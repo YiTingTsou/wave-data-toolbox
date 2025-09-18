@@ -19,7 +19,12 @@ summary(wave_data);
 
 ## Installation
 
-Download or clone this repository
+Download via [Releases](https://github.com/YiTingTsou/wave-data-toolbox/releases) or clone this repository:
+
+```bash
+git clone https://github.com/YiTingTsou/wave-data-toolbox.git
+cd wave-data-toolbox
+```
 
 ## Features
 
@@ -51,33 +56,33 @@ Open `LoadWaveData_Main.m` and define the latitude, longitude, and time range yo
 
 ## Data source and terms
 
-This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via CSIRO’s Data Access Portal and THREDDS services (OPeNDAP, HTTP, WMS/WCS, NetCDF Subset Service). The collection is updated monthly and provides global and nested regional grids since 1979. See the collection page and the THREDDS catalogue for details.
+This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via CSIRO's THREDDS services. The collection provides global and nested regional wave hindcast grids updated monthly since 1979.
 
-- Collection page: <https://data.csiro.au/collection/csiro:39819>
-- THREDDS (gridded): <http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html>
-- DAP guide to THREDDS and OPeNDAP access: <https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/>
-  **Required acknowledgement (as specified by CSIRO):**
-  > Source: Bureau of Meteorology and CSIRO © 2013
+**Key resources:**
 
-Please review the collection page for current terms. It notes the acknowledgement requirement and places restrictions on reproducing or supplying the data files themselves. The metadata and services are publicly accessible; programmatic access via OPeNDAP is supported (this toolbox uses that mode). If you plan to redistribute data files, check the collection page and contact CSIRO/Bureau contacts listed there.
+- [Collection page](https://data.csiro.au/collection/csiro:39819) - terms, acknowledgement, and reuse notes
+- [THREDDS catalog](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - direct data access
 
-- Collection page details including acknowledgement and reuse notes: <https://data.csiro.au/collection/csiro:39819>
-- DAP access methods (OPeNDAP, THREDDS): <https://research.csiro.au/slrwavescoast/waves/data-access/>
+**Important:** This toolbox accesses data via OPeNDAP for research use. If you plan to redistribute data files, please review the [collection page](https://data.csiro.au/collection/csiro:39819) for current terms and contact information.
 
-## Citation
+## Citation and Acknowledgement
 
-If you use this toolbox, please cite:
+**Required data acknowledgement (as specified by CSIRO):**
+
+> Source: Bureau of Meteorology and CSIRO © 2013
+>
+> All Rights (including copyright) Bureau of Meteorology, CSIRO 2019.
+
+**Dataset citation:**
+
+```
+Durrant, Thomas; Hemer, Mark; Smith, Grant; Trenham, Claire; & Greenslade, Diana (2019): CAWCR Wave Hindcast - Aggregated Collection. v5. CSIRO. Service Collection. http://hdl.handle.net/102.100.100/137152?index=1
+```
+
+**Toolbox citation:**
 
 ```
 Tsou, Y.-T. (2025). Wave Data Loading Toolbox [Computer software]. Australian Maritime College, University of Tasmania. GitHub. https://github.com/YiTingTsou/wave-data-toolbox
-```
-
-Please also acknowledge and cite the dataset:
-
-```
-Durrant, T., Greenslade, D., Hemer, M., Trenham, C., & Smith, G. (2014).
-CAWCR Wave Hindcast – aggregated collection (v1). CSIRO.
-https://doi.org/10.4225/08/523168703DCC5
 ```
 
 ## License
@@ -89,7 +94,7 @@ https://doi.org/10.4225/08/523168703DCC5
 
 This project includes the following third-party component:
 
-- **[customcolormap].m**  
+- **customcolormap.m**  
   Copyright (c) 2018, Víctor Martínez-Cagigal  
   Licensed under the BSD 3-Clause License.  
   See `third_party_licenses/BSD_VictorMartinezCagigal.txt` for full text.
@@ -100,7 +105,7 @@ Issues and pull requests are welcome. Please open an issue for bugs or feature r
 
 ## Maintainer
 
-Yi‑Ting Tsou
+Yi‑Ting Tsou  
 Australian Maritime College | University of Tasmania  
 Email: YiTing.Tsou@utas.edu.au
 
