@@ -1,5 +1,7 @@
 # Troubleshooting
+
 ## Common issues and fixes
+
 - **No grid points found**. Verify longitude/latitude and increase `search_radius`.
 - **Network timeouts**. Remote server busy. Retry later or reduce concurrency.
 - **Land point selected**. The tool automatically searches for the nearest valid ocean cell.
@@ -7,24 +9,31 @@
 - **Large datasets**. Enable `save_loaded_data = true` for monthly caching to avoid memory pressure.
 - **Permission errors**. Ensure write access to the working directory (for `OutputData/`).
 - **Interrupted downloads**. Re-run with the same inputs. Existing monthly files are skipped.
+
 ## Quick checks
+
 ```matlab
 help loadWaveData
 help findNearestGridPoint
 help generateFilePaths
 help loadMonthlyData
 help saveMonthlyData
-help WaveHindcastAnalysis
-help WaveRose
+help storeMonthlyData
+help waveHindcastAnalysis
+help waveRose
 ```
+
 ## Minimal reproducible example
+
 ```matlab
 % Coordinates near Tasmania
 lon = 145.1768; lat = -40.026;
 wave_data = loadWaveData(lon, lat, 201501, 201512);
 summary(wave_data);
 ```
+
 ## Diagnostics
+
 ```matlab
 % Check remote file availability
 url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.aus_4m.202508.nc';
@@ -38,4 +47,5 @@ end
 **Further help**: See the CSIRO THREDDS catalogue to confirm the latest month available.
 
 Links:
+
 - THREDDS: https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html

@@ -38,7 +38,7 @@ cd wave-data-toolbox
 
 ## Usage
 
-Open `LoadWaveData_Main.m` and define the latitude, longitude, and time range you want to load.
+Open `loadWaveDataMain.m` and define the latitude, longitude, and time range you want to load.
 
 ### Output
 
@@ -46,7 +46,7 @@ Open `LoadWaveData_Main.m` and define the latitude, longitude, and time range yo
 - It is recommended to load only one month of data first to verify that the selected grid point is close to your target location.
 - The toolbox will then:
   - Download wave data from the CAWCR Wave Hindcast – Aggregated Collection via OPeNDAP.
-  - Save the data in both `.mat` and `.csv` formats in the `OutputData/` folder.
+  - Save the data in both `.mat` and `.csv` formats in the `outputData/` folder.
   - Generate a probability distribution heatmap and a directional wave rose for the loaded dataset.
 
 ## Requirements

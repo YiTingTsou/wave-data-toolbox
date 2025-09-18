@@ -15,7 +15,7 @@
 % Demonstrates loading and basic visualization of wave hindcast data
 clc;clear;close all
 
-addpath Utils\
+addpath utils\
 
 %% User Input
 target_lon = 145.1768; % [degrees E]
@@ -24,17 +24,17 @@ start_year_month = 201501; % YearMonth
 end_year_month = 201502; % YearMonth
 
 %% Load wave data using function
-wave_data = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);
-% Note: Complete dataset is always saved to OutputData/ folder regardless of save_loaded_data setting
+wave_data = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, 'save_loaded_data', false);
+% Note: Complete dataset is always saved to outputData/ folder regardless of save_loaded_data setting
 
 %% Basic Analysis and Visualization
 if ~isempty(wave_data)
     % Figure 1 - Probability Distribution Heatmap
     n_bins = 10; % Number of bins for each dimension
-    WaveHindcastAnalysis
+    waveHindcastAnalysis
     
     % Figure 2 - Wave Direction Distribution
-    WaveRose  
+    waveRose  
 else
     fprintf('No data loaded. Check your parameters.\n');
 end

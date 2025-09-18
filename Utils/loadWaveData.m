@@ -118,7 +118,6 @@ end
 baseUrl = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/';
 location_info = [];  % Will be set in first iteration
 
-
 for i = 1:length(year_months)
     current_ym = year_months(i);
     if verbose
@@ -222,11 +221,11 @@ if ~isempty(all_time)
 
     % Save complete dataset (always saved by default)
     if ~isempty(location_info)
-        if ~exist('OutputData', 'dir')
-            mkdir('OutputData')
+        if ~exist('outputData', 'dir')
+            mkdir('outputData')
         end
         base_complete_filename = sprintf('%s/wave_data_%d_%d_%s_%dm_%.4fE_%.4fN', ...
-            'OutputData', start_year_month, end_year_month, region, grid_resolution, location_info.actual_lon, location_info.actual_lat);
+            'outputData', start_year_month, end_year_month, region, grid_resolution, location_info.actual_lon, location_info.actual_lat);
         mat_complete_filename =  [base_complete_filename '.mat'];
         save(mat_complete_filename, 'wave_data');
         csv_complete_filename = [base_complete_filename '.csv'];
