@@ -21,7 +21,7 @@ addpath utils\
 target_lon = 145.1768; % [degrees E]
 target_lat = -40.026; % [degrees N]
 start_year_month = 201501; % YearMonth
-end_year_month = 201510; % YearMonth
+end_year_month = 201512; % YearMonth
 
 %% Load wave data using function
 [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);

@@ -44,8 +44,4 @@ catch ME
 end
 ```
 
-**Further help**: See the CSIRO THREDDS catalogue to confirm the latest month available.
-
-Links:
-
-- THREDDS: https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html
+**Further help**: See the [CSIRO THREDDS catalogue](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) to confirm the latest month available.

@@ -11,11 +11,10 @@ wave_data = loadWaveData(145.1768, -40.026, 201501, 201512);
 summary(wave_data);
 ```
 
-- Detailed usage, options and troubleshooting are in **docs**:
-  - `docs/usage.md`
-  - `docs/parameters.md`
-  - `docs/troubleshooting.md`
-  - `docs/structure.md`
+- [Usage Guide](docs/usage.md)
+- [Parameters and Data Options](docs/parameters.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [Toolbox Structure](docs/structure.md)
 
 ## Installation
 
@@ -62,6 +61,7 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 
 - [Collection page](https://data.csiro.au/collection/csiro:39819) - terms, acknowledgement, and reuse notes
 - [THREDDS catalog](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - direct data access
+- [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/) - how‑to for browsing THREDDS catalogs and constructing OPeNDAP URLs
 
 **Important:** This toolbox accesses data via OPeNDAP for research use. If you plan to redistribute data files, please review the [collection page](https://data.csiro.au/collection/csiro:39819) for current terms and contact information.
 

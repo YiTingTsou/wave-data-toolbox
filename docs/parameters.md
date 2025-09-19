@@ -1,4 +1,4 @@
-# Parameters and data options
+# Parameters and Data Options
 
 ## `loadWaveData.m`
 
@@ -41,26 +41,22 @@ wave_data = loadWaveData(target_lon, target_lat, start_year_month, end_year_mont
 
 ### Regions, resolutions, coverage
 
-| Code   | Description       | Grid resolution (arcmin) | Coverage       |
-| ------ | ----------------- | ------------------------ | -------------- |
-| `pac`  | Western Pacific   | 4, 10                    | 197901–present |
-| `glob` | Global domain     | 24                       | 197901–present |
-| `aus`  | Australian region | 4, 10                    | 197901–present |
+| Code   | Description       | Grid resolution (arcmin) | Temporal Coverage |
+| ------ | ----------------- | ------------------------ | ----------------- |
+| `pac`  | Western Pacific   | 4, 10                    | 197901–present    |
+| `glob` | Global domain     | 24                       | 197901–present    |
+| `aus`  | Australian region | 4, 10                    | 197901–present    |
 
-> Check latest monthly availability at the CSIRO THREDDS catalogue.
+> Check latest monthly availability at the [CSIRO THREDDS catalogue](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html).
 
-**Links**
-
-- Collection page: <https://data.csiro.au/collection/csiro:39819>
-- THREDDS (gridded): <http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html>
-- DAP guide to THREDDS and OPeNDAP access: <https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/>
+![Data Coverage by Region and Resolution](figures/dataCoverage.png)
 
 ## `waveHindcastAnalysis.m`
 
 ### Function signature
 
 ```matlab
-waveHindcastAnalysis(t02, hs, dataset_metadata, 'bins', 15, 'save_fig', true, 'text', true)
+waveHindcastAnalysis(t02, hs, dataset_metadata, 'bins', 15, 'save_fig', true, 'text', true, 'xlabel', 'Mean Period T_{02} [s]', 'ylabel', 'Significant Wave Height H_s [m]')
 ```
 
 ### Parameters:
@@ -68,3 +64,5 @@ waveHindcastAnalysis(t02, hs, dataset_metadata, 'bins', 15, 'save_fig', true, 't
 - `'bins'` (default: 15) - Number of bins for each dimension
 - `'save_fig'` (default: true) - Save figure to PNG file
 - `'text'` (default: true) - Display percentage values on heatmap
+- `'xlabel'` (default: 'Mean Period T\_{02} [s]') - X-axis label
+- `'ylabel'` (default: 'Significant Wave Height H_s [m]') - Y-axis label

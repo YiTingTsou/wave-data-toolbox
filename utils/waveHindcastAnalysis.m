@@ -33,6 +33,8 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
 %   'bins'            - Number of bins for each dimension (default: 15)
 %   'save_fig'        - Logical: Save figure to PNG file (default: true)
 %   'text'            - Logical: Display percentage values on heatmap (default: true)
+%   'xlabel'          - String: X-axis label (default: 'Mean Period T_{02} [s]')
+%   'ylabel'          - String: Y-axis label (default: 'Significant Wave Height H_s [m]')
 %
 % OUTPUT:
 %   - Displays bi-variate probability heatmap with:
@@ -64,6 +66,10 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
 %   % Multiple options combined
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
 %                       'bins', 25, 'save_fig', true, 'text', false);
+%   
+%   % Custom axis labels for different wave parameters
+%   waveHindcastAnalysis(wave_data.dir, wave_data.hs, dataset_metadata, ...
+%                       'xlabel', 'Wave Direction [degrees]', 'ylabel', 'Significant Wave Height H_s [m]');
 %
 % NOTES:
 %   - Both input arrays must have the same length
@@ -81,6 +87,8 @@ addRequired(p, 'dataset_metadata', @isstruct);
 addParameter(p, 'bins', 15, @(x) isnumeric(x) && isscalar(x) && x > 0);
 addParameter(p, 'save_fig', true, @islogical);
 addParameter(p, 'text', true, @islogical);
+addParameter(p, 'xlabel', 'Mean Period T_{02} [s]', @ischar);
+addParameter(p, 'ylabel', 'Significant Wave Height H_s [m]', @ischar);
 
 parse(p, t02, hs, dataset_metadata, varargin{:});
 
@@ -88,6 +96,8 @@ parse(p, t02, hs, dataset_metadata, varargin{:});
 n_bins = p.Results.bins;
 save_figure = p.Results.save_fig;
 show_percentages = p.Results.text;
+x_label = p.Results.xlabel;
+y_label = p.Results.ylabel;
 
 
 actual_lon = dataset_metadata.actual_lon;
@@ -128,8 +138,8 @@ cbh = colorbar;
 ylabel(cbh, 'Probability Density', 'FontSize', 14)
 
 % Formatting
-xlabel('Mean Period T_{0m1} [s]')
-ylabel('Significant Wave Height H_s [m]')
+xlabel(x_label)
+ylabel(y_label)
 title({'Bi-Variate Probability Distribution'; ...
        sprintf('%.4f°E, %.4f°N from %d to %d', actual_lon, actual_lat, start_year_month, end_year_month)}, ...
        'FontSize', 20);
