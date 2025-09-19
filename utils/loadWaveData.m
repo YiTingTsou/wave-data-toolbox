@@ -181,12 +181,15 @@ for i = 1:length(year_months)
     end
 end
 
-% Display location info
-if verbose && ~isempty(location_info)
-    fprintf('\nTarget location:     %.4f°E, %.4f°N\n', target_lon, target_lat);
-    fprintf('Extracting location: %.4f°E, %.4f°N\n', location_info.actual_lon, location_info.actual_lat);
-    % Calculate distance
-    R = 6371; % Earth's radius in km
+% Calculate distance between target and actual extraction point
+try
+    % Use MATLAB Mapping Toolbox function if available (more accurate)
+    distance_km = distance(target_lat, target_lon, ...
+        location_info.actual_lat, location_info.actual_lon, ...
+        referenceEllipsoid('wgs84')) / 1000; % Convert meters to kilometers
+catch
+    % Fallback to Haversine formula (spherical Earth approximation)
+    R = 6371; % Earth's radius in km (Mean earth radius)
     lat1_rad = deg2rad(target_lat);
     lat2_rad = deg2rad(location_info.actual_lat);
     delta_lat = deg2rad(location_info.actual_lat - target_lat);
@@ -194,6 +197,12 @@ if verbose && ~isempty(location_info)
     a = sin(delta_lat/2)^2 + cos(lat1_rad) * cos(lat2_rad) * sin(delta_lon/2)^2;
     c = 2 * atan2(sqrt(a), sqrt(1-a));
     distance_km = R * c;
+end
+
+% Display location info
+if verbose && ~isempty(location_info)
+    fprintf('\nTarget location:     %.4f°E, %.4f°N\n', target_lon, target_lat);
+    fprintf('Extracting location: %.4f°E, %.4f°N\n', location_info.actual_lon, location_info.actual_lat);
     fprintf('Distance from target: %.2f km\n', distance_km);
 end
 
@@ -232,6 +241,7 @@ if ~isempty(all_time)
         dataset_metadata.end_year_month = end_year_month;
         dataset_metadata.region = region;
         dataset_metadata.grid_resolution = grid_resolution;
+        dataset_metadata.location_offset = distance_km;
         dataset_metadata.additional_params = additional_params;
 
         save(sprintf('output/lon%.4fE_lat%.4fN.mat', location_info.actual_lon, location_info.actual_lat), 'dataset_metadata');

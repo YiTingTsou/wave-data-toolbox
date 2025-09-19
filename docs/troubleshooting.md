@@ -7,7 +7,7 @@
 - **Land point selected**. The tool automatically searches for the nearest valid ocean cell.
 - **Parameter not found**. Inspect file variables with `ncdisp` or adjust `additional_params` names.
 - **Large datasets**. Enable `save_loaded_data = true` for monthly caching to avoid memory pressure.
-- **Permission errors**. Ensure write access to the working directory (for `OutputData/`).
+- **Permission errors**. Ensure write access to the working directory (for `output/`).
 - **Interrupted downloads**. Re-run with the same inputs. Existing monthly files are skipped.
 
 ## Quick checks

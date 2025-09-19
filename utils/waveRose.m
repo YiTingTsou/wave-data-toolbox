@@ -129,6 +129,7 @@ if save_figure
     if ~exist('output', 'dir')
             mkdir('output')
     end
+    title_prefix = lower(title_prefix);
     filename = sprintf('%sRose_%d_%d_%.4fE_%.4fN', strrep(title_prefix, ' ', ''), start_year_month, end_year_month, actual_lon, actual_lat);
     print(gcf, '-dpng', '-r300', fullfile('output', [filename '.png']))
 end
