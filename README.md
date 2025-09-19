@@ -33,7 +33,7 @@ cd wave-data-toolbox
 - Flexible parameter selection (for example, `hs`, `t02`, `dir`, plus optional extras)
 - Optional monthly saving for resume capability and lower memory use
 - Built‑in analyses: probability distributions and wave roses
-- Writes a complete dataset to `OutputData/` (`.mat` and `.csv`)
+- Writes a complete dataset to `Output/` (`.mat` and `.csv`)
 - Efficient single-point extraction instead of loading the entire grid data
 
 ## Usage
@@ -46,8 +46,8 @@ Open `loadWaveDataMain.m` and define the latitude, longitude, and time range you
 - It is recommended to load only one month of data first to verify that the selected grid point is close to your target location.
 - The toolbox will then:
   - Download wave data from the CAWCR Wave Hindcast – Aggregated Collection via OPeNDAP.
-  - Save the data in both `.mat` and `.csv` formats in the `outputData/` folder.
-  - Generate a probability distribution heatmap and a directional wave rose for the loaded dataset.
+  - Save `dataset_metadata.m` and `wave_data` in both `.mat` and `.csv` formats in the `output/` folder.
+  - Generate and save a probability distribution heatmap and a directional wave rose for the loaded dataset.
 
 ## Requirements
 

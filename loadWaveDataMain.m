@@ -21,20 +21,18 @@ addpath utils\
 target_lon = 145.1768; % [degrees E]
 target_lat = -40.026; % [degrees N]
 start_year_month = 201501; % YearMonth
-end_year_month = 201502; % YearMonth
+end_year_month = 201510; % YearMonth
 
 %% Load wave data using function
-wave_data = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, 'save_loaded_data', false);
-% Note: Complete dataset is always saved to outputData/ folder regardless of save_loaded_data setting
+[wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);
 
 %% Basic Analysis and Visualization
 if ~isempty(wave_data)
     % Figure 1 - Probability Distribution Heatmap
-    n_bins = 10; % Number of bins for each dimension
-    waveHindcastAnalysis
+    waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata)
     
     % Figure 2 - Wave Direction Distribution
-    waveRose  
+    mean_dir = waveRose(wave_data.dir, dataset_metadata);
 else
     fprintf('No data loaded. Check your parameters.\n');
 end
