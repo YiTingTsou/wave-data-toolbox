@@ -1,6 +1,8 @@
 # Usage Guide
 
-This page explains common workflows and advanced options for the coding toolbox to access the CAWCR Wave Hindcast data and related utilities.
+This guide shows typical workflows and runnable examples for the toolbox.
+
+For complete argument definitions, defaults, and output fields, see **[parameters.md](parameters.md)**.
 
 ## Overview
 
@@ -9,34 +11,31 @@ This page explains common workflows and advanced options for the coding toolbox 
 1. Choose a location and time range.
 2. Load wave data with `loadWaveData`.
 3. (Optional) Tune binning or use helper utilities for analysis and caching.
-4. Use the downloaded `wave_data` or generated visualisation figures.
+4. Use the downloaded `wave_data` or generated figures.
 
-## 1.`loadWaveData` function
+## 1. `loadWaveData` function
 
 ### 1.1 Basic loading
 
 ```matlab
-% Most common use
-wave_data = loadWaveData(145.1768, -40.026, 201501, 201512);
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 ```
 
-### 1.2 Advanced options
+### 1.2 Advanced full options
 
 ```matlab
-wave_data = loadWaveData(145.1768, -40.026, 201501, 201512, ...
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     'region', 'aus', ...            % 'aus' | 'glob' | 'pac'
-    'resolution', 10, ...           % arcminutes
-    'radius', 0.1, ...              % degrees
-    'params', {'t0m1','fp','dpm'}, ...
-    'cache', true, ...              % monthly caching
-    'verbose', true);
+    'resolution', 4, ...            % arcminutes
+    'radius', 0.5, ...              % degrees
+    'params', {'t0m1','fp','dpm'}, ... % additional params to load
+    'cache', false, ...             % monthly caching
+    'verbose', false);              % display messages
 ```
 
-For a full list of available parameters, their types, allowed values, and defaults, see: [parameters.md](parameters.md)
+#### 1.2.1 Exploring available parameters for `params`
 
-## 2. Exploring available parameters from CAWCR Wave Hindcast
-
-You can quickly inspect variables and metadata from the remote dataset in the MATLAB Workspace.
+Inspect available variables directly from the remote NetCDF catalogue:
 
 ```matlab
 url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.aus_4m.202508.nc';
@@ -45,27 +44,49 @@ info = ncinfo(url); {info.Variables.Name}' % list parameter names
 ncdisp(url, 'hs');                        % variable details
 ```
 
-## 3. Related analysis scripts
+### 1.3 Outputs
 
-- **`waveHindcastAnalysis.m`** - Generate bi-variate probability distribution heatmaps
+- `wave_data`: table of time‑series variables suitable for plotting and statistics
+- `dataset_metadata`: struct describing extraction and processing
 
-  ```matlab
-  waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
-  waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, 'bins', 20, 'text', false);
-  ```
+## 2. Analysis functions
 
-For detailed parameter options and descriptions, see: [parameters.md](parameters.md)
+### 2.1 `waveHindcastAnalysis` function
 
-- **`waveRose.m`** - Generate polar histogram (rose plot) for wave directions
+Generate bi-variate probability distribution heatmaps
 
-  ```matlab
-  mean_dir = waveRose(wave_data.dir, dataset_metadata);
-  waveRose(wave_data.dir, dataset_metadata, 'save_fig', false);  % Display only
-  waveRose(wind_data, dataset_metadata, 'title', 'Wind Direction');  % Wind rose
-  waveRose(current_data, dataset_metadata, 'title', 'Current Direction', 'save_fig', false);
-  ```
+#### 2.1.1 Basic usage
 
-### Example outputs
+```matlab
+waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
+```
+
+#### 2.1.2 Advanced full options
+
+```matlab
+waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
+    'bins', 20, ...               % No. of bins
+    'save_fig', false, ...
+    'text', false, ...             % Display percentage values
+    'xlabel', 'X-axis Label', ...
+    'ylabel', 'Y-axis Label');
+```
+
+### 2.2 `waveRose` function
+
+Generate polar histogram (rose plot) for wave directions
+
+```matlab
+mean_dir = waveRose(wave_data.dir, dataset_metadata);
+
+% Display only
+waveRose(wave_data.dir, dataset_metadata, 'save_fig', false);
+
+% Wind rose
+waveRose(wind_data, dataset_metadata, 'title', 'Wind Direction');
+```
+
+### 2.3 Example outputs
 
 <table>
 <tr>
@@ -78,26 +99,10 @@ For detailed parameter options and descriptions, see: [parameters.md](parameters
 <td width="50%">
 
 **Wave Rose**
-![Wave Rose](figures/WaveRose_201501_201512_145.1668E_-40.0000N.png)
+![Wave Rose](figures/waveRose_201501_201512_145.1668E_-40.0000N.png)
 
 </td>
 </tr>
 </table>
-
-## 4. Using helper utilities directly
-
-```matlab
-% Find nearest grid point
-location_info = findNearestGridPoint(url, lon, lat, 0.1, true);
-
-% Generate file paths
-[folder_name, filename] = generateFilePaths(lon, lat, 201508, 'aus', 10);
-
-% Load a single month
-monthly_data = loadMonthlyData(url, location_info, {'hs','t02'}, true);
-
-% Save a monthly file
-saveMonthlyData(monthly_data, filename, {'hs','t02'}, true);
-```
 
 **See also**: [parameters.md](parameters.md), [troubleshooting.md](troubleshooting.md), [structure.md](structure.md)

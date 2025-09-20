@@ -1,21 +1,28 @@
 # Toolbox Structure
 
-This page covers the structure of the toolbox.
+## For Users
 
-## Main Functions
+### Main Script
 
-- **`loadWaveDataMain.m`** - Example script demonstrating usage and analysis
-- **`loadWaveData.m`** - Main orchestrator function for loading wave data (in Utils/)
+- **`loadWaveDataMain.m`** - Example script showing how to use the toolbox
 
-## Helper Functions (Utils/)
+### Core Function
+
+- **`loadWaveData.m`** - Main function for loading wave data
+
+### Analysis Functions
+
+- **`waveHindcastAnalysis.m`** - Generate probability distribution heatmap
+- **`waveRose.m`** - Create directional wave rose plots
+
+---
+
+## For Contributors/Developers
+
+### Internal Helper Functions (Utils/)
 
 - **`findNearestGridPoint.m`** - Finds nearest valid ocean grid point
 - **`generateFilePaths.m`** - Creates consistent file and folder naming
 - **`loadMonthlyData.m`** - Loads wave data for a single month
 - **`saveMonthlyData.m`** - Saves individual monthly datasets
 - **`storeMonthlyData.m`** - Script to store monthly wave data in cell arrays
-
-## Analysis Functions (Utils/)
-
-- **`waveHindcastAnalysis.m`** - Generate probability distribution heatmap
-- **`waveRose.m`** - Create directional wave rose plots

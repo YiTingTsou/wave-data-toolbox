@@ -24,9 +24,10 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 %   'params'          - Cell array of additional parameter names to load (default: {})
 %
 % OUTPUT:
-%   wave_data - Table with columns: time, t02, hs, dir (and optionally additional parameters)
-%               Complete dataset is always saved to OutputData/ folder regardless of save_loaded_data setting
-%
+%   wave_data         - Table with time series wave data: time, t02 [s], hs [m], dir [deg]
+%                       and any additional parameters specified in 'params'. Always saved to output/ folder as .mat and .csv files
+%   dataset_metadata  - Structure with extraction location info and processing metadata. Always saved to output/ folder as .mat file
+%                       
 % EXAMPLE:
 %   % Load 1 year of data for Bass Strait (with monthly file saving enabled by default)
 %   wave_data = loadWaveData(145.1768, -40.026, 201501, 201512);

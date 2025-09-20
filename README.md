@@ -12,7 +12,7 @@ summary(wave_data);
 ```
 
 - [Usage Guide](docs/usage.md)
-- [Parameters and Data Options](docs/parameters.md)
+- [Function and Parameter Reference](docs/parameters.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [Toolbox Structure](docs/structure.md)
 
@@ -28,25 +28,25 @@ cd wave-data-toolbox
 ## Features
 
 - Automated OPeNDAP downloads with file‑existence checks
-- Spatial subsetting and nearest valid ocean grid selection
-- Flexible parameter selection (for example, `hs`, `t02`, `dir`, plus optional extras)
+- Spatial subsetting and efficient single-point extraction (avoids loading entire grid data)
+- Flexible parameter selection (for example, `hs`, `t02`, `dir`, plus optional extras)
 - Optional monthly saving for resume capability and lower memory use
 - Built‑in analyses: probability distributions and wave roses
-- Writes a complete dataset to `Output/` (`.mat` and `.csv`)
-- Efficient single-point extraction instead of loading the entire grid data
 
 ## Usage
 
 Open `loadWaveDataMain.m` and define the latitude, longitude, and time range you want to load.
 
-### Output
+For detailed function parameters and output descriptions, see the [Usage Guide](docs/usage.md).
 
-- The command window will display the target location and the closest available grid point, along with the distance between them.
-- It is recommended to load only one month of data first to verify that the selected grid point is close to your target location.
-- The toolbox will then:
-  - Download wave data from the CAWCR Wave Hindcast – Aggregated Collection via OPeNDAP.
-  - Save `dataset_metadata.m` and `wave_data` in both `.mat` and `.csv` formats in the `output/` folder.
-  - Generate and save a probability distribution heatmap and a directional wave rose for the loaded dataset.
+### What happens when you run it
+
+- The command window displays the target location and closest available grid point, plus distance between them
+- Wave data is downloaded from the CAWCR Wave Hindcast via OPeNDAP
+- Complete dataset is saved to `output/` (`wave_data` in .mat and .csv; `dataset_metadata` in .mat only)
+- Probability distribution heatmap and directional wave rose are generated and saved
+
+**Tip:** Load only one month first to verify the selected grid point is close to your target location.
 
 ## Requirements
 

@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "To cite this software, please use the information provided in this file."
+type: software
+title: "Wave Data Loading Toolbox"
+abstract: "A MATLAB toolbox for extracting and analysing wave hindcast data from the CSIRO/CAWCR Wave Hindcast collection, with fast single‑point loading, optional monthly caching, and basic visualisation."
+authors:
+  - family-names: "Tsou"
+    given-names: "Yi-Ting"
+    email: "YiTing.Tsou@utas.edu.au"
+    affiliation: "Australian Maritime College, University of Tasmania"
+repository-code: "https://github.com/YiTingTsou/wave-data-toolbox"
+url: "https://github.com/YiTingTsou/wave-data-toolbox"
+license: MIT
+date-released: 2025-09-20
+version: "1.1.1"
+keywords:
+  - "oceanography"
+  - "wave data"
+  - "MATLAB"
+  - "CSIRO"
+  - "hindcast"
+  - "OPeNDAP"

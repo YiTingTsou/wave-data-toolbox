@@ -20,9 +20,9 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
 %
 % INPUTS:
 %   t02               - Numeric array of first wave parameter (e.g., wave periods) [units depend on data]
-%                       NaN values are automatically removed
+%                       This parameter will be plotted on the x-axis
 %   hs                - Numeric array of second wave parameter (e.g., wave heights) [units depend on data]
-%                       NaN values are automatically removed
+%                       This parameter will be plotted on the y-axis
 %   dataset_metadata  - Structure containing dataset information with fields:
 %                       .actual_lon       - Extraction longitude [degrees E]
 %                       .actual_lat       - Extraction latitude [degrees N]

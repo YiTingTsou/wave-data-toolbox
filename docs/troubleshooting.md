@@ -14,11 +14,6 @@
 
 ```matlab
 help loadWaveData
-help findNearestGridPoint
-help generateFilePaths
-help loadMonthlyData
-help saveMonthlyData
-help storeMonthlyData
 help waveHindcastAnalysis
 help waveRose
 ```
@@ -28,7 +23,7 @@ help waveRose
 ```matlab
 % Coordinates near Tasmania
 lon = 145.1768; lat = -40.026;
-wave_data = loadWaveData(lon, lat, 201501, 201512);
+[wave_data, dataset_metadata] = loadWaveData(lon, lat, 201501, 201502);
 summary(wave_data);
 ```
 

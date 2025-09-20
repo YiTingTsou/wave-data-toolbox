@@ -31,7 +31,7 @@ try
     time_month = ncread(url, 'time');
     num_time_month = length(time_month);
 
-    % Calculate absolute indices for data extraction
+    % Absolute indices for data extraction
     abs_lon_idx = location_info.lon_idx;
     abs_lat_idx = location_info.lat_idx;
 
