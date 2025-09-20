@@ -99,7 +99,6 @@ show_percentages = p.Results.text;
 x_label = p.Results.xlabel;
 y_label = p.Results.ylabel;
 
-
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;
 start_year_month = dataset_metadata.start_year_month;
@@ -129,7 +128,7 @@ figure
 imagesc(t0m1_centers, hs_centers, probability);
 set(gca, 'YDir', 'normal') % Flip Y-axis to normal orientation
 
-% Apply the same custom colormap
+% Apply the custom colormap
 mycolormap = customcolormap([0 .25 .5 .75 1],{'#e81416','#EBE94E','#39D46B','#3282F6','#ffffff'});
 colormap(mycolormap);
 

@@ -78,6 +78,11 @@ if ischar(additional_params)
     additional_params = {additional_params};
 end
 
+% Convert negative longitude to 0-360° range (degrees East)
+if target_lon < 0
+    target_lon = target_lon + 360;
+end
+
 %% Generate list of year-month combinations
 year_months = [];
 current_year = floor(start_year_month / 100);
