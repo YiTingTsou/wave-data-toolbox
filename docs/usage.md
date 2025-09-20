@@ -2,7 +2,7 @@
 
 This guide shows typical workflows and runnable examples for the toolbox.
 
-For complete argument definitions, defaults, and output fields, see **[parameters.md](parameters.md)**.
+For complete argument definitions, defaults, and output fields, see [Function and Parameter Reference](parameters.md).
 
 ## Overview
 
@@ -67,7 +67,7 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     'bins', 20, ...               % No. of bins
     'save_fig', false, ...
-    'text', false, ...             % Display percentage values
+    'text', false, ...            % Display percentage values
     'xlabel', 'X-axis Label', ...
     'ylabel', 'Y-axis Label');
 ```
@@ -92,17 +92,17 @@ waveRose(wind_data, dataset_metadata, 'title', 'Wind Direction');
 <tr>
 <td width="50%">
 
-**Bi-Variate Probability Distribution**
+`waveHindcastAnalysis`
 ![Bi-Variate Probability Distribution](figures/biVariate_201501_201512_145.1668E_-40.0000N.png)
 
 </td>
 <td width="50%">
 
-**Wave Rose**
+`waveRose`
 ![Wave Rose](figures/waveRose_201501_201512_145.1668E_-40.0000N.png)
 
 </td>
 </tr>
 </table>
 
-**See also**: [parameters.md](parameters.md), [troubleshooting.md](troubleshooting.md), [structure.md](structure.md)
+**See also**: [Function and Parameter Reference](parameters.md), [Troubleshooting Guide](troubleshooting.md), [Toolbox Structure](structure.md)

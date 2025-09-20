@@ -7,13 +7,13 @@ A MATLAB toolbox for extracting and analysing wave hindcast data from the CSIRO/
 Loads data for January to December 2015 at a specified location.
 
 ```matlab
-wave_data = loadWaveData(145.1768, -40.026, 201501, 201512);
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 summary(wave_data);
 ```
 
 - [Usage Guide](docs/usage.md)
 - [Function and Parameter Reference](docs/parameters.md)
-- [Troubleshooting](docs/troubleshooting.md)
+- [Troubleshooting Guide](docs/troubleshooting.md)
 - [Toolbox Structure](docs/structure.md)
 
 ## Installation

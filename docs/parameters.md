@@ -2,7 +2,7 @@
 
 This page documents function signatures, arguments, defaults, outputs, variables, and dataset coverage.
 
-For step‑by‑step workflows and examples, see **[usage.md](usage.md)**.
+For step‑by‑step workflows and examples, see [Usage Guide](usage.md).
 
 ## 1. `loadWaveData`
 
@@ -37,33 +37,19 @@ Load CAWCR Wave Hindcast data for a target location and period, optionally inclu
 | `cache`            | logical    | `true`  | Save monthly data during loading             |
 | `params`           | cell array | `{}`    | Extra variables to load (e.g., `t0m1`, `fp`) |
 
-### 1.4 Variables
-
-**Standard (always loaded)**
-
-- `time`: time vector
-- `t02`: mean period from second frequency moment
-- `hs`: significant wave height
-- `dir`: wave direction
-
-**Optional (`params`)**
-
-- `t0m1`: mean period from inverse frequency moment
-- Others as available in NetCDF files
-
-### 1.5 Regions, resolutions, coverage
+### 1.4 Regions, resolutions, coverage
 
 | Code   | Description       | Grid resolution (arcmin) | Temporal Coverage |
 | ------ | ----------------- | ------------------------ | ----------------- |
-| `pac`  | Western Pacific   | 4, 10                    | 197901–present    |
 | `glob` | Global domain     | 24                       | 197901–present    |
-| `aus`  | Australian region | 4, 10                    | 197901–present    |
+| `aus`  | Australian region | 10, 4                    | 197901–present    |
+| `pac`  | Western Pacific   | 10, 4                    | 197901–present    |
 
 > Check latest monthly availability at the [CSIRO THREDDS catalogue](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html).
 
 ![Data Coverage by Region and Resolution](figures/dataCoverage.png)
 
-### 1.6 Outputs
+### 1.5 Outputs
 
 _Note: `wave_data` is saved automatically to the `output/` folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
 
