@@ -15,13 +15,13 @@ For complete argument definitions, defaults, and output fields, see [Function an
 
 ## 1. `loadWaveData` function
 
-### 1.1 Basic loading
+### 1.1 Basic loading for wave data
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 ```
 
-### 1.2 Advanced full options
+### 1.2 Advanced full options for loading wave data
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
@@ -33,20 +33,39 @@ For complete argument definitions, defaults, and output fields, see [Function an
     'verbose', false);              % display messages
 ```
 
-#### 1.2.1 Exploring available parameters for `params`
+### 1.3 Basic loading for wind data
+
+```matlab
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
+```
+
+### 1.4 Advanced full options for loading wave data
+
+```matlab
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
+    'wind', true, ...
+    'params', {'t0m1','fp','dpm'}, ... % additional params to load
+    'cache', false, ...             % monthly caching
+    'verbose', false);              % display messages
+```
+
+#### 1.5 Exploring available parameters for `params`
 
 Inspect available variables directly from the remote NetCDF catalogue:
 
 ```matlab
+% For gridded datasets (wave)
 url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.aus_4m.202508.nc';
-ncdisp(url, '/', 'min');                 % quick overview
 info = ncinfo(url); {info.Variables.Name}' % list parameter names
-ncdisp(url, 'hs');                        % variable details
+
+% For spec datasets (wind)
+url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/ww3.202508_spec.nc';
+info = ncinfo(url); {info.Variables.Name}' % list parameter names
 ```
 
-### 1.3 Outputs
+### 1.6 Outputs
 
-- `wave_data`: table of time‑series variables suitable for plotting and statistics
+- `wave_data` or `wind_data`: table of time‑series variables suitable for plotting and statistics
 - `dataset_metadata`: struct describing extraction and processing
 
 ## 2. Analysis functions

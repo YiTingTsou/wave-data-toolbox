@@ -19,10 +19,17 @@
 
 ## For Contributors/Developers
 
-### Internal Helper Functions (Utils/)
+### Internal Helper Functions for `loadWaveData`
 
-- **`findNearestGridPoint.m`** - Finds nearest valid ocean grid point
-- **`generateFilePaths.m`** - Creates consistent file and folder naming
-- **`loadMonthlyData.m`** - Loads wave data for a single month
-- **`saveMonthlyData.m`** - Saves individual monthly datasets
-- **`storeMonthlyData.m`** - Script to store monthly wave data in cell arrays
+The following helper functions support the main wave and wind data loading workflow:
+
+- **`findNearestGridPoint.m`**: Identifies the nearest valid ocean grid point for a given location.
+- **`loadMonthlyData.m`**: Loads wind or wave data for a single month, with built-in fallback logic for missing variables.
+- **`saveMonthlyData.m`**: Saves individual monthly datasets to disk.
+- **`storeMonthlyData.m`**: Collects and stores monthly wave data in cell arrays for further processing.
+- **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data.
+
+Folder structure:
+
+- `+gridded/`: Contains functions for loading and processing wave data.
+- `+spec/`: Contains functions for loading and processing wind data.
