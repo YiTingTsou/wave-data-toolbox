@@ -9,9 +9,9 @@ For complete argument definitions, defaults, and output fields, see [Function an
 **Typical workflow**
 
 1. Choose a location and time range.
-2. Load wave data with `loadWaveData`.
+2. Load data with `loadWaveData`.
 3. (Optional) Tune binning or use helper utilities for analysis and caching.
-4. Use the downloaded `wave_data` or generated figures.
+4. Use the downloaded data or generated figures.
 
 ## 1. `loadWaveData` function
 
@@ -49,7 +49,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
     'verbose', false);              % display messages
 ```
 
-#### 1.5 Exploring available parameters for `params`
+### 1.5 Exploring available parameters for `params`
 
 Inspect available variables directly from the remote NetCDF catalogue:
 
@@ -70,7 +70,7 @@ info = ncinfo(url); {info.Variables.Name}' % list parameter names
 
 ## 2. Analysis functions
 
-### 2.1 `waveHindcastAnalysis` function
+### 2.1 `waveHindcastAnalysis`
 
 Generate bi-variate probability distribution heatmaps
 
@@ -91,7 +91,7 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     'ylabel', 'Y-axis Label');
 ```
 
-### 2.2 `waveRose` function
+### 2.2 `waveRose`
 
 Generate polar histogram (rose plot) for wave directions
 

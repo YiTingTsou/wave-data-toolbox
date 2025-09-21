@@ -11,7 +11,7 @@ Loads data for January to December 2015 at a specified location.
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 
 % Loads wind data
-[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
+[wind_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
 ```
 
 - [Usage Guide](docs/usage.md)
@@ -45,8 +45,8 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 ### What happens when you run it
 
 - The command window displays the target location and closest available grid point, plus distance between them
-- Wave data or wind data is downloaded from the CAWCR Wave Hindcast via OPeNDAP
-- Complete dataset is saved to `output/` in .mat and .csv; `dataset_metadata` in .mat only)
+- Wave and wind data are downloaded from the CAWCR Wave Hindcast via OPeNDAP
+- The complete dataset is saved to `output/` in both .mat and .csv formats, along with a metadata file in .mat format
 - Probability distribution heatmap and directional wave rose are generated and saved
 
 **Tip:** Load only one month first to verify the selected grid point is close to your target location.
