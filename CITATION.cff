@@ -12,7 +12,7 @@ repository-code: "https://github.com/YiTingTsou/wave-data-toolbox"
 url: "https://github.com/YiTingTsou/wave-data-toolbox"
 license: MIT
 date-released: 2025-09-21
-version: "1.2.0"
+version: "1.1.2"
 keywords:
   - "oceanography"
   - "wave data"
