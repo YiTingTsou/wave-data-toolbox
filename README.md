@@ -92,7 +92,7 @@ Tsou, Y.-T. (2025). Wave Data Loading Toolbox [Computer software]. Australian Ma
 
 ## License
 
-- **Code:** MIT License (see `LICENSE`).
+- **Code:** MIT License (see [LICENSE](LICENSE)).
 - **Data:** Governed by the terms on the CSIRO collection page and the THREDDS services. Do not redistribute data files without checking those terms and contacts.
 
 ### Third-Party Components and Licenses
@@ -102,7 +102,7 @@ This project includes the following third-party component:
 - **customcolormap.m**  
   Copyright (c) 2018, Víctor Martínez-Cagigal  
   Licensed under the BSD 3-Clause License.  
-  See `third_party_licenses/BSD_VictorMartinezCagigal.txt` for full text.
+  See [`BSD_VictorMartinezCagigal`](/third_party_licenses/BSD_VictorMartinezCagigal.txt) for full text.
 
 ## Contributing
 
