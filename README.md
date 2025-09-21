@@ -116,4 +116,4 @@ Email: YiTing.Tsou@utas.edu.au
 
 ## Acknowledgements and use of AI tools
 
-Some text, code comments, and code suggestions were generated using AI tools and subsequently reviewed and validated by the author. Responsibility for the final content remains with the author.
+Parts of the codebase, including comments and documentation, were developed with the assistance of AI tools for code suggestions, debugging, and refinement. All generated content was reviewed and verified by the author before integration.

@@ -44,7 +44,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     'wind', true, ...
-    'params', {'t0m1','fp','dpm'}, ... % additional params to load
+    'params', {'direction'}, ...    % additional params to load
     'cache', false, ...             % monthly caching
     'verbose', false);              % display messages
 ```
@@ -96,9 +96,10 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
 Generate polar histogram (rose plot) for wave directions
 
 ```matlab
+% Basic usage
 mean_dir = waveRose(wave_data.dir, dataset_metadata);
 
-% Display only
+% Display figure only
 waveRose(wave_data.dir, dataset_metadata, 'save_fig', false);
 
 % Wind rose
