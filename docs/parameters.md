@@ -12,7 +12,6 @@ For step‑by‑step workflows and examples, see [Usage Guide](usage.md).
 [wave_data, dataset_metadata] = loadWaveData(target_lon,target_lat, start_year_month, end_year_month, ...
     'region', region, ...
     'resolution', resolution, ...
-    'radius', radius, ...
     'verbose', verbose, ...
     'cache', cache, ...
     'params', params, ...
@@ -36,7 +35,6 @@ This function loads CAWCR Wave Hindcast data for a specified location and time r
 | `end_year_month`   | numeric    | —       | End date in `YYYYMM`                         |
 | `region`           | string     | `aus`   | Data region: `aus`, `glob`, `pac`            |
 | `resolution`       | numeric    | `10`    | Grid resolution [arcminutes]                 |
-| `radius`           | numeric    | `0.1`   | Search radius around target [degrees]        |
 | `verbose`          | logical    | `true`  | Display progress messages                    |
 | `cache`            | logical    | `true`  | Save monthly data during loading             |
 | `params`           | cell array | `{}`    | Extra variables to load (e.g., `t0m1`, `fp`) |
@@ -73,7 +71,7 @@ This function loads CAWCR Wave Hindcast data for a specified location and time r
 
 ### 1.5 Outputs
 
-_Note: `wave_data` or `wind_data` is saved automatically to the `output/` folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
+_Note: `wave_data` or `wind_data` is saved automatically to the `outputs/` folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
 
 - **wave_data** - Table containing time series wave parameters with columns:
   - `time`: time vector

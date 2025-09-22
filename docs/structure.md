@@ -14,6 +14,7 @@
 
 - **`waveHindcastAnalysis.m`** - Generate probability distribution heatmap
 - **`waveRose.m`** - Create directional wave rose plots
+- **`locationComparison.m`** - A figure showing the target location and the data extraction location(s).
 
 ---
 

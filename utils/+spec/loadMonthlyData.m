@@ -90,3 +90,4 @@ end
 % Store all arrays in output structure
 monthly_data = data_struct;
 monthly_data.time = time_month(:);
+end

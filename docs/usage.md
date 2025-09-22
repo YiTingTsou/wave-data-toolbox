@@ -27,7 +27,6 @@ For complete argument definitions, defaults, and output fields, see [Function an
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     'region', 'aus', ...            % 'aus' | 'glob' | 'pac'
     'resolution', 4, ...            % arcminutes
-    'radius', 0.5, ...              % degrees
     'params', {'t0m1','fp','dpm'}, ... % additional params to load
     'cache', false, ...             % monthly caching
     'verbose', false);              % display messages
@@ -93,17 +92,17 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
 
 ### 2.2 `waveRose`
 
-Generate polar histogram (rose plot) for wave directions
+Generate polar histogram (rose plot) showing the joint probability distribution of wave (or wind/current) directions and heights (or speeds).
 
 ```matlab
 % Basic usage
-mean_dir = waveRose(wave_data.dir, dataset_metadata);
+mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 
 % Display figure only
-waveRose(wave_data.dir, dataset_metadata, 'save_fig', false);
+waveRose(wave_data.dir, wave_data.hs, dataset_metadata, 'save_fig', false);
 
 % Wind rose
-waveRose(wind_data, dataset_metadata, 'title', 'Wind Direction');
+waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, 'title', 'Wind');
 ```
 
 ### 2.3 Example outputs
@@ -119,10 +118,22 @@ waveRose(wind_data, dataset_metadata, 'title', 'Wind Direction');
 <td width="50%">
 
 `waveRose`
-![Wave Rose](figures/waveRose_201501_201512_145.1668E_-40.0000N.png)
+![Wind Rose](figures/windRose_201501_201512_145.3300E_-39.8700N.png)
 
 </td>
 </tr>
 </table>
+
+### 2.4 **`locationComparison`**
+
+A figure showing the target location, the data extraction location(s), and the locations of all available datasets in the CAWCR Wave Hindcast.
+
+```matlab
+% With one extracted dataset_metadata (wave or wind)
+locationComparison(dataset_metadata);
+
+% With both wave and wind metadata
+locationComparison(dataset_metadata);
+```
 
 **See also**: [Function and Parameter Reference](parameters.md), [Troubleshooting Guide](troubleshooting.md), [Toolbox Structure](structure.md)

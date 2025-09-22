@@ -27,13 +27,15 @@ end_year_month = 201512;   % End YearMonth (YYYYMM)
 % Wave Data Analysis and Visualization
 % Probability Distribution Heatmap
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
-
 % Wave Direction Distribution
-wave_mean_dir = waveRose(wave_data.dir, dataset_metadata);
+wave_mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 
 %% Load Wind Data
-[wind_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, 'wind', true);
+[wind_data, dataset_metadata_wind] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, 'wind', true);
 
-% Wind Data Visualization
 % Wind Direction Distribution
-wind_mean_dir = waveRose(wind_data.wnddir, dataset_metadata, 'title', 'Wind');
+wind_mean_dir = waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata_wind, 'title', 'Wind');
+
+%% Verify loading location
+% Confirm wave and wind data are loaded closely to the target location
+locationComparison(dataset_metadata, dataset_metadata_wind);

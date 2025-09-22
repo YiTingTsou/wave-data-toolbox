@@ -25,13 +25,13 @@ function [dataset_metadata] = saveCompleteDataset(wave_data, location_info, star
 
 % Save complete dataset (always saved by default)
 if ~isempty(location_info)
-    if ~exist('output', 'dir')
-        mkdir('output')
+    if ~exist('outputs', 'dir')
+        mkdir('outputs')
     end
     
     % Save wave_data
     base_complete_filename = sprintf('%s/wave_data_%d_%d_%s_%dm_%.4fE_%.4fN', ...
-        'output', start_year_month, end_year_month, region, grid_resolution, location_info.actual_lon, location_info.actual_lat);
+        'outputs', start_year_month, end_year_month, region, grid_resolution, location_info.actual_lon, location_info.actual_lat);
     mat_complete_filename = [base_complete_filename '.mat'];
     save(mat_complete_filename, 'wave_data');
     csv_complete_filename = [base_complete_filename '.csv'];
@@ -46,7 +46,7 @@ if ~isempty(location_info)
     dataset_metadata.location_offset = distance_km;
     dataset_metadata.additional_params = additional_params;
 
-    save(sprintf('output/lon%.4fE_lat%.4fN_wave.mat', location_info.actual_lon, location_info.actual_lat), 'dataset_metadata');
+    save(sprintf('outputs/lon%.4fE_lat%.4fN_wave.mat', location_info.actual_lon, location_info.actual_lat), 'dataset_metadata');
     
     if verbose
         fprintf('\nComplete wave dataset saved\n------\n\n');

@@ -25,7 +25,7 @@ try
     current_file_path = mfilename('fullpath');
     package_dir = fileparts(current_file_path);
     station_info_file = fullfile(package_dir, 'spac_station_info.mat');
-    
+    % load station info
     load(station_info_file, 'station_info');
 
     distances = sqrt((station_info.longitude - target_lon).^2 + (station_info.latitude - target_lat).^2);

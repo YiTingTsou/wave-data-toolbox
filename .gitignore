@@ -1,6 +1,5 @@
 # folder
-output/
-lon*/
+outputs/
 
 # Ignore MATLAB autosave files
 *.asv

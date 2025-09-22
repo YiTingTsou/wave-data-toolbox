@@ -77,8 +77,6 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
 %   - Higher n_bins values provide more detail but may reduce statistical significance
 %   - Probability text is only shown for bins with >0.3% probability
 %
-% SEE ALSO: loadWaveData, waveRose, customcolormap
-%
 
 p = inputParser;
 addRequired(p, 't02', @isnumeric);
@@ -174,10 +172,10 @@ set(gcf,'Name','Bi-Variate Probability Distribution','units','normalized','outer
 
 %% Save the figure
 if save_figure
-    if ~exist('output', 'dir')
-            mkdir('output')
+    if ~exist('outputs', 'dir')
+            mkdir('outputs')
     end
     filename = sprintf('biVariate_%d_%d_%.4fE_%.4fN', start_year_month, end_year_month, actual_lon, actual_lat);
-    print(gcf, '-dpng', '-r300', fullfile('output', [filename '.png']))
+    print(gcf, '-dpng', '-r300', fullfile('outputs', [filename '.png']))
 end
 end

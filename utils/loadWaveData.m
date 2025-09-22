@@ -19,7 +19,6 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 % OPTIONAL PARAMETERS:
 %   'region'          - Data region: 'aus', 'glob', 'pac' (default: 'aus')
 %   'resolution'      - Grid resolution in arcminutes (default: 10)
-%   'radius'          - Search radius around target location in degrees (default: 0.1)
 %   'verbose'         - Display progress messages (default: true)
 %   'cache'           - Save monthly data during loading for resumable downloads (default: true)
 %   'params'          - Cell array of additional parameter names to load (default: {})
@@ -64,7 +63,6 @@ addRequired(p, 'start_year_month', @(x) isnumeric(x) && isscalar(x));
 addRequired(p, 'end_year_month', @(x) isnumeric(x) && isscalar(x));
 addParameter(p, 'region', 'aus', @(x) ischar(x) && ismember(x, {'aus', 'glob', 'pac'}));
 addParameter(p, 'resolution', 10, @(x) isnumeric(x) && isscalar(x) && x > 0);
-addParameter(p, 'radius', 0.1, @(x) isnumeric(x) && isscalar(x) && x > 0);
 addParameter(p, 'verbose', true, @islogical);
 addParameter(p, 'cache', true, @islogical);
 addParameter(p, 'params', {}, @(x) iscell(x) || ischar(x));
@@ -75,7 +73,6 @@ parse(p, target_lon, target_lat, start_year_month, end_year_month, varargin{:});
 % Extract parsed values
 region = p.Results.region;
 grid_resolution = p.Results.resolution;
-search_radius = p.Results.radius;
 verbose = p.Results.verbose;
 save_loaded_data = p.Results.cache;
 additional_params = p.Results.params;
@@ -155,6 +152,7 @@ for i = 1:length(year_months)
         url = [baseUrl_spec fileName];
         package_name = 'spec';
     else
+        lonlat = sprintf('%s_%dm.mat', region, grid_resolution);
         fileName = sprintf('%s_%dm.%d', region, grid_resolution, current_ym);
         url = [baseUrl_gridded 'ww3.' fileName '.nc'];
         package_name = 'gridded';
@@ -166,14 +164,8 @@ for i = 1:length(year_months)
             if wind
                 location_info = spec.findNearestGridPoint(target_lon, target_lat);
             else
-                location_info = gridded.findNearestGridPoint(url, target_lon, target_lat, search_radius);
+                location_info = gridded.findNearestGridPoint(target_lon, target_lat, lonlat);
             end
-
-            % Validate location_info was properly created
-            if isempty(location_info) || ~isstruct(location_info)
-                error('Failed to find valid grid point for target location');
-            end
-
         end
 
         % Validate location info exists for data extraction
@@ -188,7 +180,7 @@ for i = 1:length(year_months)
         if save_loaded_data && exist(save_filename, 'file')
             loaded_data = load(save_filename);
             monthly_data = loaded_data.monthly_data;
-            % Store data using appropriate package function
+            % Store data using package function
             if wind
                 [all_time, all_wnd, all_wnddir, all_additional] = spec.storeMonthlyData(...
                     monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
@@ -202,7 +194,7 @@ for i = 1:length(year_months)
         % Load monthly data from server
         monthly_data = feval([package_name '.loadMonthlyData'], url, location_info, additional_params, verbose);
 
-        % Store data using appropriate package function
+        % Store data using package function
         if wind
             [all_time, all_wnd, all_wnddir, all_additional] = spec.storeMonthlyData(...
                 monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
@@ -224,7 +216,7 @@ for i = 1:length(year_months)
     end
 end
 
-%%% Calculate distance and display location info
+%% Calculate distance and display location info
 if ~isempty(location_info) && isstruct(location_info)
     distance_km = calculateDistance(target_lat, target_lon, location_info);
 
@@ -285,11 +277,11 @@ current_lon = location_info.actual_lon;
 current_lat = location_info.actual_lat;
 
 if wind
-    folder_name = sprintf('lon%.4fE_lat%.4fN_wind', current_lon, current_lat);
+    folder_name = sprintf('outputs/lon%.4fE_lat%.4fN_wind', current_lon, current_lat);
     filename = sprintf('%s/wind_data_%d_%.4fE_%.4fN.mat', ...
         folder_name, current_ym, current_lon, current_lat);
 else
-    folder_name = sprintf('lon%.4fE_lat%.4fN', current_lon, current_lat);
+    folder_name = sprintf('outputs/lon%.4fE_lat%.4fN', current_lon, current_lat);
     filename = sprintf('%s/wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', ...
         folder_name, current_ym, region, grid_resolution, current_lon, current_lat);
 end
