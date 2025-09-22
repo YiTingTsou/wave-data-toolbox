@@ -1,6 +1,6 @@
 # Wave Data Loading Toolbox
 
-A MATLAB toolbox for extracting and analysing wave and wind hindcast data from the CSIRO/CAWCR Wave Hindcast collection, with fast single‑point loading, optional monthly caching, and basic visualisation.
+A MATLAB toolbox for extracting and analysing wave and wind hindcast data from the CSIRO/CAWCR Wave Hindcast collection, with efficient single‑point loading, optional monthly caching, and basic visualisation.
 
 ## Quick start
 
@@ -46,7 +46,7 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 
 - The command window displays the target location and closest available grid point, plus distance between them
 - Wave and wind data are downloaded from the CAWCR Wave Hindcast via OPeNDAP
-- The complete dataset is saved to `output/` in both .mat and .csv formats, along with a metadata file in .mat format
+- The complete dataset is saved to `outputs/` in both .mat and .csv formats, along with a metadata file in .mat format
 - Probability distribution heatmap and directional wave rose are generated and saved
 - A figure confirms that wave and wind data are loaded close to the target location.
 
@@ -93,7 +93,7 @@ Tsou, Y.-T. (2025). Wave Data Loading Toolbox [Computer software]. Australian Ma
 
 ## License
 
-- **Code:** BSD 3‑Clause Licence (see [LICENSE](LICENSE)).
+- **Code:** BSD 3-Clause License (see [LICENSE](LICENSE)).
 - **Data:** Governed by the terms on the CSIRO collection page and the THREDDS services. Do not redistribute data files without checking those terms and contacts.
 
 ### Third-Party Components and Licenses
