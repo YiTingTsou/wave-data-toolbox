@@ -1,4 +1,4 @@
-function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
+function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 %WAVEHINDCASTANALYSIS Generate probability distribution heatmap for wave data
 %
 % Part of Load Wave Data Toolbox
@@ -78,24 +78,35 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, varargin)
 %   - Probability text is only shown for bins with >0.3% probability
 %
 
-p = inputParser;
-addRequired(p, 't02', @isnumeric);
-addRequired(p, 'hs', @isnumeric);
-addRequired(p, 'dataset_metadata', @isstruct);
-addParameter(p, 'bins', 15, @(x) isnumeric(x) && isscalar(x) && x > 0);
-addParameter(p, 'save_fig', true, @islogical);
-addParameter(p, 'text', true, @islogical);
-addParameter(p, 'xlabel', 'Mean Period T_{02} [s]', @ischar);
-addParameter(p, 'ylabel', 'Significant Wave Height H_s [m]', @ischar);
+% p = inputParser;
+% addRequired(p, 't02', @isnumeric);
+% addRequired(p, 'hs', @isnumeric);
+% addRequired(p, 'dataset_metadata', @isstruct);
+% addParameter(p, 'bins', 15, @(x) isnumeric(x) && isscalar(x) && x > 0);
+% addParameter(p, 'save_fig', true, @islogical);
+% addParameter(p, 'text', true, @islogical);
+% addParameter(p, 'xlabel', 'Mean Period T_{02} [s]', @ischar);
+% addParameter(p, 'ylabel', 'Significant Wave Height H_s [m]', @ischar);
+% 
+% parse(p, t02, hs, dataset_metadata, varargin{:});
 
-parse(p, t02, hs, dataset_metadata, varargin{:});
+arguments
+    t02 (:,1) double
+    hs (:,1) double
+    dataset_metadata struct
+    options.bins (1,1) double {mustBePositive} = 15
+    options.save_fig (1,1) logical = true
+    options.text (1,1) logical = true
+    options.xlabel (1,:) char = 'Mean Period T_{02} [s]'
+    options.ylabel (1,:) char = 'Significant Wave Height H_s [m]'
+end
 
 % Extract parsed values
-n_bins = p.Results.bins;
-save_figure = p.Results.save_fig;
-show_percentages = p.Results.text;
-x_label = p.Results.xlabel;
-y_label = p.Results.ylabel;
+n_bins = options.bins;
+save_figure = options.save_fig;
+show_percentages = options.text;
+x_label = options.xlabel;
+y_label = options.ylabel;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;

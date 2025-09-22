@@ -1,4 +1,4 @@
-function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, varargin)
+function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, options)
 %LOADWAVEDATA Load wave hindcast data from OPeNDAP server
 %
 % Part of Load Wave Data Toolbox
@@ -56,31 +56,60 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 %
 
 %% Parse input arguments
-p = inputParser;
-addRequired(p, 'target_lon', @(x) isnumeric(x) && isscalar(x) && x >= -180 && x <= 360);
-addRequired(p, 'target_lat', @(x) isnumeric(x) && isscalar(x) && x >= -90 && x <= 90);
-addRequired(p, 'start_year_month', @(x) isnumeric(x) && isscalar(x));
-addRequired(p, 'end_year_month', @(x) isnumeric(x) && isscalar(x));
-addParameter(p, 'region', 'aus', @(x) ischar(x) && ismember(x, {'aus', 'glob', 'pac'}));
-addParameter(p, 'resolution', 10, @(x) isnumeric(x) && isscalar(x) && x > 0);
-addParameter(p, 'verbose', true, @islogical);
-addParameter(p, 'cache', true, @islogical);
-addParameter(p, 'params', {}, @(x) iscell(x) || ischar(x));
-addParameter(p, 'wind', false, @islogical);
+% p = inputParser;
+% addRequired(p, 'target_lon', @(x) isnumeric(x) && isscalar(x) && x >= -180 && x <= 360);
+% addRequired(p, 'target_lat', @(x) isnumeric(x) && isscalar(x) && x >= -90 && x <= 90);
+% addRequired(p, 'start_year_month', @(x) isnumeric(x) && isscalar(x));
+% addRequired(p, 'end_year_month', @(x) isnumeric(x) && isscalar(x));
+% addParameter(p, 'region', 'aus', @(x) ischar(x) && ismember(x, {'aus', 'glob', 'pac'}));
+% addParameter(p, 'resolution', 10, @(x) isnumeric(x) && isscalar(x) && x > 0);
+% addParameter(p, 'verbose', true, @islogical);
+% addParameter(p, 'cache', true, @islogical);
+% addParameter(p, 'params', {}, @(x) iscell(x) || ischar(x));
+% addParameter(p, 'wind', false, @islogical);
+% 
+% parse(p, target_lon, target_lat, start_year_month, end_year_month, varargin{:});
+% 
+% % Extract parsed values
+% region = p.Results.region;
+% grid_resolution = p.Results.resolution;
+% verbose = p.Results.verbose;
+% save_loaded_data = p.Results.cache;
+% additional_params = p.Results.params;
+% wind = p.Results.wind;
 
-parse(p, target_lon, target_lat, start_year_month, end_year_month, varargin{:});
+arguments
+    % Required inputs
+    target_lon (1,1) double {mustBeGreaterThanOrEqual(target_lon,-180), mustBeLessThanOrEqual(target_lon,360)}
+    target_lat (1,1) double {mustBeGreaterThanOrEqual(target_lat,-90), mustBeLessThanOrEqual(target_lat,90)}
+    start_year_month (1,1) double
+    end_year_month (1,1) double
+
+    % Optional parameters
+    options.region (1,:) char {mustBeMember(options.region,{'aus','glob','pac'})} = 'aus'
+    options.resolution (1,1) double {mustBeMember(options.resolution, [4, 10]), mustBePositive} = 10
+    options.verbose (1,1) logical = true
+    options.cache (1,1) logical = true
+    options.params = {}
+    options.wind (1,1) logical = false
+end
 
 % Extract parsed values
-region = p.Results.region;
-grid_resolution = p.Results.resolution;
-verbose = p.Results.verbose;
-save_loaded_data = p.Results.cache;
-additional_params = p.Results.params;
-wind = p.Results.wind;
+region = options.region;
+grid_resolution = options.resolution;
+verbose = options.verbose;
+save_loaded_data = options.cache;
+additional_params = options.params;
+wind = options.wind;
 
 % Convert single string to cell array
 if ischar(additional_params)
     additional_params = {additional_params};
+end
+
+% Provided incorrect resolution input
+if strcmpi(region, 'glob')
+    grid_resolution = 24;
 end
 
 % Convert negative longitude to 0-360° range (degrees East)

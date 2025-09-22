@@ -1,4 +1,4 @@
-function mean_dir = waveRose(wave_directions, hs, dataset_metadata, varargin)
+function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 %WAVEROSE Generate a polar histogram (rose plot) of wave or wind directions and heights/speeds.
 %
 % Part of Load Wave Data Toolbox
@@ -59,18 +59,17 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, varargin)
 %   mean_dir = waveRose(current_dir, current_speed, dataset_metadata, 'save_fig', false, 'title', 'Current Direction');
 %
 
-p = inputParser;
-addRequired(p, 'wave_directions', @isnumeric); % Array of directions (degrees)
-addRequired(p, 'hs', @isnumeric);              % Array of wave heights (or wind speeds)
-addRequired(p, 'dataset_metadata', @isstruct); % Metadata structure
-addParameter(p, 'save_fig', true, @islogical); % Save figure to PNG
-addParameter(p, 'title', 'Wave', @ischar);     % Custom title prefix
-
-parse(p, wave_directions, hs, dataset_metadata, varargin{:});
+arguments
+    wave_directions (:,1) double          % Array of directions (degrees)
+    hs (:,1) double                       % Array of directions (degrees)
+    dataset_metadata struct               % Metadata structure
+    options.save_fig (1,1) logical = true % Save figure to PNG
+    options.title (1,:) char = 'Wave'     % Custom title prefix
+end
 
 % Extract parsed values
-save_figure = p.Results.save_fig;
-title_prefix = p.Results.title;
+save_figure = options.save_fig;
+title_prefix = options.title;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;

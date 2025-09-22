@@ -47,7 +47,7 @@ package_dir = fileparts(current_file_path);
 
 % Plot gridded locations
 for i = 1:length(gridArray)
-    lonlat_info_file = fullfile(package_dir, '+gridded', gridArray{i});
+    lonlat_info_file = fullfile(package_dir, '+gridded', 'lonlat', gridArray{i});
     load(lonlat_info_file, 'geo_coord'); % geo_coord.grid_lon, geo_coord.grid_lat
     scatter(geo_coord.grid_lon, geo_coord.grid_lat, 20, 'filled', ...
         MarkerFaceAlpha = 0.7, ...
@@ -78,8 +78,13 @@ ylabel('Latitude [°N]');
 legend;
 
 % Set axis limits for better focus
-xlim([target_lon - 5, target_lon + 5]);
-ylim([target_lat - 3, target_lat + 3]);
+x_min = max(0, target_lon - 5);
+x_max = min(360, target_lon + 5);
+xlim([x_min, x_max]);
+
+y_min = max(-85, target_lat - 3);
+y_max = min(85, target_lat + 3);
+ylim([y_min, y_max]);
 
 hold off;
 end

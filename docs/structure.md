@@ -33,4 +33,5 @@ The following helper functions support the main wave and wind data loading workf
 Folder structure:
 
 - `+gridded/`: Contains functions for loading and processing wave data.
+  - `lonlat/`: Pre-loaded longitude, latitude and available wave data locations
 - `+spec/`: Contains functions for loading and processing wind data.

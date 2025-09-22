@@ -1,5 +1,5 @@
 function [location_info] = findNearestGridPoint(target_lon, target_lat, lonlat)
-%FINDNEARESTGRIDPOINT Find the nearest valid grid point in wave data
+%FINDNEARESTGRIDPOINT Find the nearest valid grid point in the wave data with a window size of 5 degrees
 %
 % Part of Load Wave Data Toolbox
 % Author: Yi-Ting Tsou
@@ -28,30 +28,49 @@ try
     % Get the path to this function's directory
     current_file_path = mfilename('fullpath');
     package_dir = fileparts(current_file_path);
-    lonlat_info_file = fullfile(package_dir, lonlat);
+    lonlat_info_file = fullfile(package_dir, 'lonlat', lonlat);
     % load station info
     load(lonlat_info_file, 'geo_coord');
 
-    longitude = geo_coord.longitude;
-    latitude = geo_coord.latitude;
+    longitude = geo_coord.longitude;    % [0, 360]
+    latitude = geo_coord.latitude;     % [-90, 90]
     valid_lon_idx = geo_coord.valid_lon_idx;
     valid_lat_idx = geo_coord.valid_lat_idx;
 
-    distances = sqrt((longitude(valid_lon_idx) - target_lon).^2 + (latitude(valid_lat_idx) - target_lat).^2);
-    [~, min_idx] = min(distances);
-    ocean_lon_idx = valid_lon_idx(min_idx);
-    ocean_lat_idx = valid_lat_idx(min_idx);
+    % Adjustable search window (degrees)
+    window_deg = 5; 
 
-    % Store location info (using absolute indices)
+    % Compute differences with wrap-around for longitude
+    lon_diff = mod(longitude(valid_lon_idx) - target_lon + 180, 360) - 180;
+    lat_diff = latitude(valid_lat_idx) - target_lat;
+
+    % Apply bounding box filter
+    mask = (abs(lat_diff) <= window_deg) & (abs(lon_diff) <= window_deg);
+
+    % If no points in the window, fallback to all
+    if ~any(mask)
+        mask = true(size(valid_lon_idx));
+    end
+
+    cand_lon_idx = valid_lon_idx(mask);
+    cand_lat_idx = valid_lat_idx(mask);
+
+    % Compute approximate distance in degrees (fast)
+    distances = sqrt( (longitude(cand_lon_idx) - target_lon).^2 + ...
+                      (latitude(cand_lat_idx)  - target_lat).^2 );
+
+    [~, min_local]  = min(distances);
+    ocean_lon_idx   = cand_lon_idx(min_local);
+    ocean_lat_idx   = cand_lat_idx(min_local);
+
+    % Store location info
     location_info.target_lon = target_lon;
     location_info.target_lat = target_lat;
     location_info.actual_lon = longitude(ocean_lon_idx);
     location_info.actual_lat = latitude(ocean_lat_idx);
-    location_info.lon_idx = ocean_lon_idx;
-    location_info.lat_idx = ocean_lat_idx;
+    location_info.lon_idx    = ocean_lon_idx;
+    location_info.lat_idx    = ocean_lat_idx;
 
 catch ME
     error('Failed to find nearest grid point: %s', ME.message);
-end
-
 end
