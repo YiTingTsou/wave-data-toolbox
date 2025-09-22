@@ -93,7 +93,7 @@ Tsou, Y.-T. (2025). Wave Data Loading Toolbox [Computer software]. Australian Ma
 
 ## License
 
-- **Code:** BSD 3-Clause License (see [LICENSE](LICENSE)).
+- **Code:** MIT License (see [LICENSE](LICENSE)).
 - **Data:** Governed by the terms on the CSIRO collection page and the THREDDS services. Do not redistribute data files without checking those terms and contacts.
 
 ### Third-Party Components and Licenses
