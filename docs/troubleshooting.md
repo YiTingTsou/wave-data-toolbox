@@ -3,7 +3,7 @@
 ## Common issues and fixes
 
 - **Network timeouts**. Remote server busy. Retry later or reduce concurrency.
-- **Land point selected**. The tool automatically searches for the nearest valid grid cell.
+- **Land point selection**: Searches for the nearest valid grid cell. Consider using other regions, resolutions, or coverage for a closer available point.
 - **Parameter not found**. Inspect file variables with `ncdisp` or adjust `additional_params` names.
   > If the issue is due to the parameter name being different in the early release dataset, please open an issue to request support.
 - **Large datasets**. Enable `save_loaded_data = true` for monthly caching to avoid memory pressure.
