@@ -80,12 +80,12 @@ _Note: `wave_data` or `wind_data` is saved to the `outputs/` data retrieval loca
   - `t02`: spectral density second frequency moment [s]
   - `hs`: significant wave height [m]
   - `dir`: wave from direction [degrees]
-  - Additional columns if specified in 'params' input (e.g., `t0m1`, `fp`, `dpm`)
+  - Additional columns if specified in `params` input (e.g., `t0m1`, `fp`, `dpm`)
 - **wind_data** - Table containing time series wave parameters with columns:
   - `time`: time vector
   - `wnd`: wind speed at 10m [m/s]
   - `wnddir`: wind from direction [degrees]
-  - Additional columns if specified in 'params' input
+  - Additional columns if specified in `params` input
 - **dataset_metadata** - Structure with extraction location info and processing metadata:
   - `target_lon` - Target longitude requested [degrees E]
   - `target_lat` - Target latitude requested [degrees N]
