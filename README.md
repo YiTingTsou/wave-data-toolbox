@@ -63,11 +63,15 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 
 **Key resources:**
 
-- [Collection page](https://data.csiro.au/collection/csiro:39819) - terms, acknowledgement, and reuse notes
-- THREDDS catalog
-  - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - direct data access for wave data
-  - [spec](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - direct data access for wind data
-- [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/) - how‑to for browsing THREDDS catalogs and constructing OPeNDAP URLs
+- Dataset overview:
+  - [CAWCR Wave Hindcast - Aggregated Collection](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute) - Aggregated global wave hindcast dataset (1979–2010) from CAWCR, providing gridded wave and wind fields
+- Terms and reuse:
+  - [Collection page](https://data.csiro.au/collection/csiro:39819) - terms, acknowledgement, and reuse notes
+- Direct data access (THREDDS):
+  - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - wave data
+  - [spec](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - wind data
+- Access guide:
+  - [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/) - instructions for browsing THREDDS catalogues and constructing OPeNDAP URLs
 
 **Important:** This toolbox accesses data via OPeNDAP for research use. If you plan to redistribute data files, please review the [collection page](https://data.csiro.au/collection/csiro:39819) for current terms and contact information.
 
@@ -82,7 +86,8 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 **Dataset citation:**
 
 ```
-Durrant, Thomas; Hemer, Mark; Smith, Grant; Trenham, Claire; & Greenslade, Diana (2019): CAWCR Wave Hindcast - Aggregated Collection. v5. CSIRO. Service Collection. http://hdl.handle.net/102.100.100/137152?index=1
+Durrant, Thomas ; Hemer, Mark ; Smith, Grant ; Trenham, Claire ; Greenslade, Diana (2020): CAWCR Wave Hindcast - Aggregated Collection. v5. Commonwealth Scientific and Industrial Research Organisation.dataset.
+http://hdl.handle.net/102.100.100/137152?index=1
 ```
 
 **Toolbox citation:**

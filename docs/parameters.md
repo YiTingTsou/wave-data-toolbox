@@ -20,7 +20,9 @@ For step‑by‑step workflows and examples, see [Usage Guide](usage.md).
 
 ### 1.2 Description
 
-This function loads CAWCR Wave Hindcast data for a specified location and time range. It supports the optional inclusion of additional variables and caching to reduce repeated downloads. Wave and wind data are stored in different catalogues in CAWCR; the function can retrieved only one catalogue per call:
+This function loads [CAWCR Wave Hindcast](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute) data for a specified location and time range. It supports the optional inclusion of additional variables and caching to reduce repeated downloads.
+
+Wave and wind data are stored in different catalogues in CAWCR; the function can retrieved only one catalogue per call:
 
 - Wave data: retrieved from the `gridded` catalogue
 - Wind data: retrieved from the `spec` catalogue

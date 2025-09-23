@@ -38,7 +38,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
 ```
 
-### 1.4 Advanced full options for loading wave data
+### 1.4 Advanced full options for loading wind data
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
@@ -66,6 +66,7 @@ info = ncinfo(url); {info.Variables.Name}' % list parameter names
 
 - `wave_data` or `wind_data`: table of time‑series variables suitable for plotting and statistics
 - `dataset_metadata`: struct describing extraction and processing
+- Saved monthly data when `cache` is set to true.
 
 ## 2. Analysis functions
 
