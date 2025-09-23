@@ -63,15 +63,12 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 
 **Key resources:**
 
-- Dataset overview:
-  - [CAWCR Wave Hindcast - Aggregated Collection](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute) - Aggregated global wave hindcast dataset (1979–2010) from CAWCR, providing gridded wave and wind fields
-- Terms and reuse:
-  - [Collection page](https://data.csiro.au/collection/csiro:39819) - terms, acknowledgement, and reuse notes
+- Dataset overview: Aggregated global wave hindcast dataset from [CAWCR](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute), providing gridded wave and wind fields
+- Terms and reuse: See [Collection page](https://data.csiro.au/collection/csiro:39819) for terms of use, acknowledgement, and reuse notes.
 - Direct data access (THREDDS):
-  - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - wave data
-  - [spec](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) - wind data
-- Access guide:
-  - [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/) - instructions for browsing THREDDS catalogues and constructing OPeNDAP URLs
+  - Wave data - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html)
+  - Wind data - [spec](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html)
+- Access guide: [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/)
 
 **Important:** This toolbox accesses data via OPeNDAP for research use. If you plan to redistribute data files, please review the [collection page](https://data.csiro.au/collection/csiro:39819) for current terms and contact information.
 
