@@ -12,6 +12,7 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 %   waveRose(wave_directions, hs, dataset_metadata)
 %   waveRose(wave_directions, hs, dataset_metadata, 'save_fig', true)
 %   waveRose(wave_directions, hs, dataset_metadata, 'title', 'Wind Direction')
+%   waveRose(wave_directions, hs, dataset_metadata, 'rootName', 'bassStraight')
 %   mean_dir = waveRose(wave_directions, hs, dataset_metadata)
 %   mean_dir = waveRose(wave_directions, hs, dataset_metadata, 'save_fig', false, 'title', 'Current Direction')
 %
@@ -27,6 +28,7 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 % OPTIONAL PARAMETERS (Name-Value Pairs):
 %   'save_fig'        - Logical: Save figure to PNG file (default: true)
 %   'title'           - String: Custom title prefix (default: 'Wave')
+%   'rootName'        - String: User option to define a custom root name for saving the figure (default: empty)
 %
 % OUTPUT:
 %   mean_dir          - Circular mean direction in degrees (0-360°)
@@ -39,7 +41,7 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 %     * Probability normalization (percent)
 %     * Circular mean direction statistic
 %     * Location and time period in title
-%   - Optionally saves high-resolution PNG file to 'output' directory
+%   - Optionally saves high-resolution PNG file to directory
 %
 % FEATURES:
 %   - Oceanographic convention (North up, clockwise positive)
@@ -59,17 +61,20 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 %   mean_dir = waveRose(current_dir, current_speed, dataset_metadata, 'save_fig', false, 'title', 'Current Direction');
 %
 
+%% Parse input arguments
 arguments
     wave_directions (:,1) double          % Array of directions (degrees)
     hs (:,1) double                       % Array of directions (degrees)
     dataset_metadata struct               % Metadata structure
     options.save_fig (1,1) logical = true % Save figure to PNG
-    options.title (1,:) char = 'Wave'     % Custom title prefix
+    options.title (1,:) string = 'Wave'     % Custom title prefix
+    options.rootName (1,:) string = {};
 end
 
-% Extract parsed values
+% Extract option values
 save_figure = options.save_fig;
 title_prefix = options.title;
+rootName = options.rootName;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;
@@ -92,7 +97,7 @@ if strcmpi(title_prefix, 'wave')
 elseif strcmpi(title_prefix, 'wind')
     hightedges = [0 1.6 5.5 10.8 17.2 24.5 Inf];
 else
-    hightedges = round(linspace(0, max(hs_clean), 7),1); 
+    hightedges = round(linspace(0, max(hs_clean), 7),1);
 end
 
 % 2D histogram: direction vs. height
@@ -182,11 +187,19 @@ set(gcf,'Name', figure_name,'units','normalized','outerposition',[1/2 1/4 1/3 1/
 
 %% Save the figure if requested
 if save_figure
-    if ~exist('outputs', 'dir')
-        mkdir('outputs')
+    % Create output directory if it does not exist
+    if ~exist(fullfile('outputs',dataset_metadata.filename), 'dir')
+        mkdir(fullfile('outputs',dataset_metadata.filename))
     end
     title_prefix = lower(title_prefix);
-    filename = sprintf('%sRose_%d_%d_%.4fE_%.4fN', strrep(title_prefix, ' ', ''), start_year_month, end_year_month, actual_lon, actual_lat);
-    print(gcf, '-dpng', '-r300', fullfile('outputs', [filename '.png']))
+    title_prefix = strrep(title_prefix, ' ', '');
+    % Construct the output filename, optionally with a custom root name
+    if isempty(rootName)
+        filename = sprintf('%sRose_%d_%d_%.4fE_%.4fN', title_prefix, start_year_month, end_year_month, actual_lon, actual_lat);
+    else
+        filename = sprintf('%s_%sRose_%d_%d_%.4fE_%.4fN',rootName, title_prefix, start_year_month, end_year_month, actual_lon, actual_lat);
+    end
+    % Save the current figure as a PNG (300 DPI) in the output directory
+    print(gcf, '-dpng', '-r300', fullfile('outputs',dataset_metadata.filename, [filename '.png']))
 end
 end

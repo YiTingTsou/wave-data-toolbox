@@ -19,7 +19,7 @@ addpath utils\
 target_lon = 145.1768; % Longitude [degrees E]
 target_lat = -40.026;  % Latitude [degrees N]
 start_year_month = 201501; % Start YearMonth (YYYYMM)
-end_year_month = 201503;   % End YearMonth (YYYYMM)
+end_year_month = 201612;   % End YearMonth (YYYYMM)
 
 %% Load Wave Data
 [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);
@@ -27,6 +27,7 @@ end_year_month = 201503;   % End YearMonth (YYYYMM)
 % Wave Data Analysis and Visualization
 % Probability Distribution Heatmap
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
+
 % Wave Direction Distribution
 wave_mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 

@@ -56,37 +56,15 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 %
 
 %% Parse input arguments
-% p = inputParser;
-% addRequired(p, 'target_lon', @(x) isnumeric(x) && isscalar(x) && x >= -180 && x <= 360);
-% addRequired(p, 'target_lat', @(x) isnumeric(x) && isscalar(x) && x >= -90 && x <= 90);
-% addRequired(p, 'start_year_month', @(x) isnumeric(x) && isscalar(x));
-% addRequired(p, 'end_year_month', @(x) isnumeric(x) && isscalar(x));
-% addParameter(p, 'region', 'aus', @(x) ischar(x) && ismember(x, {'aus', 'glob', 'pac'}));
-% addParameter(p, 'resolution', 10, @(x) isnumeric(x) && isscalar(x) && x > 0);
-% addParameter(p, 'verbose', true, @islogical);
-% addParameter(p, 'cache', true, @islogical);
-% addParameter(p, 'params', {}, @(x) iscell(x) || ischar(x));
-% addParameter(p, 'wind', false, @islogical);
-% 
-% parse(p, target_lon, target_lat, start_year_month, end_year_month, varargin{:});
-% 
-% % Extract parsed values
-% region = p.Results.region;
-% grid_resolution = p.Results.resolution;
-% verbose = p.Results.verbose;
-% save_loaded_data = p.Results.cache;
-% additional_params = p.Results.params;
-% wind = p.Results.wind;
-
 arguments
     % Required inputs
     target_lon (1,1) double {mustBeGreaterThanOrEqual(target_lon,-180), mustBeLessThanOrEqual(target_lon,360)}
     target_lat (1,1) double {mustBeGreaterThanOrEqual(target_lat,-90), mustBeLessThanOrEqual(target_lat,90)}
-    start_year_month (1,1) double
-    end_year_month (1,1) double
+    start_year_month (1,1) double {mustBeValidYearMonth}
+    end_year_month (1,1) double {mustBeValidYearMonth}
 
     % Optional parameters
-    options.region (1,:) char {mustBeMember(options.region,{'aus','glob','pac'})} = 'aus'
+    options.region (1,:) string {mustBeMember(options.region,{'aus','glob','pac'})} = 'aus'
     options.resolution (1,1) double {mustBeMember(options.resolution, [4, 10]), mustBePositive} = 10
     options.verbose (1,1) logical = true
     options.cache (1,1) logical = true
@@ -203,11 +181,11 @@ for i = 1:length(year_months)
         end
 
         % Generate save filename for caching
-        save_filename = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution);
+        [folder_name, monthly_filename] = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution);
 
         % Try to load cached data first
-        if save_loaded_data && exist(save_filename, 'file')
-            loaded_data = load(save_filename);
+        if save_loaded_data && exist(monthly_filename, 'file')
+            loaded_data = load(monthly_filename);
             monthly_data = loaded_data.monthly_data;
             % Store data using package function
             if wind
@@ -234,7 +212,7 @@ for i = 1:length(year_months)
 
         % Save monthly data to cache
         if save_loaded_data
-            feval([package_name '.saveMonthlyData'], monthly_data, save_filename, additional_params, verbose);
+            feval([package_name '.saveMonthlyData'], monthly_data, monthly_filename, additional_params, verbose);
         end
 
     catch ME
@@ -285,10 +263,10 @@ if ~isempty(all_time)
 
     % Save complete dataset using appropriate package function
     if wind
-        [dataset_metadata] = spec.saveCompleteDataset(wave_data, location_info, ...
+        [dataset_metadata] = spec.saveCompleteDataset(folder_name, wave_data, location_info, ...
             start_year_month, end_year_month, additional_params, distance_km, verbose);
     else
-        [dataset_metadata] = gridded.saveCompleteDataset(wave_data, location_info, ...
+        [dataset_metadata] = gridded.saveCompleteDataset(folder_name, wave_data, location_info, ...
             start_year_month, end_year_month, additional_params, distance_km, verbose, region, grid_resolution);
     end
 
@@ -299,7 +277,7 @@ end
 end
 
 %% Helper function for generating cache filenames
-function filename = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution)
+function [folder_name, filename] = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution)
 % Use actual coordinates if available, otherwise use target coordinates
 
 current_lon = location_info.actual_lon;
@@ -307,11 +285,11 @@ current_lat = location_info.actual_lat;
 
 if wind
     folder_name = sprintf('outputs/lon%.4fE_lat%.4fN_wind', current_lon, current_lat);
-    filename = sprintf('%s/wind_data_%d_%.4fE_%.4fN.mat', ...
+    filename = sprintf('%s/monthly_files/wind_data_%d_%.4fE_%.4fN.mat', ...
         folder_name, current_ym, current_lon, current_lat);
 else
     folder_name = sprintf('outputs/lon%.4fE_lat%.4fN', current_lon, current_lat);
-    filename = sprintf('%s/wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', ...
+    filename = sprintf('%s/monthly_files/wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', ...
         folder_name, current_ym, region, grid_resolution, current_lon, current_lat);
 end
 end
@@ -343,4 +321,15 @@ catch
     c = 2 * atan2(sqrt(a), sqrt(1-a));
     distance_km = R * c;
 end
+end
+
+%% Helper function to check input is valid YYYYMM
+ function mustBeValidYearMonth(value)
+    if ~isscalar(value) || ~isnumeric(value)
+        error('Year-month must be a numeric scalar.');
+    end
+    month = mod(value, 100);
+    if month < 1 || month > 12
+        error('Invalid month in year-month input: %d. Month must be between 01 and 12.', value);
+    end
 end

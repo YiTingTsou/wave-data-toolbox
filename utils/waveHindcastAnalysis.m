@@ -6,7 +6,7 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 % Australian Maritime College | University of Tasmania
 %
 % Creates a bi-variate probability distribution heatmap showing the joint
-% relationship between any two wave parameters (commonly wave period and 
+% relationship between any two wave parameters (commonly wave period and
 % significant wave height, but can be any pair of wave variables).
 % The visualization helps identify dominant wave conditions and their
 % frequency of occurrence at the specified location and time period.
@@ -17,6 +17,7 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 %   waveHindcastAnalysis(t02, hs, dataset_metadata, 'save_fig', false)
 %   waveHindcastAnalysis(t02, hs, dataset_metadata, 'text', false)
 %   waveHindcastAnalysis(t02, hs, dataset_metadata, 'bins', 25, 'save_fig', true)
+%   waveHindcastAnalysis(t02, hs, dataset_metadata, 'bins', 25, 'rootName', 'bassStraight')
 %
 % INPUTS:
 %   t02               - Numeric array of first wave parameter (e.g., wave periods) [units depend on data]
@@ -33,15 +34,16 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 %   'bins'            - Number of bins for each dimension (default: 15)
 %   'save_fig'        - Logical: Save figure to PNG file (default: true)
 %   'text'            - Logical: Display percentage values on heatmap (default: true)
-%   'xlabel'          - String: X-axis label (default: 'Mean Period T_{02} [s]')
+%   'xlabel'          - String: X-axis label (default: 'Period T_{02} [s]')
 %   'ylabel'          - String: Y-axis label (default: 'Significant Wave Height H_s [m]')
+%   'rootName'        - String: User option to define a custom root name for saving the figure (default: empty)
 %
 % OUTPUT:
 %   - Displays bi-variate probability heatmap with:
 %     * Probability values as percentage text overlay (>1% only)
 %     * Location and time period in title
 %     * Probability density colorbar
-%   - Optionally saves high-resolution PNG file to 'output' directory
+%   - Optionally saves high-resolution PNG file to directory
 %
 % FEATURES:
 %   - Automatic handling of missing data (NaN removal)
@@ -53,20 +55,20 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 % EXAMPLE:
 %   % Basic usage with default settings (15 bins, save figure, show text)
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
-%   
+%
 %   % Custom number of bins
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, 'bins', 20);
-%   
+%
 %   % Clean heatmap without percentage text
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, 'text', false);
-%   
+%
 %   % Display only (no file saving)
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, 'save_fig', false);
-%   
+%
 %   % Multiple options combined
 %   waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
 %                       'bins', 25, 'save_fig', true, 'text', false);
-%   
+%
 %   % Custom axis labels for different wave parameters
 %   waveHindcastAnalysis(wave_data.dir, wave_data.hs, dataset_metadata, ...
 %                       'xlabel', 'Wave Direction [degrees]', 'ylabel', 'Significant Wave Height H_s [m]');
@@ -78,18 +80,7 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 %   - Probability text is only shown for bins with >0.3% probability
 %
 
-% p = inputParser;
-% addRequired(p, 't02', @isnumeric);
-% addRequired(p, 'hs', @isnumeric);
-% addRequired(p, 'dataset_metadata', @isstruct);
-% addParameter(p, 'bins', 15, @(x) isnumeric(x) && isscalar(x) && x > 0);
-% addParameter(p, 'save_fig', true, @islogical);
-% addParameter(p, 'text', true, @islogical);
-% addParameter(p, 'xlabel', 'Mean Period T_{02} [s]', @ischar);
-% addParameter(p, 'ylabel', 'Significant Wave Height H_s [m]', @ischar);
-% 
-% parse(p, t02, hs, dataset_metadata, varargin{:});
-
+%% Parse input arguments
 arguments
     t02 (:,1) double
     hs (:,1) double
@@ -97,16 +88,18 @@ arguments
     options.bins (1,1) double {mustBePositive} = 15
     options.save_fig (1,1) logical = true
     options.text (1,1) logical = true
-    options.xlabel (1,:) char = 'Mean Period T_{02} [s]'
-    options.ylabel (1,:) char = 'Significant Wave Height H_s [m]'
+    options.xlabel (1,:) string = 'Period T_{02} [s]'
+    options.ylabel (1,:) string = 'Significant Wave Height H_s [m]'
+    options.rootName (1,:) string = {};
 end
 
-% Extract parsed values
+% Extract option values
 n_bins = options.bins;
 save_figure = options.save_fig;
 show_percentages = options.text;
 x_label = options.xlabel;
 y_label = options.ylabel;
+rootName = options.rootName;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;
@@ -149,29 +142,29 @@ ylabel(cbh, 'Probability Density', 'FontSize', 14)
 xlabel(x_label)
 ylabel(y_label)
 title({'Bi-Variate Probability Distribution'; ...
-       sprintf('%.4f°E, %.4f°N from %d to %d', actual_lon, actual_lat, start_year_month, end_year_month)}, ...
-       'FontSize', 20);
+    sprintf('%.4f°E, %.4f°N from %d to %d', actual_lon, actual_lat, start_year_month, end_year_month)}, ...
+    'FontSize', 20);
 
 % Add probability values as text on each cell
 if show_percentages
-hold on
-for i = 1:length(hs_centers)
-    for j = 1:length(t0m1_centers)
-        if probability(i,j) > 0.003 % Only show text the probabilities is greater then 0.3%
-            % Choose text color based on background intensity
-            if probability(i,j) > max(probability(:))*6/7
-                text_color = 'white';
-            else
-                text_color = 'black';
+    hold on
+    for i = 1:length(hs_centers)
+        for j = 1:length(t0m1_centers)
+            if probability(i,j) > 0.003 % Only show text the probabilities is greater then 0.3%
+                % Choose text color based on background intensity
+                if probability(i,j) > max(probability(:))*6/7
+                    text_color = 'white';
+                else
+                    text_color = 'black';
+                end
+
+                % Display probability as percentage
+                text(t0m1_centers(j), hs_centers(i), sprintf('%.1f%%', probability(i,j)*100), ...
+                    'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', ...
+                    'FontSize', 8, 'Color', text_color, 'FontWeight', 'bold');
             end
-            
-            % Display probability as percentage
-            text(t0m1_centers(j), hs_centers(i), sprintf('%.1f%%', probability(i,j)*100), ...
-                'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', ...
-                'FontSize', 8, 'Color', text_color, 'FontWeight', 'bold');
         end
     end
-end
 end
 
 % Improve axis appearance
@@ -182,11 +175,19 @@ axis tight
 set(gcf,'Name','Bi-Variate Probability Distribution','units','normalized','outerposition',[1/8 1/4 1/3 1/2])
 
 %% Save the figure
+% Save the figure as a high-resolution PNG if requested
 if save_figure
-    if ~exist('outputs', 'dir')
-            mkdir('outputs')
+    % Create output directory if it does not exist
+    if ~exist(fullfile('outputs',dataset_metadata.filename), 'dir')
+        mkdir(fullfile('outputs',dataset_metadata.filename))
     end
-    filename = sprintf('biVariate_%d_%d_%.4fE_%.4fN', start_year_month, end_year_month, actual_lon, actual_lat);
-    print(gcf, '-dpng', '-r300', fullfile('outputs', [filename '.png']))
+    % Construct the output filename, optionally with a custom root name
+    if isempty(rootName)
+        filename = sprintf('biVariate_%d_%d_%.4fE_%.4fN', start_year_month, end_year_month, actual_lon, actual_lat);
+    else
+        filename = sprintf('%s_biVariate_%d_%d_%.4fE_%.4fN',rootName, start_year_month, end_year_month, actual_lon, actual_lat);
+    end
+    % Save the current figure as a PNG (300 DPI) in the output directory
+    print(gcf, '-dpng', '-r300', fullfile('outputs', dataset_metadata.filename, [filename '.png']))
 end
 end

@@ -96,6 +96,7 @@ _Note: `wave_data` or `wind_data` is saved automatically to the `outputs/` folde
   - `end_year_month` - End date in YYYYMM format
   - `additional_params` - Cell array of additional parameters loaded
   - `idx` - Index used for data extraction
+  - `filename` - Save the folder name
   - Only for wave data:
     - `region` - Dataset region ('aus', 'glob', or 'pac')
     - `grid_resolution` - Grid resolution [arcminutes]
@@ -119,13 +120,14 @@ Create a bi‑variate probability distribution heatmap from paired series.
 
 ### 2.3 Arguments
 
-| Parameter          | Type      | Default                             | Description                             |
-| ------------------ | --------- | ----------------------------------- | --------------------------------------- |
-| `x_param`          | numeric   | —                                   | First parameter (plotted on x-axis)     |
-| `y_param`          | numeric   | —                                   | Second parameter (plotted on y-axis)    |
-| `dataset_metadata` | structure | —                                   | Dataset information from `loadWaveData` |
-| `bins`             | numeric   | `15`                                | Number of bins for each dimension       |
-| `save_fig`         | logical   | `true`                              | Save figure to PNG file                 |
-| `text`             | logical   | `true`                              | Display percentage values on heatmap    |
-| `xlabel`           | string    | `'Mean Period T_{02} [s]'`          | X-axis label                            |
-| `ylabel`           | string    | `'Significant Wave Height H_s [m]'` | Y-axis label                            |
+| Parameter          | Type      | Default                             | Description                                                    |
+| ------------------ | --------- | ----------------------------------- | -------------------------------------------------------------- |
+| `x_param`          | numeric   | —                                   | First parameter (plotted on x-axis)                            |
+| `y_param`          | numeric   | —                                   | Second parameter (plotted on y-axis)                           |
+| `dataset_metadata` | structure | —                                   | Dataset information from `loadWaveData`                        |
+| `bins`             | numeric   | `15`                                | Number of bins for each dimension                              |
+| `save_fig`         | logical   | `true`                              | Save figure to PNG file                                        |
+| `text`             | logical   | `true`                              | Display percentage values on heatmap                           |
+| `xlabel`           | string    | `'Mean Period T_{02} [s]'`          | X-axis label                                                   |
+| `ylabel`           | string    | `'Significant Wave Height H_s [m]'` | Y-axis label                                                   |
+| `rootName`         | string    | {}                                  | User option to define a custom root name for saving the figure |

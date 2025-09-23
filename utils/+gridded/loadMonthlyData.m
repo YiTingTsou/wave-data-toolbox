@@ -29,28 +29,51 @@ function [monthly_data] = loadMonthlyData(url, location_info, additional_params,
 try
     % Read time data for current month
     time_month = ncread(url, 'time');
-    num_time_month = length(time_month);
+    num_time_month = numel(time_month);
 
     % Absolute indices for data extraction
     abs_lon_idx = location_info.lon_idx;
     abs_lat_idx = location_info.lat_idx;
 
     % List all required variable names
-    var_names = {'t02', 'hs', 'dir'};
+    var_names = {'t02','hs','dir'};
     if ~isempty(additional_params)
+        if isstring(additional_params) || ischar(additional_params)
+            additional_params = cellstr(additional_params);
+        end
         var_names = [var_names, additional_params(:)'];
     end
 
+    fallbacks = struct('t0m1', {{'tm0m1'}}, ...
+                       't01',  {{'t'}});
+
+    info = ncinfo(url);
+    available = {info.Variables.Name};
+
     data_struct = struct();
-    for k = 1:length(var_names)
+    for k = 1:numel(var_names)
+        req = var_names{k};
+        resolved = pick_available(req, fallbacks, available);
+
+        if isempty(resolved)
+            if verbose
+                fprintf('  Warning: Variable "%s" not found and no fallback available. Filling NaNs.\n', req);
+            end
+            data_struct.(req) = NaN(num_time_month, 1);
+            continue
+        end
+
         try
-            vdata = squeeze(ncread(url, var_names{k}, [abs_lon_idx, abs_lat_idx, 1], [1, 1, num_time_month]));
-            data_struct.(var_names{k}) = vdata(:); % Ensure column vector
+            vdata = squeeze(ncread(url, resolved, [abs_lon_idx, abs_lat_idx, 1], [1, 1, num_time_month]));
+            data_struct.(req) = vdata(:);
+            if verbose && ~strcmp(resolved, req)
+                fprintf('  Info: Using fallback "%s" for requested "%s".\n', resolved, req);
+            end
         catch ME_param
             if verbose
-                fprintf('  Warning: Failed to load parameter %s - %s\n', var_names{k}, ME_param.message);
+                fprintf('  Warning: Failed to load "%s" (resolved from "%s") - %s\n', resolved, req, ME_param.message);
             end
-            data_struct.(var_names{k}) = NaN(num_time_month, 1);
+            data_struct.(req) = NaN(num_time_month, 1);
         end
     end
 
@@ -61,5 +84,24 @@ try
 catch ME
     error('Failed to load monthly data: %s', ME.message);
 end
+end  
 
+%% Helper function to return first available variable among [requested, fallbacks{requested}...]
+function resolved = pick_available(requested, fallbacks, available)
+
+    candidates = {requested};
+    if isfield(fallbacks, requested)
+        fb = fallbacks.(requested);
+        if isstring(fb) || ischar(fb), fb = cellstr(fb); end
+        candidates = [candidates, fb(:)'];
+    end
+
+    resolved = '';
+    for i = 1:numel(candidates)
+        if any(strcmp(available, candidates{i}))
+            resolved = candidates{i};
+            return;
+        end
+    end
 end
+

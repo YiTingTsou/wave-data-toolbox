@@ -88,7 +88,8 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     'save_fig', false, ...
     'text', false, ...            % Display percentage values
     'xlabel', 'X-axis Label', ...
-    'ylabel', 'Y-axis Label');
+    'ylabel', 'Y-axis Label', ...
+    'rootName','bassStraight');   % Saved figure names will begin with 'bassStraight'
 ```
 
 ### 2.2 `waveRose`
@@ -99,8 +100,10 @@ Generate polar histogram (rose plot) showing the joint probability distribution 
 % Basic usage
 mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 
-% Display figure only
-waveRose(wave_data.dir, wave_data.hs, dataset_metadata, 'save_fig', false);
+% Advanced full options for using it as wave rose
+waveRose(wave_data.dir, wave_data.hs, dataset_metadata, ...
+    'save_fig', false, ...
+    'rootName','bassStraight');
 
 % Wind rose
 waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, 'title', 'Wind');
@@ -113,13 +116,13 @@ waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, 'title', 'Wind');
 <td width="50%">
 
 `waveHindcastAnalysis`
-![Bi-Variate Probability Distribution](figures/biVariate_201501_201512_145.1668E_-40.0000N.png)
+![Bi-Variate Probability Distribution](figures/biVariate_201501_201612_145.1668E_-40.0000N.png)
 
 </td>
 <td width="50%">
 
 `waveRose`
-![Wind Rose](figures/windRose_201501_201512_145.3300E_-39.8700N.png)
+![Wind Rose](figures/waveRose_201501_201612_145.1668E_-40.0000N.png)
 
 </td>
 </tr>

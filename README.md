@@ -104,7 +104,6 @@ This project includes the following third-party component:
 
 - **customcolormap.m**  
   Copyright (c) 2018, Víctor Martínez-Cagigal  
-  Licensed under the BSD 3-Clause License.  
   See [`BSD_VictorMartinezCagigal`](/third_party_licenses/BSD_VictorMartinezCagigal.txt) for full text.
 
 ## Contributing

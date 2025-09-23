@@ -52,7 +52,7 @@ for i = 1:length(gridArray)
     scatter(geo_coord.grid_lon, geo_coord.grid_lat, 20, 'filled', ...
         MarkerFaceAlpha = 0.7, ...
         MarkerFaceColor = dataColor{i},...
-        DisplayName = gridArrayName{i});
+        DisplayName = [gridArrayName{i} ' - wave']);
 end
 
 % Plot wind locations if provided
@@ -62,7 +62,7 @@ if nargin == 2 && ~isempty(dataset_metadata_wind)
     lonlat_info_file = fullfile(package_dir, '+spec', 'spac_station_info.mat');
     load(lonlat_info_file, 'station_info'); % station_info.longitude, station_info.latitude
     scatter(station_info.longitude, station_info.latitude, 100, 'x', ...
-        LineWidth = 2, MarkerFaceAlpha = 0.7, MarkerFaceColor = dataColor{end}, DisplayName = 'spec');
+        LineWidth = 2, MarkerFaceAlpha = 0.7, MarkerFaceColor = dataColor{end}, DisplayName = 'spec - wind');
     plot(wind_lon, wind_lat, 'rx', MarkerSize = 15, LineWidth = 2, DisplayName = 'Wind Data Location');
 end
 
