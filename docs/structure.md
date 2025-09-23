@@ -14,7 +14,7 @@
 
 - **`waveHindcastAnalysis.m`** - Generate probability distribution heatmap
 - **`waveRose.m`** - Create directional wave rose plots
-- **`locationComparison.m`** - A figure showing the target location and the data extraction location(s).
+- **`locationComparison.m`** - A figure showing the target location and the data extraction location(s)
 
 ---
 
@@ -24,14 +24,14 @@
 
 The following helper functions support the main wave and wind data loading workflow:
 
-- **`findNearestGridPoint.m`**: Identifies the nearest valid ocean grid point for a given location.
-- **`loadMonthlyData.m`**: Loads wind or wave data for a single month, with built-in fallback logic for missing variables.
-- **`saveMonthlyData.m`**: Saves individual monthly datasets to disk.
-- **`storeMonthlyData.m`**: Collects and stores monthly wave data in cell arrays for further processing.
-- **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data.
+- **`findNearestGridPoint.m`**: Identifies the nearest valid ocean grid point for a given location
+- **`loadMonthlyData.m`**: Loads wind or wave data for a single month, with built-in fallback logic for missing variables
+- **`saveMonthlyData.m`**: Saves individual monthly datasets to disk
+- **`storeMonthlyData.m`**: Collects and stores monthly wave data in cell arrays for further processing
+- **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data
 
 Folder structure:
 
-- `+gridded/`: Contains functions for loading and processing wave data.
+- `+gridded/`: Contains functions for loading and processing wave data
   - `lonlat/`: Pre-loaded longitude, latitude and available wave data locations
-- `+spec/`: Contains functions for loading and processing wind data.
+- `+spec/`: Contains functions for loading and processing wind data

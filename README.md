@@ -1,6 +1,6 @@
 # Wave Data Loading Toolbox
 
-A MATLAB toolbox for extracting and analysing wave and wind hindcast data from the CSIRO/CAWCR Wave Hindcast collection, with efficient single‑point loading, optional monthly caching, and basic visualisation.
+A MATLAB toolbox for extracting and analysing wave and wind hindcast data from the [CAWCR Wave Hindcast – Aggregated Collection](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute), with efficient single‑point loading, optional monthly caching, and basic visualisation.
 
 ## Quick start
 
@@ -59,11 +59,10 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 
 ## Data source and terms
 
-This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via CSIRO's THREDDS services. The collection provides global and nested regional wave hindcast grids updated monthly since 1979.
+This toolbox accesses the [CAWCR Wave Hindcast – Aggregated Collection](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute) via CSIRO's THREDDS services. The collection provides global and nested regional wave hindcast grids updated monthly since 1979.
 
 **Key resources:**
 
-- **Dataset overview**: Aggregated global wave hindcast dataset from [CAWCR](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute), providing gridded wave and wind fields
 - **Terms and reuse**: See [Collection page](https://data.csiro.au/collection/csiro:39819) for terms of use, acknowledgement, and reuse notes
 - **Direct data access (THREDDS)**:
   - Wave data - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html)
@@ -74,7 +73,7 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 
 ## Citation and Acknowledgement
 
-**Required data acknowledgement:**
+**Data acknowledgement:**
 
 > Source: Bureau of Meteorology and CSIRO © 2013
 >
