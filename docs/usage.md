@@ -8,10 +8,10 @@ For complete argument definitions, defaults, and output fields, see [Function an
 
 **Typical workflow**
 
-1. Choose a location and time range.
-2. Load data with `loadWaveData`.
-3. (Optional) Tune binning or use helper utilities for analysis and caching.
-4. Use the downloaded data or generated figures.
+1. Choose a location and time range
+2. Load data with `loadWaveData`
+3. (Optional) Tune binning or use helper utilities for analysis and caching
+4. Use the downloaded data or generated figures
 
 ## 1. `loadWaveData` function
 
@@ -66,7 +66,7 @@ info = ncinfo(url); {info.Variables.Name}' % list parameter names
 
 - `wave_data` or `wind_data`: table of time‑series variables suitable for plotting and statistics
 - `dataset_metadata`: struct describing extraction and processing
-- Saved monthly data when `cache` is set to true.
+- Saved monthly data when `cache` is set to true
 
 ## 2. Analysis functions
 
@@ -130,7 +130,7 @@ waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, 'title', 'Wind');
 
 ### 2.4 **`locationComparison`**
 
-A figure showing the target location, the data extraction location(s), and the locations of all available datasets in the CAWCR Wave Hindcast.
+A figure showing the target location, the data extraction location(s), and the locations of all available datasets in the [CAWCR Wave Hindcast](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute).
 
 ```matlab
 % With one extracted dataset_metadata (wave or wind)

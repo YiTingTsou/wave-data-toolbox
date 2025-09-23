@@ -73,7 +73,7 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ### 1.5 Outputs
 
-_Note: `wave_data` or `wind_data` is saved automatically to the `outputs/` folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
+_Note: `wave_data` or `wind_data` is saved to the `outputs/` data retrieval location folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
 
 - **wave_data** - Table containing time series wave parameters with columns:
   - `time`: time vector
@@ -111,7 +111,8 @@ waveHindcastAnalysis(x_param, y_param, dataset_metadata, ...
     'save_fig', true, ...
     'text', true, ...
     'xlabel', 'X-axis Label', ...
-    'ylabel', 'Y-axis Label')
+    'ylabel', 'Y-axis Label', ...
+    'rootName','bassStraight');
 ```
 
 ### 2.2 Description
@@ -128,6 +129,6 @@ Create a bi‑variate probability distribution heatmap from paired series.
 | `bins`             | numeric   | `15`                                | Number of bins for each dimension                              |
 | `save_fig`         | logical   | `true`                              | Save figure to PNG file                                        |
 | `text`             | logical   | `true`                              | Display percentage values on heatmap                           |
-| `xlabel`           | string    | `'Mean Period T_{02} [s]'`          | X-axis label                                                   |
+| `xlabel`           | string    | `'Period T_{02} [s]'`               | X-axis label                                                   |
 | `ylabel`           | string    | `'Significant Wave Height H_s [m]'` | Y-axis label                                                   |
-| `rootName`         | string    | {}                                  | User option to define a custom root name for saving the figure |
+| `rootName`         | string    | `{}`                                | User option to define a custom root name for saving the figure |

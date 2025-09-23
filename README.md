@@ -48,7 +48,7 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 - Wave and wind data are downloaded from the CAWCR Wave Hindcast via OPeNDAP
 - The complete dataset is saved to `outputs/` in both .mat and .csv formats, along with a metadata file in .mat format
 - Probability distribution heatmap and directional wave rose are generated and saved
-- A figure confirms that wave and wind data are loaded close to the target location.
+- A figure confirms that wave and wind data are loaded close to the target location
 
 **Tip:** Load only one month first to verify the selected grid point is close to your target location.
 
@@ -74,7 +74,7 @@ This toolbox accesses the **CAWCR Wave Hindcast – Aggregated Collection** via 
 
 ## Citation and Acknowledgement
 
-**Required data acknowledgement (as specified by CSIRO):**
+**Required data acknowledgement:**
 
 > Source: Bureau of Meteorology and CSIRO © 2013
 >
