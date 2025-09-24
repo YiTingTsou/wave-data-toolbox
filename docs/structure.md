@@ -2,7 +2,9 @@
 
 ## For Users
 
-### Main Script (example script)
+### Main Script
+
+- **`loadWaveDataMain.m`** - Example script demonstrating the use of all toolbox functions
 
 ### Toolbox Functions
 
