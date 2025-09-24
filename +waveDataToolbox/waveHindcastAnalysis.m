@@ -131,7 +131,7 @@ imagesc(t0m1_centers, hs_centers, probability);
 set(gca, 'YDir', 'normal') % Flip Y-axis to normal orientation
 
 % Apply the custom colormap
-mycolormap = customcolormap([0 .25 .5 .75 1],{'#e81416','#EBE94E','#39D46B','#3282F6','#ffffff'});
+mycolormap = waveDataToolbox.utils.customcolormap([0 .25 .5 .75 1],{'#e81416','#EBE94E','#39D46B','#3282F6','#ffffff'});
 colormap(mycolormap);
 
 % Add colorbar

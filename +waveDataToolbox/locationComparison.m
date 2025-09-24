@@ -47,7 +47,7 @@ package_dir = fileparts(current_file_path);
 
 % Plot gridded locations
 for i = 1:length(gridArray)
-    lonlat_info_file = fullfile(package_dir, '+gridded', 'lonlat', gridArray{i});
+    lonlat_info_file = fullfile(package_dir, '+utils', '+gridded', 'lonlat', gridArray{i});
     load(lonlat_info_file, 'geo_coord'); % geo_coord.grid_lon, geo_coord.grid_lat
     scatter(geo_coord.grid_lon, geo_coord.grid_lat, 20, 'filled', ...
         MarkerFaceAlpha = 0.7, ...
@@ -59,7 +59,7 @@ end
 if nargin == 2 && ~isempty(dataset_metadata_wind)
     wind_lon = dataset_metadata_wind.actual_lon;
     wind_lat = dataset_metadata_wind.actual_lat;
-    lonlat_info_file = fullfile(package_dir, '+spec', 'spac_station_info.mat');
+    lonlat_info_file = fullfile(package_dir, '+utils', '+spec', 'spac_station_info.mat');
     load(lonlat_info_file, 'station_info'); % station_info.longitude, station_info.latitude
     scatter(station_info.longitude, station_info.latitude, 100, 'x', ...
         LineWidth = 2, MarkerFaceAlpha = 0.7, MarkerFaceColor = dataColor{end}, DisplayName = 'spec - wind');

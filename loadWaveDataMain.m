@@ -7,13 +7,14 @@
 % see README.md in the project root directory.
 %
 % This script demonstrates wave hindcast data loading and basic analysis
-% using the CSIRO/CAWCR Wave Hindcast Archive.
+% using the CAWCR Wave Hindcast – Aggregated Collection.
 %
 % ==================================================================
 
 %% Initialization
 clc; clear; close all;
-addpath utils\
+% Import functions from the waveDataToolbox package
+import waveDataToolbox.*
 
 %% User Input: Set target location and time range
 target_lon = 145.1768; % Longitude [degrees E]

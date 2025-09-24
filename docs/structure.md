@@ -2,23 +2,21 @@
 
 ## For Users
 
-### Main Script
+### Main Script (example script)
 
-- **`loadWaveDataMain.m`** - Example script showing how to use the toolbox
+### Toolbox Functions
 
-### Core Function
+#### Core Function
 
-- **`loadWaveData.m`** - Main function for loading wave data
+- **`loadWaveData.m`** - Function for loading wave data
 
-### Analysis Functions
+#### Analysis Functions
 
-- **`waveHindcastAnalysis.m`** - Generate probability distribution heatmap
-- **`waveRose.m`** - Create directional wave rose plots
-- **`locationComparison.m`** - A figure showing the target location and the data extraction location(s)
+- **`waveHindcastAnalysis.m`** - Generates probability distribution heatmaps
+- **`waveRose.m`** - Creates directional wave rose plots
+- **`locationComparison.m`** - Generates a figure showing the target location and the data extraction location(s)
 
----
-
-## For Contributors/Developers
+## For Contributors/Developers `+utils`
 
 ### Internal Helper Functions for `loadWaveData`
 
@@ -35,3 +33,20 @@ Folder structure:
 - `+gridded/`: Contains functions for loading and processing wave data
   - `lonlat/`: Pre-loaded longitude, latitude and available wave data locations
 - `+spec/`: Contains functions for loading and processing wind data
+
+### Internal Helper Functions for `waveHindcastAnalysis`
+
+- **`customcolormap.m`** - Defines a customized colormap (Third-Party Component)
+
+```
+ +waveDataToolbox/
+   ├── loadWaveData.m
+   ├── locationComparison.m
+   ├── waveHindcastAnalysis.m
+   ├── waveRose.m
+   │
+   └── +utils/
+       ├── customcolormap.m
+       ├── +gridded/
+       └── +spec/
+```

@@ -56,6 +56,7 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 %
 
 %% Parse input arguments
+
 arguments
     % Required inputs
     target_lon (1,1) double {mustBeGreaterThanOrEqual(target_lon,-180), mustBeLessThanOrEqual(target_lon,360)}
@@ -168,10 +169,10 @@ for i = 1:length(year_months)
     try
         % Find extraction location (first iteration only)
         if i == 1
-            if wind
-                location_info = spec.findNearestGridPoint(target_lon, target_lat);
-            else
-                location_info = gridded.findNearestGridPoint(target_lon, target_lat, lonlat);
+          if wind
+              location_info = waveDataToolbox.utils.spec.findNearestGridPoint(target_lon, target_lat);
+          else
+              location_info = waveDataToolbox.utils.gridded.findNearestGridPoint(target_lon, target_lat, lonlat);
             end
         end
 
@@ -189,30 +190,30 @@ for i = 1:length(year_months)
             monthly_data = loaded_data.monthly_data;
             % Store data using package function
             if wind
-                [all_time, all_wnd, all_wnddir, all_additional] = spec.storeMonthlyData(...
-                    monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
+                    [all_time, all_wnd, all_wnddir, all_additional] = waveDataToolbox.utils.spec.storeMonthlyData(...
+                        monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
             else
-                [all_time, all_t02, all_hs, all_dir, all_additional] = gridded.storeMonthlyData(...
-                    monthly_data, all_time, all_t02, all_hs, all_dir, all_additional, additional_params);
+                    [all_time, all_t02, all_hs, all_dir, all_additional] = waveDataToolbox.utils.gridded.storeMonthlyData(...
+                        monthly_data, all_time, all_t02, all_hs, all_dir, all_additional, additional_params);
             end
             continue;
         end
 
         % Load monthly data from server
-        monthly_data = feval([package_name '.loadMonthlyData'], url, location_info, additional_params, verbose);
+        monthly_data = feval(['waveDataToolbox.utils.' package_name '.loadMonthlyData'], url, location_info, additional_params, verbose);
 
         % Store data using package function
-        if wind
-            [all_time, all_wnd, all_wnddir, all_additional] = spec.storeMonthlyData(...
-                monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
-        else
-            [all_time, all_t02, all_hs, all_dir, all_additional] = gridded.storeMonthlyData(...
-                monthly_data, all_time, all_t02, all_hs, all_dir, all_additional, additional_params);
+    if wind
+        [all_time, all_wnd, all_wnddir, all_additional] = waveDataToolbox.utils.spec.storeMonthlyData(...
+            monthly_data, all_time, all_wnd, all_wnddir, all_additional, additional_params);
+    else
+        [all_time, all_t02, all_hs, all_dir, all_additional] = waveDataToolbox.utils.gridded.storeMonthlyData(...
+            monthly_data, all_time, all_t02, all_hs, all_dir, all_additional, additional_params);
         end
 
         % Save monthly data to cache
-        if save_loaded_data
-            feval([package_name '.saveMonthlyData'], monthly_data, monthly_filename, additional_params, verbose);
+      if save_loaded_data
+          feval(['waveDataToolbox.utils.' package_name '.saveMonthlyData'], monthly_data, monthly_filename, additional_params, verbose);
         end
 
     catch ME
@@ -263,11 +264,11 @@ if ~isempty(all_time)
 
     % Save complete dataset using appropriate package function
     if wind
-        [dataset_metadata] = spec.saveCompleteDataset(folder_name, wave_data, location_info, ...
-            start_year_month, end_year_month, additional_params, distance_km, verbose);
+            [dataset_metadata] = waveDataToolbox.utils.spec.saveCompleteDataset(folder_name, wave_data, location_info, ...
+                start_year_month, end_year_month, additional_params, distance_km, verbose);
     else
-        [dataset_metadata] = gridded.saveCompleteDataset(folder_name, wave_data, location_info, ...
-            start_year_month, end_year_month, additional_params, distance_km, verbose, region, grid_resolution);
+            [dataset_metadata] = waveDataToolbox.utils.gridded.saveCompleteDataset(folder_name, wave_data, location_info, ...
+                start_year_month, end_year_month, additional_params, distance_km, verbose, region, grid_resolution);
     end
 
 else
