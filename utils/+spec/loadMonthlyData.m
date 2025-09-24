@@ -29,65 +29,75 @@ function [monthly_data] = loadMonthlyData(url, location_info, additional_params,
 %   'u10m' for wind speed and 'udir' for wind direction as fallbacks. If neither is available,
 %   the corresponding output field will be filled with NaN.
 
-% Define fallback mappings
-fallbacks = struct('wnd', 'u10m', 'wnddir', 'udir');
+
+% Predefined fallbacks
+fallbacks = struct('wnd',   {{'u10m'}}, ...
+    'wnddir',{{'udir'}}, ...
+    'dpt',   {{'depth'}}, ...
+    'cur',   {{'curr'}}, ...
+    'curdir',   {{'currdir'}});
 
 try
-    % Read time data for current month
+    % Read time data
     time_month = ncread(url, 'time');
-    num_time_month = length(time_month);
-    % Read all variables for the selected station in one call
+    num_time_month = numel(time_month);
+
+    % Assume dimensions [station, time]
     start_pos = [location_info.station_idx, 1];
-    count = [1, num_time_month];
-catch ME
-    error('Failed to initialise monthly data: %s', ME.message);
-end
+    count     = [1, num_time_month];
 
-% List all required variable names
-var_names = {'wnd', 'wnddir'};
-if ~isempty(additional_params)
-    var_names = [var_names, additional_params(:)'];
-end
-
-% Loop for variables with fallback
-data_struct = struct();
-for k = 1:length(var_names)
-    var = var_names{k};
-    alt = '';
-    if isfield(fallbacks, var)
-        alt = fallbacks.(var);
+    % Build variable list
+    var_names = {'wnd','wnddir'};
+    if ~isempty(additional_params)
+        if isstring(additional_params) || ischar(additional_params)
+            additional_params = cellstr(additional_params);
+        end
+        var_names = [var_names, additional_params(:)'];
     end
 
-    success = false;
-    fallback_attempted = false;
-    for idx = 1:2
-        candidate = {var, alt};
-        name = candidate{idx};
-        if isempty(name), continue; end
-        try
-            vdata = squeeze(ncread(url, name, start_pos, count))';
-            data_struct.(var) = vdata(:);
-            success = true;
-            break
-        catch ME_param
-            if idx == 1
-                fallback_attempted = true;
-                % Do not print warning yet, only if fallback also fails
-            elseif idx == 2 && verbose
-                % Only print warning if both fail
-                fprintf('  Warning: Failed to load parameter %s for %s - %s\n', name, var, ME_param.message);
+    data_struct = struct();
+
+    for k = 1:numel(var_names)
+        req = var_names{k};
+
+        % Build candidate list: primary + fallbacks
+        candidates = {req};
+        if isfield(fallbacks, req)
+            fb = fallbacks.(req);
+            if isstring(fb) || ischar(fb), fb = cellstr(fb); end
+            candidates = [candidates, fb(:)'];
+        end
+
+        loaded = false;
+        last_err = '';
+
+        for c = 1:numel(candidates)
+            name = candidates{c};
+            try
+                vdata = squeeze(ncread(url, name, start_pos, count));
+                data_struct.(req) = vdata(:); % store under requested name
+                loaded = true;
+                if verbose && c > 1
+                    fprintf('  Info: Using fallback "%s" for "%s".\n', name, req);
+                end
+                break
+            catch ME_param
+                last_err = ME_param.message;
             end
         end
-    end
-    if ~success && fallback_attempted && verbose
-        fprintf('  Warning: Failed to load parameter %s for %s - %s\n', var, var, 'Primary and fallback both failed');
-    end
-    if ~success
-        data_struct.(var) = NaN(num_time_month, 1);
-    end
-end
 
-% Store all arrays in output structure
-monthly_data = data_struct;
-monthly_data.time = time_month(:);
+        if ~loaded
+            if verbose
+                fprintf('  Warning: Failed to load "%s" (and fallbacks). Last error: %s\n', req, last_err);
+            end
+            data_struct.(req) = NaN(num_time_month, 1);
+        end
+    end
+
+    monthly_data = data_struct;
+    monthly_data.time = time_month(:);
+
+catch ME
+    error('Failed to load monthly data: %s', ME.message);
+end
 end

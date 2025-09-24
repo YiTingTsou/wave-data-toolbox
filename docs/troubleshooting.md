@@ -2,7 +2,7 @@
 
 ## Common issues and fixes
 
-- **Network timeouts** - Remote server busy. Retry later or reduce concurrency
+- **Network timeouts** - Remote server busy. Retry later or reduce the number of `params`
 - **Land point selection** - Consider using other regions or resolutions for a closer available point
 - **Parameter not found** - Inspect file variables with `ncdisp` or adjust `additional_params` names
   > If the issue is due to the parameter name differing in the early release dataset, please open an issue to request an update.

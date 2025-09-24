@@ -12,7 +12,7 @@ function [monthly_data] = loadMonthlyData(url, location_info, additional_params,
 %   url             - URL to the NetCDF file
 %   location_info   - Structure from findNearestGridPoint containing:
 %                     .actual_lon - Actual longitude used
-%                     .actual_lat - Actual latitude used  
+%                     .actual_lat - Actual latitude used
 %                     .lon_idx    - Longitude index for subsetting
 %                     .lat_idx    - Latitude index for subsetting
 %   additional_params - Cell array of additional parameter names to load
@@ -45,7 +45,9 @@ try
     end
 
     fallbacks = struct('t0m1', {{'tm0m1'}}, ...
-                       't01',  {{'t'}});
+        't01',  {{'t'}}, ...
+        'uwnd',  {{'U10'}}, ...
+        'vwnd',  {{'V10'}});
 
     info = ncinfo(url);
     available = {info.Variables.Name};
@@ -84,24 +86,23 @@ try
 catch ME
     error('Failed to load monthly data: %s', ME.message);
 end
-end  
+end
 
 %% Helper function to return first available variable among [requested, fallbacks{requested}...]
 function resolved = pick_available(requested, fallbacks, available)
 
-    candidates = {requested};
-    if isfield(fallbacks, requested)
-        fb = fallbacks.(requested);
-        if isstring(fb) || ischar(fb), fb = cellstr(fb); end
-        candidates = [candidates, fb(:)'];
-    end
-
-    resolved = '';
-    for i = 1:numel(candidates)
-        if any(strcmp(available, candidates{i}))
-            resolved = candidates{i};
-            return;
-        end
-    end
+candidates = {requested};
+if isfield(fallbacks, requested)
+    fb = fallbacks.(requested);
+    if isstring(fb) || ischar(fb), fb = cellstr(fb); end
+    candidates = [candidates, fb(:)'];
 end
 
+resolved = '';
+for i = 1:numel(candidates)
+    if any(strcmp(available, candidates{i}))
+        resolved = candidates{i};
+        return;
+    end
+end
+end

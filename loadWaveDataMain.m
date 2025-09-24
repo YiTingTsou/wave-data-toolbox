@@ -19,7 +19,7 @@ addpath utils\
 target_lon = 145.1768; % Longitude [degrees E]
 target_lat = -40.026;  % Latitude [degrees N]
 start_year_month = 201501; % Start YearMonth (YYYYMM)
-end_year_month = 201612;   % End YearMonth (YYYYMM)
+end_year_month = 201503;   % End YearMonth (YYYYMM)
 
 %% Load Wave Data
 [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);
@@ -32,10 +32,10 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 wave_mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 
 %% Load Wind Data
-[wind_data, dataset_metadata_wind] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, 'wind', true);
+[wind_data, dataset_metadata_wind] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month, "wind", true);
 
 % Wind Direction Distribution
-wind_mean_dir = waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata_wind, 'title', 'Wind');
+wind_mean_dir = waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata_wind, "title", "Wind");
 
 %% Verify loading location
 % Confirm wave and wind data are loaded closely to the target location

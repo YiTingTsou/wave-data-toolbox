@@ -66,7 +66,7 @@ This toolbox accesses the [CAWCR Wave Hindcast – Aggregated Collection](https:
 - **Terms and reuse**: See [Collection page](https://data.csiro.au/collection/csiro:39819) for terms of use, acknowledgement, and reuse notes
 - **Direct data access (THREDDS)**:
   - Wave data - [gridded](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html)
-  - Wind data - [spec](http://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html)
+  - Wind data - [spec](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html)
 - **Access guide**: [DAP guide to THREDDS and OPeNDAP access](https://research.csiro.au/dap/download/accessing-data-via-a-thredds-catalogue/)
 
 **Important:** This toolbox accesses data via OPeNDAP for research use. If you plan to redistribute data files, please review the [collection page](https://data.csiro.au/collection/csiro:39819) for current terms and contact information.

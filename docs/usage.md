@@ -25,11 +25,11 @@ For complete argument definitions, defaults, and output fields, see [Function an
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
-    'region', 'aus', ...            % 'aus' | 'glob' | 'pac'
-    'resolution', 4, ...            % arcminutes
-    'params', {'t0m1','fp','dpm'}, ... % additional params to load
-    'cache', false, ...             % monthly caching
-    'verbose', false);              % display messages
+    "region", "aus", ...            % "aus" | "glob" | "pac"
+    "resolution", 4, ...            % arcminutes
+    "params", {'t0m1','fp','dpm'}, ... % additional params to load
+    "cache", false, ...             % monthly caching
+    "verbose", false);              % display messages
 ```
 
 ### 1.3 Basic loading for wind data
@@ -42,10 +42,10 @@ For complete argument definitions, defaults, and output fields, see [Function an
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
-    'wind', true, ...
-    'params', {'direction'}, ...    % additional params to load
-    'cache', false, ...             % monthly caching
-    'verbose', false);              % display messages
+    "wind", true, ...
+    "params", {'direction'}, ...    % additional params to load
+    "cache", false, ...             % monthly caching
+    "verbose", false);              % display messages
 ```
 
 ### 1.5 Exploring available parameters for `params`
@@ -72,7 +72,7 @@ info = ncinfo(url); {info.Variables.Name}' % list parameter names
 
 ### 2.1 `waveHindcastAnalysis`
 
-Generate bi-variate probability distribution heatmaps
+Generate bi-variate probability distribution heatmaps.
 
 #### 2.1.1 Basic usage
 
@@ -84,12 +84,12 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
-    'bins', 20, ...               % No. of bins
-    'save_fig', false, ...
-    'text', false, ...            % Display percentage values
-    'xlabel', 'X-axis Label', ...
-    'ylabel', 'Y-axis Label', ...
-    'rootName','bassStraight');   % Saved figure names will begin with 'bassStraight'
+    "bins", 20, ...               % No. of bins
+    "save_fig", false, ...
+    "text", false, ...            % Display percentage values
+    "xlabel", "X-axis Label", ...
+    "ylabel", "Y-axis Label", ...
+    "rootName","bassStraight");   % Saved figure names will begin with 'bassStraight'
 ```
 
 ### 2.2 `waveRose`
@@ -102,11 +102,11 @@ mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 
 % Advanced full options for using it as wave rose
 waveRose(wave_data.dir, wave_data.hs, dataset_metadata, ...
-    'save_fig', false, ...
-    'rootName','bassStraight');
+    "save_fig", false, ...
+    "rootName","bassStraight");
 
 % Wind rose
-waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, 'title', 'Wind');
+waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 ```
 
 ### 2.3 Example outputs
@@ -139,5 +139,11 @@ locationComparison(dataset_metadata);
 % With both wave and wind metadata
 locationComparison(dataset_metadata);
 ```
+
+#### 2.4.1 Double-check the extraction location
+
+Check if you are happy with the location used for data extraction. If not, change the `region` or `resolution` to the closest available grid point by inspecting the locationComparison MATLAB .fig.
+
+![Location Comparison](figures/locationComparison.png)
 
 **See also**: [Function and Parameter Reference](parameters.md), [Troubleshooting Guide](troubleshooting.md), [Toolbox Structure](structure.md)
