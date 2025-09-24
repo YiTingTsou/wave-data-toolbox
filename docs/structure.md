@@ -16,6 +16,8 @@
 - **`waveRose.m`** - Creates directional wave rose plots
 - **`locationComparison.m`** - Generates a figure showing the target location and the data extraction location(s)
 
+---
+
 ## For Contributors/Developers `+utils`
 
 ### Internal Helper Functions for `loadWaveData`
@@ -48,5 +50,6 @@ Folder structure:
    └── +utils/
        ├── customcolormap.m
        ├── +gridded/
+       │   └── lonlat/
        └── +spec/
 ```

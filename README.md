@@ -16,7 +16,6 @@ Loads data for January to December 2015 at a specified location.
 
 - [Usage Guide](docs/usage.md)
 - [Function and Parameter Reference](docs/parameters.md)
--
 - [Troubleshooting Guide](docs/troubleshooting.md)
 - [Toolbox Structure](docs/structure.md)
 
@@ -33,8 +32,7 @@ In MATLAB, add the toolbox to your path:
 
 ```matlab
 addpath(genpath('path/to/wave-data-toolbox'))
-
-% If want to make this permanent across MATLAB sessions:
+% If want to make this permanent across MATLAB sessions
 savepath
 ```
 
