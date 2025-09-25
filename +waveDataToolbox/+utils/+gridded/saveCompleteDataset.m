@@ -44,6 +44,6 @@ dataset_metadata.filename = extractAfter(foldername, 'outputs/');
 save(sprintf('%s/%s.mat', foldername, dataset_metadata.filename), 'dataset_metadata');
 
 if verbose
-    fprintf('\nComplete wave dataset saved\n------\n\n');
+    fprintf('\nComplete wave dataset saved\n');
 end
 end

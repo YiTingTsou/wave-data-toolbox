@@ -38,7 +38,7 @@ try
     valid_lat_idx = geo_coord.valid_lat_idx;
 
     % Adjustable search window (degrees)
-    window_deg = 5; 
+    window_deg = 2; 
 
     % Compute differences with wrap-around for longitude
     lon_diff = mod(longitude(valid_lon_idx) - target_lon + 180, 360) - 180;

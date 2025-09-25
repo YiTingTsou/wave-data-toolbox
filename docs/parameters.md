@@ -13,7 +13,7 @@ For step‑by‑step workflows and examples, see [Usage Guide](usage.md).
     "region", region, ...
     "resolution", resolution, ...
     "verbose", verbose, ...
-    "cache", cache, ...
+    "useParallel", parallelProcessing, ...
     "params", params, ...
     "wind", false);
 ```
@@ -38,7 +38,7 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 | `region`           | string     | `aus`   | Data region: `aus`, `glob`, `pac`            |
 | `resolution`       | numeric    | `10`    | Grid resolution [arcminutes]                 |
 | `verbose`          | logical    | `true`  | Display progress messages                    |
-| `cache`            | logical    | `true`  | Save monthly data during loading             |
+| `useParallel`      | logical    | `true`  | Use parallel pool for data loading           |
 | `params`           | cell array | `{}`    | Extra variables to load (e.g., `t0m1`, `fp`) |
 | `wind`             | logical    | `false` | Retrieved `gridded` catalogue                |
 
@@ -56,16 +56,16 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ### 1.4 Arguments for loading wind data
 
-| Parameter          | Type       | Default | Description                      |
-| ------------------ | ---------- | ------- | -------------------------------- |
-| `target_lon`       | numeric    | —       | Target longitude [degrees E]     |
-| `target_lat`       | numeric    | —       | Target latitude [degrees N]      |
-| `start_year_month` | numeric    | —       | Start date in `YYYYMM`           |
-| `end_year_month`   | numeric    | —       | End date in `YYYYMM`             |
-| `verbose`          | logical    | `true`  | Display progress messages        |
-| `cache`            | logical    | `true`  | Save monthly data during loading |
-| `params`           | cell array | `{}`    | Extra variables to load          |
-| `wind`             | logical    | `true`  | Retrieved `spec` catalogue       |
+| Parameter          | Type       | Default | Description                        |
+| ------------------ | ---------- | ------- | ---------------------------------- |
+| `target_lon`       | numeric    | —       | Target longitude [degrees E]       |
+| `target_lat`       | numeric    | —       | Target latitude [degrees N]        |
+| `start_year_month` | numeric    | —       | Start date in `YYYYMM`             |
+| `end_year_month`   | numeric    | —       | End date in `YYYYMM`               |
+| `verbose`          | logical    | `true`  | Display progress messages          |
+| `useParallel`      | logical    | `true`  | Use parallel pool for data loading |
+| `params`           | cell array | `{}`    | Extra variables to load            |
+| `wind`             | logical    | `true`  | Retrieved `spec` catalogue         |
 
 > Check latest monthly availability at the [`spec`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html) catalogue.
 

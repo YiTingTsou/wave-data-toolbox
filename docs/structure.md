@@ -24,19 +24,18 @@
 
 ### Internal Helper Functions for `loadWaveData`
 
-The following helper functions support the main wave and wind data loading workflow:
+- **localEnableParallel.m**: Decide whether to use parallel and try to start a pool
+- **fetchAndCache.m**: Fetch and cache monthly data files, optionally in parallel
+- **assembleAndSaveDataset**: Assemble wave or wind data from monthly files and save complete dataset.
+- **assembleStreamedDataset.m**: Assemble wave or wind data using streamed access via MATFILE if assembleAndSaveDataset fails due to memory limits
+
+The following helper functions support the main wave and wind data loading workflow, `+gridded/` and `+spec/`:
 
 - **`findNearestGridPoint.m`**: Identifies the nearest valid ocean grid point for a given location
 - **`loadMonthlyData.m`**: Loads wind or wave data for a single month, with built-in fallback logic for missing variables
 - **`saveMonthlyData.m`**: Saves individual monthly datasets to disk
 - **`storeMonthlyData.m`**: Collects and stores monthly wave data in cell arrays for further processing
 - **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data
-
-Folder structure:
-
-- `+gridded/`: Contains functions for loading and processing wave data
-  - `lonlat/`: Pre-loaded longitude, latitude and available wave data locations
-- `+spec/`: Contains functions for loading and processing wind data
 
 ### Internal Helper Functions for `waveHindcastAnalysis`
 
@@ -49,9 +48,8 @@ Folder structure:
    ├── waveHindcastAnalysis.m
    ├── waveRose.m
    │
-   └── +utils/
-       ├── customcolormap.m
-       ├── +gridded/
-       │   └── lonlat/
-       └── +spec/
+   └── +utils/         % Internal Helper Functions
+       ├── +gridded/   % Functions for wave data
+       │   └── lonlat/ % Pre-loaded grid points
+       └── +spec/      % Functions for wind data
 ```
