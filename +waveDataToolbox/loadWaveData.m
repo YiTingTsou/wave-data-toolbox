@@ -190,7 +190,7 @@ end
 
 %% Report location info
 if verbose
-    fprintf('Target location: %.4f°E, %.4f°N\n', target_lon, target_lat);
+    fprintf('\nTarget location: %.4f°E, %.4f°N\n', target_lon, target_lat);
     fprintf('Extracting location: %.4f°E, %.4f°N\n', location_info.actual_lon, location_info.actual_lat);
     fprintf('Distance from target: %.2f km\n------\n\n', dataset_metadata.location_offset);
 end
