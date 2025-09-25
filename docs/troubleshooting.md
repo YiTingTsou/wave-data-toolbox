@@ -6,7 +6,7 @@
 - **Land point selection** - Consider using other regions or resolutions for a closer available point
 - **Parameter not found** - Inspect file variables with `ncdisp` or adjust `additional_params` names
   > If the issue is due to the parameter name differing in the early release dataset, please open an issue to request an update.
-- **Large datasets** - Enable `save_loaded_data = true` for monthly caching to avoid memory pressure
+- **Parallel pool**: Set `useParallel = false` to use sequential data loading
 - **Permission errors** - Ensure write access to the working directory (for `outputs/`)
 - **Interrupted downloads** - Re-run with the same inputs. Existing monthly files are skipped
 

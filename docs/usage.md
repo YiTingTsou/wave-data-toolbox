@@ -28,7 +28,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
     "region", "aus", ...            % "aus" | "glob" | "pac"
     "resolution", 4, ...            % arcminutes
     "params", {'t0m1','fp','dpm'}, ... % additional params to load
-    "cache", false, ...             % monthly caching
+    "useParallel", false, ...             % sequential data loading
     "verbose", false);              % display messages
 ```
 
@@ -44,7 +44,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     "wind", true, ...
     "params", {'direction'}, ...    % additional params to load
-    "cache", false, ...             % monthly caching
+    "useParallel", false, ...
     "verbose", false);              % display messages
 ```
 
