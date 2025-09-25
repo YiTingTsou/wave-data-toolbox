@@ -20,7 +20,7 @@ import waveDataToolbox.*
 target_lon = 145.1768; % Longitude [degrees E]
 target_lat = -40.026;  % Latitude [degrees N]
 start_year_month = 201501; % Start YearMonth (YYYYMM)
-end_year_month = 201507;   % End YearMonth (YYYYMM)
+end_year_month = 201506;   % End YearMonth (YYYYMM)
 
 %% Load Wave Data
 [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, start_year_month, end_year_month);

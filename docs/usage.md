@@ -8,9 +8,9 @@ For complete argument definitions, defaults, and output fields, see [Function an
 
 **Typical workflow**
 
-1. Choose a location and time range
-2. Load data with `loadWaveData`
-3. (Optional) Tune binning or use helper utilities for analysis and caching
+1. Choose a location and time range for `loadWaveData`
+2. Load data with
+3. Select the region, resolution, or other function properties for loading data
 4. Use the downloaded data or generated figures
 
 ## 1. `loadWaveData` function
