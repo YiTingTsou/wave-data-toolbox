@@ -40,29 +40,26 @@ end
 
 % 2) Try to start or resize pool
 try
-    % Use default cluster, respect its maximum workers
-    c = parcluster();                 % default profile
-    maxAllowed = c.NumWorkers;        % cluster limit
-    n = min(maxWorkers, maxAllowed);
+    c   = parcluster();                 % default profile
+    cap = c.NumWorkers;                 % maximum allowed by profile
+    req = [1, min(maxWorkers, cap)];    % graceful fallback range
 
-    p = gcp('nocreate');              % do not create a pool yet
-    if ~isempty(p) && p.NumWorkers ~= n
-        delete(p);
+    p = gcp('nocreate');
+    if ~isempty(p) && ~(p.NumWorkers >= req(1) && p.NumWorkers <= req(2))
+        delete(p);                      % must recreate to change size
         p = [];
     end
     if isempty(p)
-        pool = parpool(c, n);
+        pool = parpool(c, req);         % picks the largest feasible size
     else
         pool = p;
     end
-    requested = true;
 
     if verbose
-        fprintf('[parallel] Using %d workers.\n', p.NumWorkers);
+        fprintf('[parallel] Using %d workers.\n', pool.NumWorkers);
     end
 catch ME
     warning(ME.identifier, '[parallel] disabled: %s\nUsing serial mode instead.', ME.message);
-    requested = false;
     pool = [];
 end
 end
