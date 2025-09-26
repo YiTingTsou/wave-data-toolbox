@@ -18,6 +18,7 @@ For complete argument definitions, defaults, and output fields, see [Function an
 ### 1.1 Basic loading for wave data
 
 ```matlab
+% Data region and resolution are "aus" and "10" as function defaults
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 ```
 
