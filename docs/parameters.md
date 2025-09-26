@@ -46,7 +46,7 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 | Code   | Description       | Grid resolution (arcmin) | Temporal Coverage |
 | ------ | ----------------- | ------------------------ | ----------------- |
-| `glob` | Global domain     | 24                       | 197901–present    |
+| `glob` | Global domain     |                          | 197901–present    |
 | `aus`  | Australian region | 10, 4                    | 197901–present    |
 | `pac`  | Western Pacific   | 10, 4                    | 197901–present    |
 

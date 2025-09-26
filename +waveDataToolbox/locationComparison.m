@@ -39,7 +39,7 @@ dataColor = {'#ef476f';'#762a83';'#f9c74f';'#fc8d59';'#8cb369';'#3288bd'};
 
 % Grid datasets to plot
 gridArray = {'glob_24m.mat', 'aus_10m.mat', 'aus_4m.mat', 'pac_10m.mat', 'pac_4m.mat'};
-gridArrayName = {'glob\_24m', 'aus\_10m', 'aus\_4m', 'pac\_10m', 'pac\_4m'};
+gridArrayName = {'glob', 'aus\_10m', 'aus\_4m', 'pac\_10m', 'pac\_4m'};
 
 % Get the path to this function's directory
 current_file_path = mfilename('fullpath');
