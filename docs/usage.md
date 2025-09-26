@@ -9,9 +9,9 @@ For complete argument definitions, defaults, and output fields, see [Function an
 **Typical workflow**
 
 1. Choose a location and time range for `loadWaveData`
-2. Load data with
-3. Select the region, resolution, or other function properties for loading data
-4. Use the downloaded data or generated figures
+2. Select the region, resolution, or other function properties for loading data.
+3. Double-check whether the extraction location(s) are close to your target location.
+4. Use the downloaded data or generated figures.
 
 ## 1. `loadWaveData` function
 
