@@ -7,7 +7,7 @@ A MATLAB toolbox for extracting and analysing wave and wind hindcast data from t
 Loads data for January to December 2015 at a specified location.
 
 ```matlab
-% Loads wave data
+% Loads wave data from the 'aus' region with a grid resolution of 10
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 
 % Loads wind data
