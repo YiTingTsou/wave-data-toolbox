@@ -27,19 +27,19 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ### 1.3 Parameter table
 
-| Parameter          | Type       | Default | Applies to                                      | Description                                     |
-| ------------------ | ---------- | ------- | ----------------------------------------------- | ----------------------------------------------- |
-| `target_lon`       | numeric    | —       | both                                            | Target longitude [degrees E]                    |
-| `target_lat`       | numeric    | —       | both                                            | Target latitude [degrees N]                     |
-| `start_year_month` | numeric    | —       | both                                            | Start date in `YYYYMM` format                   |
-| `end_year_month`   | numeric    | —       | both                                            | End date in `YYYYMM` format                     |
-| `region`           | string     | `"aus"` | wave only                                       | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
-| `resolution`       | numeric    | `10`    | wave only                                       | Grid resolution [arcminutes]                    |
-| `verbose`          | logical    | `true`  | both                                            | Display progress messages                       |
-| `useParallel`      | logical    | `true`  | both                                            | Use parallel pool for data loading              |
-| `params`           | cell array | `{}`    | both                                            | Additional variables to load (e.g., `'fp'`)     |
-| `wind`             | logical    | `false` | both                                            | If `true`, load wind data from `spec` catalogue |
-| `rootName`         | string     | `{}`    | Define a custom root name for the saving folder |
+| Parameter          | Type       | Default | Applies to | Description                                     |
+| ------------------ | ---------- | ------- | ---------- | ----------------------------------------------- |
+| `target_lon`       | numeric    | —       | both       | Target longitude [degrees E]                    |
+| `target_lat`       | numeric    | —       | both       | Target latitude [degrees N]                     |
+| `start_year_month` | numeric    | —       | both       | Start date in `YYYYMM` format                   |
+| `end_year_month`   | numeric    | —       | both       | End date in `YYYYMM` format                     |
+| `region`           | string     | `"aus"` | wave only  | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
+| `resolution`       | numeric    | `10`    | wave only  | Grid resolution [arcminutes]                    |
+| `verbose`          | logical    | `true`  | both       | Display progress messages                       |
+| `useParallel`      | logical    | `true`  | both       | Use parallel pool for data loading              |
+| `params`           | cell array | `{}`    | both       | Additional variables to load (e.g., `'fp'`)     |
+| `wind`             | logical    | `false` | both       | If `true`, load wind data from `spec` catalogue |
+| `rootName`         | string     | `{}`    | both       | Define a custom root name for the saving folder |
 
 ### 1.3.1 Regions, resolutions, coverage for wave data
 

@@ -45,6 +45,7 @@ _Example: Load wave data with custom settings_
     "useParallel", false, ...       % sequential data loading
     "verbose", false, ...           % display messages
     "rootName","bassStraight");     % The saved folder name will begin with 'bassStraight'
+```
 
 ### 2.4 Outputs
 
