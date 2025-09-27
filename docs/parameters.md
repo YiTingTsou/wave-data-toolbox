@@ -27,20 +27,20 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 - Wave data: retrieved from the `gridded` catalogue
 - Wind data: retrieved from the `spec` catalogue
 
-### 1.3 Arguments for loading wave data
+### 1.3 Parameter Table
 
-| Parameter          | Type       | Default | Description                                  |
-| ------------------ | ---------- | ------- | -------------------------------------------- |
-| `target_lon`       | numeric    | —       | Target longitude [degrees E]                 |
-| `target_lat`       | numeric    | —       | Target latitude [degrees N]                  |
-| `start_year_month` | numeric    | —       | Start date in `YYYYMM`                       |
-| `end_year_month`   | numeric    | —       | End date in `YYYYMM`                         |
-| `region`           | string     | `aus`   | Data region: `aus`, `glob`, `pac`            |
-| `resolution`       | numeric    | `10`    | Grid resolution [arcminutes]                 |
-| `verbose`          | logical    | `true`  | Display progress messages                    |
-| `useParallel`      | logical    | `true`  | Use parallel pool for data loading           |
-| `params`           | cell array | `{}`    | Extra variables to load (e.g., `t0m1`, `fp`) |
-| `wind`             | logical    | `false` | Retrieved `gridded` catalogue                |
+| Parameter          | Type       | Default | Applies to | Description                                     |
+| ------------------ | ---------- | ------- | ---------- | ----------------------------------------------- |
+| `target_lon`       | numeric    | —       | both       | Target longitude [degrees E]                    |
+| `target_lat`       | numeric    | —       | both       | Target latitude [degrees N]                     |
+| `start_year_month` | numeric    | —       | both       | Start date in `YYYYMM` format                   |
+| `end_year_month`   | numeric    | —       | both       | End date in `YYYYMM` format                     |
+| `region`           | string     | `"aus"` | wave only  | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
+| `resolution`       | numeric    | `10`    | wave only  | Grid resolution [arcminutes]                    |
+| `verbose`          | logical    | `true`  | both       | Display progress messages                       |
+| `useParallel`      | logical    | `true`  | both       | Use parallel pool for data loading              |
+| `params`           | cell array | `{}`    | both       | Additional variables to load (e.g., `'fp'`)     |
+| `wind`             | logical    | `false` | both       | If `true`, load wind data from `spec` catalogue |
 
 ### 1.3.1 Regions, resolutions, coverage for wave data
 
@@ -54,22 +54,23 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ![Data Coverage by Region and Resolution](figures/dataCoverage_gridded.png)
 
-### 1.4 Arguments for loading wind data
-
-| Parameter          | Type       | Default | Description                        |
-| ------------------ | ---------- | ------- | ---------------------------------- |
-| `target_lon`       | numeric    | —       | Target longitude [degrees E]       |
-| `target_lat`       | numeric    | —       | Target latitude [degrees N]        |
-| `start_year_month` | numeric    | —       | Start date in `YYYYMM`             |
-| `end_year_month`   | numeric    | —       | End date in `YYYYMM`               |
-| `verbose`          | logical    | `true`  | Display progress messages          |
-| `useParallel`      | logical    | `true`  | Use parallel pool for data loading |
-| `params`           | cell array | `{}`    | Extra variables to load            |
-| `wind`             | logical    | `true`  | Retrieved `spec` catalogue         |
-
 > Check latest monthly availability at the [`spec`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html) catalogue.
 
 ![Available Grind Points for spec Catalogue](figures/dataCoverage_spec.png)
+
+### 1.3.3 Exploring available parameters for `params`
+
+Inspect available variables directly from the remote NetCDF catalogue:
+
+```matlab
+% For gridded datasets (wave)
+url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.aus_4m.202508.nc';
+info = ncinfo(url); {info.Variables.Name}' % list parameter names
+
+% For spec datasets (wind)
+url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/ww3.202508_spec.nc';
+info = ncinfo(url); {info.Variables.Name}' % list parameter names
+```
 
 ### 1.5 Outputs
 
@@ -119,7 +120,7 @@ waveHindcastAnalysis(x_param, y_param, dataset_metadata, ...
 
 Create a bi‑variate probability distribution heatmap from paired series.
 
-### 2.3 Arguments
+### 2.3 Parameter Table
 
 | Parameter          | Type      | Default                             | Description                                     |
 | ------------------ | --------- | ----------------------------------- | ----------------------------------------------- |

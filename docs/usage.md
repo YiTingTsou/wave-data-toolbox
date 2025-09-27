@@ -4,84 +4,69 @@ This guide shows typical workflows and runnable examples for the toolbox.
 
 For complete argument definitions, defaults, and output fields, see [Function and Parameter Reference](parameters.md).
 
-## Overview
+## 1. Overview
 
 **Typical workflow**
 
-1. Choose a location and time range for `loadWaveData`
-2. Select the region, resolution, or other function properties for loading data.
-3. Double-check whether the extraction location(s) are close to your target location.
-4. Use the downloaded data or generated figures.
+1. Choose a location and time range
+2. Select the region, resolution, or other function properties in `loadWaveData`
+3. Check extraction location proximity
+4. Use the downloaded data or generated figures
 
-## 1. `loadWaveData` function
+## 2. Basic Usage of `loadWaveData` function
 
-### 1.1 Basic loading for wave data
+### 2.1 Load wave data
 
 ```matlab
-% Data region and resolution are "aus" and "10" as function defaults
+% Using function defaults, the region is "aus" and the resolution is "10"
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 ```
 
-### 1.2 Advanced full options for loading wave data
+### 2.2 Load wind data
+
+```matlab
+[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
+```
+
+### 2.3 Optional Settings
+
+To customise behaviour, you may pass optional name-value pairs.
+Common options for wave and wind loading include:
+
+- "verbose": show/hide progress messages
+- "useParallel": enable/disable parallel processing
+- "params": load additional variables
+
+> Example: Load wave data with custom settings
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     "region", "aus", ...            % "aus" | "glob" | "pac"
     "resolution", 4, ...            % arcminutes
     "params", {'t0m1','fp','dpm'}, ... % additional params to load
-    "useParallel", false, ...             % sequential data loading
+    "useParallel", false, ...       % sequential data loading
     "verbose", false);              % display messages
 ```
 
-### 1.3 Basic loading for wind data
-
-```matlab
-[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
-```
-
-### 1.4 Advanced full options for loading wind data
-
-```matlab
-[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
-    "wind", true, ...
-    "params", {'direction'}, ...    % additional params to load
-    "useParallel", false, ...
-    "verbose", false);              % display messages
-```
-
-### 1.5 Exploring available parameters for `params`
-
-Inspect available variables directly from the remote NetCDF catalogue:
-
-```matlab
-% For gridded datasets (wave)
-url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.aus_4m.202508.nc';
-info = ncinfo(url); {info.Variables.Name}' % list parameter names
-
-% For spec datasets (wind)
-url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/ww3.202508_spec.nc';
-info = ncinfo(url); {info.Variables.Name}' % list parameter names
-```
-
-### 1.6 Outputs
+### 2.4 Outputs
 
 - `wave_data` or `wind_data`: table of time‑series variables suitable for plotting and statistics
 - `dataset_metadata`: struct describing extraction and processing
-- Saved monthly data when `cache` is set to true
+- Saved monthly data
 
-## 2. Analysis functions
+## 3. Analysis Tools
 
-### 2.1 `waveHindcastAnalysis`
+### 3.1 `waveHindcastAnalysis`
 
 Generate bi-variate probability distribution heatmaps.
 
-#### 2.1.1 Basic usage
+#### 3.1.1 Basic usage
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 ```
 
-#### 2.1.2 Advanced full options
+#### 3.1.2 Advanced full options
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
@@ -93,7 +78,7 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     "rootName","bassStraight");   % Saved figure names will begin with 'bassStraight'
 ```
 
-### 2.2 `waveRose`
+### 3.2 `waveRose`
 
 Generate polar histogram (rose plot) showing the joint probability distribution of wave (or wind/current) directions and heights (or speeds).
 
@@ -110,7 +95,7 @@ waveRose(wave_data.dir, wave_data.hs, dataset_metadata, ...
 waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 ```
 
-### 2.3 Example outputs
+### 3.3 Example outputs
 
 <table>
 <tr>
@@ -129,9 +114,11 @@ waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 </tr>
 </table>
 
-### 2.4 **`locationComparison`**
+### 3.4 **`locationComparison`**
 
-A figure showing the target location, the data extraction location(s), and the locations of all available datasets in the [CAWCR Wave Hindcast](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute).
+Visualise the actual grid point used for data extraction versus your target location.
+
+If the offset is large, adjust "region" or "resolution" in your next loadWaveData call.
 
 ```matlab
 % With one extracted dataset_metadata (wave or wind)
@@ -140,10 +127,6 @@ locationComparison(dataset_metadata);
 % With both wave and wind metadata
 locationComparison(dataset_metadata);
 ```
-
-#### 2.4.1 Double-check the extraction location
-
-Check if you are happy with the location used for data extraction. If not, change the `region` or `resolution` to the closest available grid point by inspecting the locationComparison MATLAB .fig.
 
 ![Location Comparison](figures/locationComparison.png)
 
