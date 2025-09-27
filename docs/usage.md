@@ -37,7 +37,7 @@ Common options for wave and wind loading include:
 
 _Example: Load wave data with custom settings_
 
-````matlab
+```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     "region", "aus", ...            % "aus" | "glob" | "pac"
     "resolution", 4, ...            % arcminutes
@@ -63,7 +63,7 @@ Generate bi-variate probability distribution heatmaps.
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
-````
+```
 
 #### 3.1.2 Advanced full options
 
