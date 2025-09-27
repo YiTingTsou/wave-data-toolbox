@@ -185,7 +185,7 @@ if save_figure
     if isempty(rootName)
         filename = 'biVariate';
     else
-        filename = rootName + "_biVariate";  % string concatenation
+        filename = sprintf('%s_biVariate',rootName);
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
     print(gcf, '-dpng', '-r300', fullfile('outputs', dataset_metadata.filename, [filename '.png']))
