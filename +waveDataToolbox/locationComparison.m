@@ -52,7 +52,7 @@ for i = 1:length(gridArray)
     scatter(geo_coord.grid_lon, geo_coord.grid_lat, 20, 'filled', ...
         MarkerFaceAlpha = 0.7, ...
         MarkerFaceColor = dataColor{i},...
-        DisplayName = [gridArrayName{i} ' - wave']);
+        DisplayName = ['[wave] ' gridArrayName{i} ]);
 end
 
 % Plot wind locations if provided
@@ -62,7 +62,7 @@ if nargin == 2 && ~isempty(dataset_metadata_wind)
     lonlat_info_file = fullfile(package_dir, '+utils', '+spec', 'spac_station_info.mat');
     load(lonlat_info_file, 'station_info'); % station_info.longitude, station_info.latitude
     scatter(station_info.longitude, station_info.latitude, 100, 'x', ...
-        LineWidth = 2, MarkerFaceAlpha = 0.7, MarkerFaceColor = dataColor{end}, DisplayName = 'spec - wind');
+        LineWidth = 2, MarkerFaceAlpha = 0.7, MarkerFaceColor = dataColor{end}, DisplayName = '[wind]');
     plot(wind_lon, wind_lat, 'rx', MarkerSize = 15, LineWidth = 2, DisplayName = 'Wind Data Location');
 end
 
@@ -71,7 +71,7 @@ plot(wave_lon, wave_lat, 'r+', MarkerSize = 15, LineWidth = 2, DisplayName = 'Wa
 plot(target_lon, target_lat, 'ro', MarkerSize = 15, LineWidth = 2, DisplayName = 'Target Location');
 
 % Add labels and legend
-title('Location Comparison', FontSize = 24);
+title('Target vs Extraction Location and Available Grid Points', FontSize = 24);
 set(gca, 'FontSize', 16)
 xlabel('Longitude [°E]');
 ylabel('Latitude [°N]');
@@ -87,4 +87,5 @@ y_max = min(85, target_lat + 3);
 ylim([y_min, y_max]);
 
 hold off;
+print(gcf, '-dpng', '-r600', 'locationComparison')
 end

@@ -37,14 +37,14 @@ Common options for wave and wind loading include:
 
 _Example: Load wave data with custom settings_
 
-```matlab
+````matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, ...
     "region", "aus", ...            % "aus" | "glob" | "pac"
     "resolution", 4, ...            % arcminutes
     "params", {'t0m1','fp','dpm'}, ... % additional params to load
     "useParallel", false, ...       % sequential data loading
-    "verbose", false);              % display messages
-```
+    "verbose", false, ...           % display messages
+    "rootName","bassStraight");     % The saved folder name will begin with 'bassStraight'
 
 ### 2.4 Outputs
 
@@ -62,7 +62,7 @@ Generate bi-variate probability distribution heatmaps.
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
-```
+````
 
 #### 3.1.2 Advanced full options
 
@@ -73,7 +73,7 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     "text", false, ...            % Display percentage values
     "xlabel", "X-axis Label", ...
     "ylabel", "Y-axis Label", ...
-    "rootName","bassStraight");   % Saved figure names will begin with 'bassStraight'
+    "rootName","bassStraight");   % The saved figure name will begin with 'bassStraight'
 ```
 
 ### 3.2 `waveRose`

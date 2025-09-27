@@ -15,32 +15,31 @@ For step‑by‑step workflows and examples, see [Usage Guide](usage.md).
     "verbose", verbose, ...
     "useParallel", parallelProcessing, ...
     "params", params, ...
-    "wind", false);
+    "wind", false, ...
+    "rootName", "Root name for the saved folder");
 ```
 
 ### 1.2 Description
 
 This function loads [CAWCR Wave Hindcast](https://researchdata.edu.au/cawcr-wave-hindcast-aggregated-collection/1401722#:~:text=Organisation%26rft,4%20degree%20%2824%20arcminute) data for a specified location and time range. It supports the optional inclusion of additional variables and caching to reduce repeated downloads.
 
-Wave and wind data are stored in different catalogues in CAWCR; the function can retrieved only one catalogue per call:
-
-- Wave data: retrieved from the `gridded` catalogue
-- Wind data: retrieved from the `spec` catalogue
+Wave and wind data are stored in different catalogues in CAWCR; the function can retrieved only one catalogue per call.
 
 ### 1.3 Parameter table
 
-| Parameter          | Type       | Default | Applies to | Description                                     |
-| ------------------ | ---------- | ------- | ---------- | ----------------------------------------------- |
-| `target_lon`       | numeric    | —       | both       | Target longitude [degrees E]                    |
-| `target_lat`       | numeric    | —       | both       | Target latitude [degrees N]                     |
-| `start_year_month` | numeric    | —       | both       | Start date in `YYYYMM` format                   |
-| `end_year_month`   | numeric    | —       | both       | End date in `YYYYMM` format                     |
-| `region`           | string     | `"aus"` | wave only  | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
-| `resolution`       | numeric    | `10`    | wave only  | Grid resolution [arcminutes]                    |
-| `verbose`          | logical    | `true`  | both       | Display progress messages                       |
-| `useParallel`      | logical    | `true`  | both       | Use parallel pool for data loading              |
-| `params`           | cell array | `{}`    | both       | Additional variables to load (e.g., `'fp'`)     |
-| `wind`             | logical    | `false` | both       | If `true`, load wind data from `spec` catalogue |
+| Parameter          | Type       | Default | Applies to                                      | Description                                     |
+| ------------------ | ---------- | ------- | ----------------------------------------------- | ----------------------------------------------- |
+| `target_lon`       | numeric    | —       | both                                            | Target longitude [degrees E]                    |
+| `target_lat`       | numeric    | —       | both                                            | Target latitude [degrees N]                     |
+| `start_year_month` | numeric    | —       | both                                            | Start date in `YYYYMM` format                   |
+| `end_year_month`   | numeric    | —       | both                                            | End date in `YYYYMM` format                     |
+| `region`           | string     | `"aus"` | wave only                                       | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
+| `resolution`       | numeric    | `10`    | wave only                                       | Grid resolution [arcminutes]                    |
+| `verbose`          | logical    | `true`  | both                                            | Display progress messages                       |
+| `useParallel`      | logical    | `true`  | both                                            | Use parallel pool for data loading              |
+| `params`           | cell array | `{}`    | both                                            | Additional variables to load (e.g., `'fp'`)     |
+| `wind`             | logical    | `false` | both                                            | If `true`, load wind data from `spec` catalogue |
+| `rootName`         | string     | `{}`    | Define a custom root name for the saving folder |
 
 ### 1.3.1 Regions, resolutions, coverage for wave data
 
@@ -52,11 +51,11 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ![Data Coverage by Region and Resolution](figures/dataCoverage_gridded.png)
 
-> Check latest monthly availability at the [`gridded`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) catalogue.
+> Check latest monthly availability for [wave](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html).
 
 ![Available Grind Points for spec Catalogue](figures/dataCoverage_spec.png)
 
-> Check latest monthly availability at the [`spec`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html) catalogue.
+> Check latest monthly availability for [wind](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html).
 
 ### 1.3.3 Exploring available parameters for `params`
 

@@ -69,6 +69,7 @@ arguments
     options.verbose (1,1) logical = true
     options.params = {}
     options.wind (1,1) logical = false
+    options.rootName (1,:) string = {};
 end
 
 % Extract options
@@ -77,6 +78,7 @@ grid_resolution = options.resolution;
 verbose = options.verbose;
 additional_params = options.params;
 wind = options.wind;
+rootName = options.rootName;
 
 % Convert single string or string array to cell array
 if ischar(additional_params) || isstring(additional_params)
@@ -94,7 +96,7 @@ if target_lon < 0
 end
 
 % Parallel processing variables
-maxWorkers = 6; 
+maxWorkers = 6;
 % Check if parallel processing is available
 [useParallel, ~] = waveDataToolbox.utils.localEnableParallel(options.useParallel, maxWorkers, verbose);
 
@@ -151,7 +153,8 @@ for k = 1:nM
         pkgs{k} = 'gridded';
     end
     % Generate output folder and file name for cache
-    [folders{k}, outFiles{k}] = generateCacheFilename(wind, location_info, ym, region, grid_resolution);
+    [folders{k}, outFiles{k}] = generateCacheFilename(wind, location_info, ym, ...
+        region, grid_resolution,rootName);
     % Ensure both the base folder and the per-month subfolder exist
     if ~exist(folders{k},'dir')
         mkdir(folders{k});
@@ -197,16 +200,27 @@ end
 end
 
 %% Helper function for generating cache filenames
-function [folder_name, filename] = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution)
+function [folder_name, filename] = generateCacheFilename(wind, location_info, current_ym, region, grid_resolution, rootName)
 % Use actual coordinates if available
 current_lon = location_info.actual_lon;
 current_lat = location_info.actual_lat;
-if wind
-    folder_name = sprintf('outputs/lon%.4fE_lat%.4fN_wind', current_lon, current_lat);
-    filename    = sprintf('%s/monthly_files/wind_data_%d_%.4fE_%.4fN.mat', folder_name, current_ym, current_lon, current_lat);
+
+% Build base folder name
+if isempty(rootName)
+    base = sprintf('lon%.4fE_lat%.4fN', current_lon, current_lat);
 else
-    folder_name = sprintf('outputs/lon%.4fE_lat%.4fN', current_lon, current_lat);
-    filename    = sprintf('%s/monthly_files/wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', folder_name, current_ym, region, grid_resolution, current_lon, current_lat);
+    base = sprintf('%s_lon%.4fE_lat%.4fN', rootName, current_lon, current_lat);
+end
+
+% Construct the output folder name, optionally with a custom root name
+if wind
+    folder_name = fullfile('outputs', [base '_wind']);
+    filename = fullfile(folder_name, 'monthly_files', ...
+        sprintf('wind_data_%d_%.4fE_%.4fN.mat', current_ym, current_lon, current_lat));
+else
+    folder_name = fullfile('outputs', base);
+    filename = fullfile(folder_name, 'monthly_files', ...
+        sprintf('wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', current_ym, region, grid_resolution, current_lon, current_lat));
 end
 end
 
