@@ -87,5 +87,4 @@ y_max = min(85, target_lat + 3);
 ylim([y_min, y_max]);
 
 hold off;
-print(gcf, '-dpng', '-r600', 'locationComparison')
 end

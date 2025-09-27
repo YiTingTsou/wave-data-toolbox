@@ -92,15 +92,11 @@ if ~isempty(all_time) && any(~cellfun(@isempty, all_time))
 
     distance_km = waveDataToolbox.utils.calculateDistance(target_lat, target_lon, location_info);
     folder_name = folders{find(validMask,1,'first')};
-    if wind
-        dataset_metadata = waveDataToolbox.utils.spec.saveCompleteDataset( ...
-            folder_name, wave_data, location_info, start_year_month, end_year_month, ...
-            additional_params, distance_km, verbose);
-    else
-        dataset_metadata = waveDataToolbox.utils.gridded.saveCompleteDataset( ...
-            folder_name, wave_data, location_info, start_year_month, end_year_month, ...
-            additional_params, distance_km, verbose, region, grid_resolution);
-    end
+
+    % Save wind dataset and metadata
+    dataset_metadata = waveDataToolbox.utils.saveCompleteDataset( ...
+        folder_name, wave_data, location_info, start_year_month, end_year_month, ...
+        additional_params, distance_km, verbose);
 else
     warning('No data was successfully loaded for streaming assembly.');
     wave_data = table();

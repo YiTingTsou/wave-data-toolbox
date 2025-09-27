@@ -28,6 +28,7 @@
 - **fetchAndCache.m**: Fetch and cache monthly data files, optionally in parallel
 - **assembleAndSaveDataset**: Assemble wave or wind data from monthly files and save complete dataset.
 - **assembleStreamedDataset.m**: Assemble wave or wind data using streamed access via MATFILE if assembleAndSaveDataset fails due to memory limits
+- **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data
 
 The following helper functions support the main wave and wind data loading workflow, `+gridded/` and `+spec/`:
 
@@ -35,7 +36,6 @@ The following helper functions support the main wave and wind data loading workf
 - **`loadMonthlyData.m`**: Loads wind or wave data for a single month, with built-in fallback logic for missing variables
 - **`saveMonthlyData.m`**: Saves individual monthly datasets to disk
 - **`storeMonthlyData.m`**: Collects and stores monthly wave data in cell arrays for further processing
-- **`saveCompleteDataset.m`**: Aggregates and saves complete datasets for both wave and wind data
 
 ### Internal Helper Functions for `waveHindcastAnalysis`
 
