@@ -27,7 +27,7 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 - Wave data: retrieved from the `gridded` catalogue
 - Wind data: retrieved from the `spec` catalogue
 
-### 1.3 Parameter Table
+### 1.3 Parameter table
 
 | Parameter          | Type       | Default | Applies to | Description                                     |
 | ------------------ | ---------- | ------- | ---------- | ----------------------------------------------- |
@@ -50,13 +50,13 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 | `aus`  | Australian region | 10, 4                    | 197901–present    |
 | `pac`  | Western Pacific   | 10, 4                    | 197901–present    |
 
-> Check latest monthly availability at the [`gridded`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) catalogue.
-
 ![Data Coverage by Region and Resolution](figures/dataCoverage_gridded.png)
 
-> Check latest monthly availability at the [`spec`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html) catalogue.
+> Check latest monthly availability at the [`gridded`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/catalog.html) catalogue.
 
 ![Available Grind Points for spec Catalogue](figures/dataCoverage_spec.png)
+
+> Check latest monthly availability at the [`spec`](https://data-cbr.csiro.au/thredds/catalog/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/spec/catalog.html) catalogue.
 
 ### 1.3.3 Exploring available parameters for `params`
 
@@ -120,7 +120,7 @@ waveHindcastAnalysis(x_param, y_param, dataset_metadata, ...
 
 Create a bi‑variate probability distribution heatmap from paired series.
 
-### 2.3 Parameter Table
+### 2.3 Parameter table
 
 | Parameter          | Type      | Default                             | Description                                     |
 | ------------------ | --------- | ----------------------------------- | ----------------------------------------------- |
