@@ -9,7 +9,7 @@
 - **Permission errors** - Ensure write access to the working directory (for `outputs/`)
 - **Interrupted downloads** - Re-run with the same inputs. Existing monthly files will be skipped
 
-### Parallel Pool
+### Parallel pool
 
 #### Why is my parallel job queued?
 
