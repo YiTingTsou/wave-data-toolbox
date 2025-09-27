@@ -45,37 +45,18 @@ parse(p, foldername, data_tbl, location_info, start_year_month, end_year_month, 
 opts = p.Results;
 foldername = string(opts.foldername);
 
-%% ---- Build base filename ----
-switch opts.type
-    case "wind"
-        base = sprintf("wind_data_%d_%d_%.4fE_%.4fN", ...
-            opts.start_year_month, opts.end_year_month, ...
-            location_info.actual_lon, location_info.actual_lat);
-    case "wave"
-        region = opts.region;
-        gr = opts.grid_resolution;
-        base = sprintf("wave_data_%d_%d_%s_%dm_%.4fE_%.4fN", ...
-            opts.start_year_month, opts.end_year_month, region, round(gr), ...
-            location_info.actual_lon, location_info.actual_lat);
-    otherwise
-        error('Unsupported type: %s', opts.type);
-end
-
+%% Wind and wave data table
+% Build base filename
+base = opts.type + "_data";
 mat_file = fullfile(foldername, base + ".mat");
 csv_file = fullfile(foldername, base + ".csv");
 
-%% ---- Save data table ----
-switch opts.type
-    case "wind"
-        wind_data = data_tbl; %#ok<NASGU>
-        save(mat_file, 'wind_data');
-    case "wave"
-        wave_data = data_tbl; %#ok<NASGU>
-        save(mat_file, 'wave_data');
-end
+% Save data table
+data_struct = struct(base, data_tbl);
+save(mat_file, '-struct', 'data_struct');
 writetable(data_tbl, csv_file);
 
-%% ---- Build and save metadata ----
+%% Build and save metadata
 dataset_metadata = location_info;
 dataset_metadata.start_year_month = start_year_month;
 dataset_metadata.end_year_month   = end_year_month;
@@ -96,12 +77,11 @@ meta_file = fullfile(foldername, "metadata.mat");
 save(meta_file, 'dataset_metadata');
 
 if verbose
-    fprintf('\nComplete %s dataset saved\n', opts.type);
+    fprintf('Complete %s dataset saved\n', opts.type);
+end
 end
 
-end
-
-%% ---- Helper: path segment after "outputs" with either separator ----
+%% Helper: path segment after "outputs" with either separator
 function tail = afterOutputs(folder_name)
 folder_name = string(folder_name);
 % Find 'outputs' followed by / or \ and extract after the last one

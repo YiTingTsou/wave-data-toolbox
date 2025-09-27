@@ -195,9 +195,9 @@ if save_figure
     title_prefix = strrep(title_prefix, ' ', '');
     % Construct the output filename, optionally with a custom root name
     if isempty(rootName)
-        filename = sprintf('%sRose_%d_%d_%.4fE_%.4fN', title_prefix, start_year_month, end_year_month, actual_lon, actual_lat);
+        filename = sprintf('%sRose', title_prefix);
     else
-        filename = sprintf('%s_%sRose_%d_%d_%.4fE_%.4fN',rootName, title_prefix, start_year_month, end_year_month, actual_lon, actual_lat);
+        filename = sprintf('%s_%sRose',rootName, title_prefix);
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
     print(gcf, '-dpng', '-r300', fullfile('outputs',dataset_metadata.filename, [filename '.png']))

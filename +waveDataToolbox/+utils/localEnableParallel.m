@@ -56,10 +56,10 @@ try
     end
 
     if verbose
-        fprintf('[parallel] Using %d workers.\n', pool.NumWorkers);
+        fprintf('[parallel] Using %d workers\n', pool.NumWorkers);
     end
 catch ME
-    warning(ME.identifier, '[parallel] disabled: %s\nUsing serial mode instead.', ME.message);
+    warning(ME.identifier, '[parallel] disabled: %s\nUsing serial mode instead', ME.message);
     pool = [];
 end
 end

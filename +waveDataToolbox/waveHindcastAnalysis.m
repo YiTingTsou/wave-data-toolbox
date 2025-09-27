@@ -183,9 +183,9 @@ if save_figure
     end
     % Construct the output filename, optionally with a custom root name
     if isempty(rootName)
-        filename = sprintf('biVariate_%d_%d_%.4fE_%.4fN', start_year_month, end_year_month, actual_lon, actual_lat);
+        filename = 'biVariate';
     else
-        filename = sprintf('%s_biVariate_%d_%d_%.4fE_%.4fN',rootName, start_year_month, end_year_month, actual_lon, actual_lat);
+        filename = rootName + "_biVariate";  % string concatenation
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
     print(gcf, '-dpng', '-r300', fullfile('outputs', dataset_metadata.filename, [filename '.png']))
