@@ -72,7 +72,7 @@ url = 'https://data-cbr.csiro.au/thredds/dodsC/catch_all/CMAR_CAWCR-Wave_archive
 info = ncinfo(url); {info.Variables.Name}' % list parameter names
 ```
 
-### 1.5 Outputs
+### 1.4 Outputs
 
 _Note: `wave_data` or `wind_data` is saved to the `outputs/` data retrieval location folder as both .mat and .csv files; `dataset_metadata` is included only in the .mat file._
 

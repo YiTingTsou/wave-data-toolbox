@@ -4,29 +4,29 @@ This guide shows typical workflows and runnable examples for the toolbox.
 
 For complete argument definitions, defaults, and output fields, see [Function and Parameter Reference](parameters.md).
 
-## **Typical workflow**
+## 1. Typical workflow
 
 1. Choose a location and time range
 2. Select the region, resolution, or other function properties in `loadWaveData`
 3. Check extraction location proximity
 4. Use the downloaded data or generated figures
 
-## 1. Basic Usage of `loadWaveData` function
+## 2. Basic Usage of `loadWaveData` function
 
-### 1.1 Load wave data
+### 2.1 Load wave data
 
 ```matlab
 % Using function defaults, the region is "aus" and the resolution is "10"
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
 ```
 
-### 1.2 Load wind data
+### 2.2 Load wind data
 
 ```matlab
 [wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
 ```
 
-### 1.3 Optional Settings
+### 2.3 Optional Settings
 
 To customise behaviour, you may pass optional name-value pairs.
 Common options for wave and wind loading include:
@@ -46,25 +46,25 @@ _Example: Load wave data with custom settings_
     "verbose", false);              % display messages
 ```
 
-### 1.4 Outputs
+### 2.4 Outputs
 
 - `wave_data` or `wind_data`: table of time‑series variables suitable for plotting and statistics
 - `dataset_metadata`: struct describing extraction and processing
 - Saved monthly data
 
-## 2. Analysis Tools
+## 3. Analysis Tools
 
-### 2.1 `waveHindcastAnalysis`
+### 3.1 `waveHindcastAnalysis`
 
 Generate bi-variate probability distribution heatmaps.
 
-#### 2.1.1 Basic usage
+#### 3.1.1 Basic usage
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 ```
 
-#### 2.1.2 Advanced full options
+#### 3.1.2 Advanced full options
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
@@ -76,7 +76,7 @@ waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
     "rootName","bassStraight");   % Saved figure names will begin with 'bassStraight'
 ```
 
-### 2.2 `waveRose`
+### 3.2 `waveRose`
 
 Generate polar histogram (rose plot) showing the joint probability distribution of wave (or wind/current) directions and heights (or speeds).
 
@@ -93,7 +93,7 @@ waveRose(wave_data.dir, wave_data.hs, dataset_metadata, ...
 waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 ```
 
-### 2.3 Example outputs
+### 3.3 Example outputs
 
 <table>
 <tr>
@@ -112,7 +112,7 @@ waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 </tr>
 </table>
 
-### 2.4 **`locationComparison`**
+### 3.4 **`locationComparison`**
 
 Visualise the actual grid point used for data extraction versus your target location.
 
