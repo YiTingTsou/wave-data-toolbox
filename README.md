@@ -97,7 +97,7 @@ http://hdl.handle.net/102.100.100/137152?index=1
 **Toolbox citation:**
 
 ```
-Tsou, Y.-T. (2025). Wave Data Loading Toolbox [Computer software]. Australian Maritime College, University of Tasmania. GitHub. https://github.com/YiTingTsou/wave-data-toolbox
+Tsou, Y. (2025). Wave Data Loading Toolbox (Version 1.1.6) [Computer software]. https://github.com/YiTingTsou/wave-data-toolbox
 ```
 
 ## License
