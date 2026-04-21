@@ -2,15 +2,17 @@
 
 ## For Users
 
-### Main Script
+### Example Scripts
 
-- **`loadWaveDataMain.m`** - Example script demonstrating the use of all toolbox functions
+- **`loadWaveDataExample.m`** - End-to-end example for running `loadWaveData` and then the analysis tools
+- **`loadWaveWindDataExample.m`** - End-to-end example for running `loadWaveWindData` and then the analysis tools
 
 ### Toolbox Functions
 
 #### Core Function
 
-- **`loadWaveData.m`** - Function for loading wave data
+- **`loadWaveData.m`** - Function for loading wave data or wind data
+- **`loadWaveWindData.m`** - Function for loading both wave and wind data
 
 #### Analysis Functions
 
@@ -44,6 +46,7 @@ The following helper functions support the main wave and wind data loading workf
 ```
  +waveDataToolbox/
    ├── loadWaveData.m
+   ├── loadWaveWindData.m
    ├── locationComparison.m
    ├── waveHindcastAnalysis.m
    ├── waveRose.m

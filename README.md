@@ -32,7 +32,7 @@ In MATLAB, add the toolbox to your path:
 
 ```matlab
 addpath(genpath('path/to/wave-data-toolbox'))
-% If want to make this permanent across MATLAB sessions
+% Run savepath only if you want this toolbox permanently on your MATLAB path
 savepath
 ```
 
@@ -46,11 +46,26 @@ savepath
 
 ## Usage
 
-Open `loadWaveDataMain.m` and define the latitude, longitude, and time range you want to load.
+This toolbox has two parts:
+
+- Data loading functions:
+  - `loadWaveData` (wave data or wind data)
+  - `loadWaveWindData` (combined wave + wind workflow)
+- Analysis functions for downloaded data:
+  - `waveHindcastAnalysis`
+  - `waveRose`
+  - `locationComparison`
+
+The two scripts in the repository root are end-to-end examples that run loading and analysis in sequence:
+
+- `loadWaveDataExample.m`
+- `loadWaveWindDataExample.m`
+
+You can use these scripts as templates and then customize parameters, function calls, and workflow order to match your own use case.
 
 For detailed function parameters and output descriptions, see the [Usage Guide](docs/usage.md).
 
-### What happens when you run it
+### What happens when you run the example scripts
 
 - The command window displays the target location and closest available grid point, plus distance between them
 - Wave and wind data are downloaded from the CAWCR Wave Hindcast via OPeNDAP

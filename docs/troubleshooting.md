@@ -32,6 +32,7 @@
 
 ```matlab
 help loadWaveData
+help loadWaveWindData
 help waveHindcastAnalysis
 help waveRose
 help locationComparison
