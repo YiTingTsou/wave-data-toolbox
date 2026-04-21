@@ -23,6 +23,7 @@ function [wave_data, dataset_metadata] = loadWaveData(target_lon, target_lat, st
 %   'useParallel'     - Use parallel processing (default: true)
 %   'params'          - Cell array of additional parameter names to load (default: {})
 %   'wind'            - Load wind data instead of wave data (default: false)
+%   'rootName'        - Custom root folder name for saving downloaded data (default: "")
 %
 % OUTPUT:
 %   wave_data         - Table with time series wave data: time, t02 [s], hs [m], dir [deg]
@@ -69,7 +70,7 @@ arguments
     options.verbose (1,1) logical = true
     options.params = {}
     options.wind (1,1) logical = false
-    options.rootName (1,:) string = {};
+    options.rootName (1,:) string = "";
 end
 
 % Extract options
@@ -206,10 +207,11 @@ current_lon = location_info.actual_lon;
 current_lat = location_info.actual_lat;
 
 % Build base folder name
-if isempty(rootName)
-    base = sprintf('lon%.4fE_lat%.4fN', current_lon, current_lat);
+location_folder = sprintf('lon%.4fE_lat%.4fN', current_lon, current_lat);
+if strlength(rootName) == 0
+    base = location_folder;
 else
-    base = sprintf('%s_lon%.4fE_lat%.4fN', rootName, current_lon, current_lat);
+    base = fullfile(char(rootName), location_folder);
 end
 
 % Construct the output folder name, optionally with a custom root name
@@ -218,7 +220,7 @@ if wind
     filename = fullfile(folder_name, 'monthly_files', ...
         sprintf('wind_data_%d_%.4fE_%.4fN.mat', current_ym, current_lon, current_lat));
 else
-    folder_name = fullfile('outputs', base);
+    folder_name = fullfile('outputs', [base '_wave']);
     filename = fullfile(folder_name, 'monthly_files', ...
         sprintf('wave_data_%d_%s_%dm_%.4fE_%.4fN.mat', current_ym, region, grid_resolution, current_lon, current_lat));
 end

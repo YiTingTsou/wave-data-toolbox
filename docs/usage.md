@@ -53,31 +53,54 @@ _Example: Load wave data with custom settings_
 - `dataset_metadata`: struct describing extraction and processing
 - Saved monthly data
 
-## 3. Analysis Tools
+## 3. Basic Usage of `loadWaveWindData` function
 
-### 3.1 `waveHindcastAnalysis`
+### 3.1 Load wave and wind data together
+
+```matlab
+[wave_wind_data] = loadWaveWindData(145.1768, -40.026, 201501, 201512, ...
+    "region", "aus", ...
+    "resolution", 10, ...
+    "useParallel", false, ...
+    "verbose", true, ...
+    "rootName", "bassStraight");
+```
+
+This function downloads both wave and wind data in one call, then saves the combined result as `wave_wind_data.mat` inside the resolved output folder.
+
+The returned structure contains:
+
+- `wave_data`
+- `wind_data`
+- `wave_metadata`
+- `wind_metadata`
+
+## 4. Analysis Tools
+
+### 4.1 `waveHindcastAnalysis`
 
 Generate bi-variate probability distribution heatmaps.
 
-#### 3.1.1 Basic usage
+#### 4.1.1 Basic usage
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata);
 ```
 
-#### 3.1.2 Advanced full options
+#### 4.1.2 Advanced full options
 
 ```matlab
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, dataset_metadata, ...
-    "bins", 20, ...               % No. of bins
+    "bins", 20, ...                % No. of bins
     "save_fig", false, ...
-    "text", false, ...            % Display percentage values
+    "text", false, ...             % Display percentage values
     "xlabel", "X-axis Label", ...
     "ylabel", "Y-axis Label", ...
-    "rootName","bassStraight");   % The saved figure name will begin with 'bassStraight'
+    "rootName","bassStraight", ... % The saved figure name will begin with 'bassStraight'
+    "largeFig", true);             % Display the figure at half-screen size
 ```
 
-### 3.2 `waveRose`
+### 4.2 `waveRose`
 
 Generate polar histogram (rose plot) showing the joint probability distribution of wave (or wind/current) directions and heights (or speeds).
 
@@ -88,13 +111,14 @@ mean_dir = waveRose(wave_data.dir, wave_data.hs, dataset_metadata);
 % Advanced full options for using it as wave rose
 waveRose(wave_data.dir, wave_data.hs, dataset_metadata, ...
     "save_fig", false, ...
-    "rootName","bassStraight");
+    "rootName","bassStraight", ...
+    "largeFig", true);
 
 % Wind rose
 waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 ```
 
-### 3.3 Example outputs
+### 4.3 Example outputs
 
 <table>
 <tr>
@@ -113,7 +137,7 @@ waveRose(wind_data.wnddir, wind_data.wnd, dataset_metadata, "title", "Wind");
 </tr>
 </table>
 
-### 3.4 **`locationComparison`**
+### 4.4 **`locationComparison`**
 
 Visualise the actual grid point used for data extraction versus your target location.
 

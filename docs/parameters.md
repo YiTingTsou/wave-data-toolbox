@@ -27,19 +27,19 @@ Wave and wind data are stored in different catalogues in CAWCR; the function can
 
 ### 1.3 Parameter table
 
-| Parameter          | Type       | Default | Applies to | Description                                     |
-| ------------------ | ---------- | ------- | ---------- | ----------------------------------------------- |
-| `target_lon`       | numeric    | —       | both       | Target longitude [degrees E]                    |
-| `target_lat`       | numeric    | —       | both       | Target latitude [degrees N]                     |
-| `start_year_month` | numeric    | —       | both       | Start date in `YYYYMM` format                   |
-| `end_year_month`   | numeric    | —       | both       | End date in `YYYYMM` format                     |
-| `region`           | string     | `"aus"` | wave only  | Dataset region: `"aus"`, `"glob"`, `"pac"`      |
-| `resolution`       | numeric    | `10`    | wave only  | Grid resolution [arcminutes]                    |
-| `verbose`          | logical    | `true`  | both       | Display progress messages                       |
-| `useParallel`      | logical    | `true`  | both       | Use parallel pool for data loading              |
-| `params`           | cell array | `{}`    | both       | Additional variables to load (e.g., `'fp'`)     |
-| `wind`             | logical    | `false` | both       | If `true`, load wind data from `spec` catalogue |
-| `rootName`         | string     | `{}`    | both       | Define a custom root name for the saving folder |
+| Parameter          | Type       | Default | Applies to | Description                                          |
+| ------------------ | ---------- | ------- | ---------- | ---------------------------------------------------- |
+| `target_lon`       | numeric    | —       | both       | Target longitude [degrees E]                         |
+| `target_lat`       | numeric    | —       | both       | Target latitude [degrees N]                          |
+| `start_year_month` | numeric    | —       | both       | Start date in `YYYYMM` format                        |
+| `end_year_month`   | numeric    | —       | both       | End date in `YYYYMM` format                          |
+| `region`           | string     | `"aus"` | wave only  | Dataset region: `"aus"`, `"glob"`, `"pac"`           |
+| `resolution`       | numeric    | `10`    | wave only  | Grid resolution [arcminutes]                         |
+| `verbose`          | logical    | `true`  | both       | Display progress messages                            |
+| `useParallel`      | logical    | `true`  | both       | Use parallel pool for data loading                   |
+| `params`           | cell array | `{}`    | both       | Additional variables to load (e.g., `'fp'`)          |
+| `wind`             | logical    | `false` | both       | If `true`, load wind data from `spec` catalogue      |
+| `rootName`         | string     | `""`    | both       | Name of the root folder used to save downloaded data |
 
 ### 1.3.1 Regions, resolutions, coverage for wave data
 
@@ -101,9 +101,52 @@ _Note: `wave_data` or `wind_data` is saved to the `outputs/` data retrieval loca
     - `region` - Dataset region ('aus', 'glob', or 'pac')
     - `grid_resolution` - Grid resolution [arcminutes]
 
-## 2. `waveHindcastAnalysis`
+## 2. `loadWaveWindData`
 
 ### 2.1 Function signature
+
+```matlab
+[wave_wind_data] = loadWaveWindData(target_lon, target_lat, start_year_month, end_year_month, ...
+    "region", region, ...
+    "resolution", resolution, ...
+    "verbose", verbose, ...
+    "useParallel", parallelProcessing, ...
+    "rootName", "Root name for the saved folder");
+```
+
+### 2.2 Description
+
+This function is a convenience wrapper that loads both wave and wind hindcast data in one call. It reuses the same core loading workflow as `loadWaveData`, but returns a combined structure containing both datasets and their metadata.
+
+Use this function when you want to download wave and wind data for the same location and time range without calling `loadWaveData` twice.
+
+### 2.3 Parameter table
+
+| Parameter          | Type    | Default                             | Description                                                                                                         |
+| ------------------ | ------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `target_lon`       | numeric | —                                   | Target longitude [degrees E]                                                                                        |
+| `target_lat`       | numeric | —                                   | Target latitude [degrees N]                                                                                         |
+| `start_year_month` | numeric | —                                   | Start date in `YYYYMM` format                                                                                       |
+| `end_year_month`   | numeric | —                                   | End date in `YYYYMM` format                                                                                         |
+| `region`           | string  | `"aus"`                             | Dataset region forwarded to `loadWaveData`                                                                          |
+| `resolution`       | numeric | `10`                                | Grid resolution forwarded to `loadWaveData`                                                                         |
+| `verbose`          | logical | `true`                              | Display progress messages                                                                                           |
+| `useParallel`      | logical | `true`                              | Use parallel pool for data loading                                                                                  |
+| `rootName`         | string  | `lon<target_lon>E_lat<target_lat>N` | Name of the root folder used to save the combined result. If omitted, it defaults to the target lon/lat folder name |
+
+### 2.4 Outputs
+
+- **wave_wind_data** - Structure containing:
+  - `wave_data`: wave time series table
+  - `wind_data`: wind time series table
+  - `wave_metadata`: metadata for the wave extraction
+  - `wind_metadata`: metadata for the wind extraction
+
+The combined output is also saved as `wave_wind_data.mat` inside the resolved `outputs/` root folder.
+
+## 3. `waveHindcastAnalysis`
+
+### 3.1 Function signature
 
 ```matlab
 waveHindcastAnalysis(x_param, y_param, dataset_metadata, ...
@@ -115,20 +158,21 @@ waveHindcastAnalysis(x_param, y_param, dataset_metadata, ...
     "rootName","Root name for the saved figure");
 ```
 
-### 2.2 Description
+### 3.2 Description
 
 Create a bi‑variate probability distribution heatmap from paired series.
 
-### 2.3 Parameter table
+### 3.3 Parameter table
 
-| Parameter          | Type      | Default                             | Description                                     |
-| ------------------ | --------- | ----------------------------------- | ----------------------------------------------- |
-| `x_param`          | numeric   | —                                   | First parameter (plotted on x-axis)             |
-| `y_param`          | numeric   | —                                   | Second parameter (plotted on y-axis)            |
-| `dataset_metadata` | structure | —                                   | Dataset information from `loadWaveData`         |
-| `bins`             | numeric   | `15`                                | Number of bins for each dimension               |
-| `save_fig`         | logical   | `true`                              | Save figure to PNG file                         |
-| `text`             | logical   | `true`                              | Display percentage values on heatmap            |
-| `xlabel`           | string    | `"Period T_{02} [s]"`               | X-axis label                                    |
-| `ylabel`           | string    | `"Significant Wave Height H_s [m]"` | Y-axis label                                    |
-| `rootName`         | string    | `{}`                                | Define a custom root name for saving the figure |
+| Parameter          | Type      | Default                             | Description                                                              |
+| ------------------ | --------- | ----------------------------------- | ------------------------------------------------------------------------ |
+| `x_param`          | numeric   | —                                   | First parameter (plotted on x-axis)                                      |
+| `y_param`          | numeric   | —                                   | Second parameter (plotted on y-axis)                                     |
+| `dataset_metadata` | structure | —                                   | Dataset information from `loadWaveData`                                  |
+| `bins`             | numeric   | `15`                                | Number of bins for each dimension                                        |
+| `save_fig`         | logical   | `true`                              | Save figure to PNG file                                                  |
+| `text`             | logical   | `true`                              | Display percentage values on heatmap                                     |
+| `xlabel`           | string    | `"Period T_{02} [s]"`               | X-axis label                                                             |
+| `ylabel`           | string    | `"Significant Wave Height H_s [m]"` | Y-axis label                                                             |
+| `rootName`         | string    | `{}`                                | Define a custom root name for saving the figure                          |
+| `largeFig`         | logical   | `false`                             | Display the figure at half-screen size (relative to the current monitor) |

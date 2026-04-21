@@ -37,6 +37,7 @@ function waveHindcastAnalysis(t02, hs, dataset_metadata, options)
 %   'xlabel'          - String: X-axis label (default: 'Period T_{02} [s]')
 %   'ylabel'          - String: Y-axis label (default: 'Significant Wave Height H_s [m]')
 %   'rootName'        - String: User option to define a custom root name for saving the figure (default: empty)
+%   'large_fig'       - Logical: If true, display the figure at half-screen size (default: false)
 %
 % OUTPUT:
 %   - Displays bi-variate probability heatmap with:
@@ -90,7 +91,8 @@ arguments
     options.text (1,1) logical = true
     options.xlabel (1,:) string = 'Period T_{02} [s]'
     options.ylabel (1,:) string = 'Significant Wave Height H_s [m]'
-    options.rootName (1,:) string = {};
+    options.rootName (1,:) string = {}
+    options.largeFig (1,1) logical = false
 end
 
 % Extract option values
@@ -100,6 +102,7 @@ show_percentages = options.text;
 x_label = options.xlabel;
 y_label = options.ylabel;
 rootName = options.rootName;
+largeFig = options.largeFig;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;
@@ -172,7 +175,11 @@ set(gca, 'FontSize', 12)
 axis tight
 
 % Configure figure window properties
-set(gcf,'Name','Bi-Variate Probability Distribution','units','normalized','outerposition',[1/8 1/4 1/3 1/2])
+if largeFig
+    set(gcf,'Name','Bi-Variate Probability Distribution','units','normalized','outerposition',[0 0 1/2 1])
+else
+    set(gcf,'Name','Bi-Variate Probability Distribution','units','normalized','outerposition',[1/8 1/4 1/3 1/2])
+end
 
 %% Save the figure
 % Save the figure as a high-resolution PNG if requested

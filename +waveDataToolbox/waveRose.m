@@ -29,6 +29,7 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 %   'save_fig'        - Logical: Save figure to PNG file (default: true)
 %   'title'           - String: Custom title prefix (default: 'Wave')
 %   'rootName'        - String: User option to define a custom root name for saving the figure (default: empty)
+%   'large_fig'       - Logical: If true, display the figure at half-screen size (default: false)
 %
 % OUTPUT:
 %   mean_dir          - Circular mean direction in degrees (0-360°)
@@ -63,18 +64,20 @@ function mean_dir = waveRose(wave_directions, hs, dataset_metadata, options)
 
 %% Parse input arguments
 arguments
-    wave_directions (:,1) double          % Array of directions (degrees)
-    hs (:,1) double                       % Array of directions (degrees)
-    dataset_metadata struct               % Metadata structure
-    options.save_fig (1,1) logical = true % Save figure to PNG
-    options.title (1,:) string = 'Wave'     % Custom title prefix
-    options.rootName (1,:) string = {};
+    wave_directions (:,1) double
+    hs (:,1) double
+    dataset_metadata struct
+    options.save_fig (1,1) logical = true
+    options.title (1,:) string = 'Wave'
+    options.rootName (1,:) string = {}
+    options.largeFig (1,1) logical = false
 end
 
 % Extract option values
 save_figure = options.save_fig;
 title_prefix = options.title;
 rootName = options.rootName;
+largeFig = options.largeFig;
 
 actual_lon = dataset_metadata.actual_lon;
 actual_lat = dataset_metadata.actual_lat;
@@ -183,7 +186,12 @@ ax.FontSize = 12; % Set font size for axes elements
 
 % Configure figure window properties
 figure_name = sprintf('%s Rose', title_prefix);
-set(gcf,'Name', figure_name,'units','normalized','outerposition',[1/2 1/4 1/3 1/2])
+
+if largeFig
+    set(gcf,'Name', figure_name,'units','normalized','outerposition',[0 0 1/2 1])
+else
+    set(gcf,'Name', figure_name,'units','normalized','outerposition',[1/2 1/4 1/3 1/2])
+end
 
 %% Save the figure if requested
 if save_figure
