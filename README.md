@@ -6,12 +6,25 @@ A MATLAB toolbox for extracting and analysing wave and wind hindcast data from t
 
 Loads data for January to December 2015 at a specified location.
 
-```matlab
-% Loads wave data from the 'aus' region with a grid resolution of 10
-[wave_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
+### Approach 1: Load wave and wind separately using `loadWaveData`
 
-% Loads wind data
-[wind_data, dataset_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
+Use this approach if you need to load wave data, wind data, or both with individual function calls. Each call returns the data and its own metadata.
+
+```matlab
+% Load wave data
+[wave_data, wave_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512);
+
+% Load wind data separately
+[wind_data, wind_metadata] = loadWaveData(145.1768, -40.026, 201501, 201512, 'wind', true);
+```
+
+### Approach 2: Load wave and wind together using `loadWaveWindData`
+
+Use this approach for convenience if you need both wave and wind data. A single function call returns both datasets and their metadata in a single structured output.
+
+```matlab
+% Load both wave and wind data in one call
+wave_wind_data = loadWaveWindData(145.1768, -40.026, 201501, 201512);
 ```
 
 - [Usage Guide](docs/usage.md)
@@ -69,7 +82,7 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 
 - The command window displays the target location and closest available grid point, plus distance between them
 - Wave and wind data are downloaded from the CAWCR Wave Hindcast via OPeNDAP
-- The complete dataset is saved to `outputs/` in both .mat and .csv formats, along with a metadata file in .mat format
+- The complete dataset is saved to `outputs/` in both `.mat` and `.csv` formats, along with a metadata file in .mat format
 - Probability distribution heatmap and directional wave rose are generated and saved
 - A figure confirms that wave and wind data are loaded close to the target location
 
@@ -112,7 +125,7 @@ http://hdl.handle.net/102.100.100/137152?index=1
 **Toolbox citation:**
 
 ```
-Tsou, Y. (2025). Wave Data Loading Toolbox (Version 1.1.6) [Computer software]. https://github.com/YiTingTsou/wave-data-toolbox
+Tsou, Y. (2026). Wave Data Loading Toolbox (Version 1.1.7) [Computer software]. https://github.com/YiTingTsou/wave-data-toolbox
 ```
 
 ## License

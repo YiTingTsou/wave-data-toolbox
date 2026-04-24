@@ -23,7 +23,7 @@ start_year_month = 201501; % Start YearMonth (YYYYMM)
 end_year_month = 201502;   % End YearMonth (YYYYMM)
 
 %% Load Wave and Wind Data
-[wave_wind_data] = loadWaveWindData(target_lon, target_lat, start_year_month, end_year_month,"useParallel",false);
+[wave_wind_data] = loadWaveWindData(target_lon, target_lat, start_year_month, end_year_month);
 
 %% Data Analysis and Visualization
 % Assign parameters
