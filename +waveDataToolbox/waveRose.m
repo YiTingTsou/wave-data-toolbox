@@ -198,20 +198,7 @@ if save_figure
     % Create output directory if it does not exist
     output_folder = fullfile(pwd, 'outputs', dataset_metadata.filename);
     if ~exist(output_folder, 'dir')
-        try
-            mkdir_ok = mkdir(output_folder);
-        catch mkdir_exc
-            mkdir_ok = false;
-        end
-        % If mkdir fails, prompt user to select a folder
-        if ~mkdir_ok
-            user_output_folder = uigetdir(pwd, 'Select a folder to save the figure');
-            if isequal(user_output_folder, 0)
-                output_folder = '';
-            else
-                output_folder = user_output_folder;
-            end
-        end
+        mkdir(output_folder)
     end
 
     title_prefix = lower(title_prefix);
@@ -224,7 +211,13 @@ if save_figure
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
     if ~isempty(output_folder)
-        print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
+        try
+            print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
+        catch
+            % Prevent the issue of Mac cannot find the folder path
+            output_folder = uigetdir(pwd, 'Select a folder to save the figure');
+            print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
+        end
     end
 end
 end
