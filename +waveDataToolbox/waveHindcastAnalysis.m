@@ -185,8 +185,9 @@ end
 % Save the figure as a high-resolution PNG if requested
 if save_figure
     % Create output directory if it does not exist
-    if ~exist(fullfile('outputs',dataset_metadata.filename), 'dir')
-        mkdir(fullfile('outputs',dataset_metadata.filename))
+    output_folder = fullfile(pwd, 'outputs', dataset_metadata.filename);
+    if ~exist(output_folder, 'dir')
+        mkdir(output_folder)
     end
     % Construct the output filename, optionally with a custom root name
     if isempty(rootName)
@@ -195,6 +196,6 @@ if save_figure
         filename = sprintf('%s_biVariate',rootName);
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
-    print(gcf, '-dpng', '-r300', fullfile('outputs', dataset_metadata.filename, [filename '.png']))
+    print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
 end
 end
