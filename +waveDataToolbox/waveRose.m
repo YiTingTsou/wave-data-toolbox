@@ -198,18 +198,22 @@ if save_figure
     % Create output directory if it does not exist
     output_folder = fullfile(pwd, 'outputs', dataset_metadata.filename);
     if ~exist(output_folder, 'dir')
-        [mkdir_ok, mkdir_msg] = mkdir(output_folder);
+        try
+            mkdir_ok = mkdir(output_folder);
+        catch mkdir_exc
+            mkdir_ok = false;
+        end
+        % If mkdir fails, prompt user to select a folder
         if ~mkdir_ok
             user_output_folder = uigetdir(pwd, 'Select a folder to save the figure');
             if isequal(user_output_folder, 0)
-                warning('waveHindcastAnalysis:SaveCanceled', ...
-                    'Figure was not saved because no output folder was selected. Original mkdir error: %s', mkdir_msg);
                 output_folder = '';
             else
                 output_folder = user_output_folder;
             end
         end
     end
+
     title_prefix = lower(title_prefix);
     title_prefix = strrep(title_prefix, ' ', '');
     % Construct the output filename, optionally with a custom root name
@@ -219,6 +223,8 @@ if save_figure
         filename = sprintf('%s_%sRose',rootName, title_prefix);
     end
     % Save the current figure as a PNG (300 DPI) in the output directory
-    print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
+    if ~isempty(output_folder)
+        print(gcf, '-dpng', '-r300', fullfile(output_folder, [filename '.png']))
+    end
 end
 end
