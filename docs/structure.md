@@ -20,6 +20,10 @@
 - **`waveRose.m`** - Creates directional wave rose plots
 - **`locationComparison.m`** - Generates a figure showing the target location and the data extraction location(s)
 
+### Interactive Script
+
+- **`hindcastWaveWindVisualisation.m`** - Generates a heatmap, a wave rose, and a wind rose from the selected data and saves the resulting figure in the data file folder.
+
 ---
 
 ## For Contributors/Developers `+utils`

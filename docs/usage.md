@@ -154,3 +154,34 @@ locationComparison(dataset_metadata);
 ![Location Comparison](figures/locationComparison.png)
 
 **See also**: [Function and Parameter Reference](parameters.md), [Troubleshooting Guide](troubleshooting.md), [Toolbox Structure](structure.md)
+
+## 5. Interactive Script
+
+### 5.1 Use `hindcastWaveWindVisualisation.m` with existing combined data
+
+Use this script only after you have a combined dataset using `loadWaveWindData`.
+
+Prerequisites:
+
+- A previously saved `wave_wind_data.mat` file that contains:
+  - `wave_data`
+  - `wind_data`
+  - `wave_metadata`
+  - `wind_metadata`
+
+Run the script from the repository root:
+
+```matlab
+HindcastWaveWindVisualisation
+```
+
+What the script does:
+
+- Prompts you to select an existing `.mat` file
+- Loads wave and wind data from that file
+- Generates:
+  - one wave probability heatmap
+  - one wave rose
+  - one wind rose
+  - one extraction-location comparison figure
+- Saves outputs to the same folder as the selected `.mat` file

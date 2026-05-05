@@ -7,8 +7,8 @@
 % see README.md in the project root directory.
 %
 % Run the script and select `wave_wind_data.mat`.
-% A heatmap and two wave roses are generated from the selected data, and the
-% resulting figure is saved in the same folder as the data file.
+% A heatmap, one wave rose and one wind rose are generated from the selected data,
+% and the resulting figure is saved in the same folder as the data file.
 %
 % ==================================================================
 

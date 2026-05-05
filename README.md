@@ -88,6 +88,14 @@ For detailed function parameters and output descriptions, see the [Usage Guide](
 
 **Tip:** Load only one month first to verify the selected grid point is close to your target location.
 
+### Additional Interactive Script
+
+- `hindcastWaveWindVisualisation.m`
+
+If you already have `wave_wind_data.mat` using `loadWaveWindData`, you can run the script below for interactive post-processing.
+
+This script prompts you to select an existing `.mat` file, then generates one heatmap, one wave rose, and one wind rose, and saves outputs to the same folder as the selected file. For step-by-step guidance and prerequisites, see the [Usage Guide](docs/usage.md).
+
 ## Requirements
 
 - MATLAB R2024a (tested). Compatibility with earlier versions is not guaranteed.
