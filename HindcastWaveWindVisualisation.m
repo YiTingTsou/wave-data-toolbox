@@ -1,4 +1,4 @@
-%% Load Wave and Wind Data: Main Script Example Using the `loadWaveWindData` Function 
+%% Hindcast Wave–Wind Analysis and Visualisation
 %
 % Author: Yi-Ting Tsou
 % Australian Maritime College | University of Tasmania
@@ -6,8 +6,9 @@
 % For full documentation and usage instructions,
 % see README.md in the project root directory.
 %
-% This script demonstrates wave hindcast data loading and basic analysis
-% using the CAWCR Wave Hindcast – Aggregated Collection.
+% Run the script and select `wave_wind_data.mat`.
+% A heatmap and two wave roses are generated from the selected data, and the
+% resulting figure is saved in the same folder as the data file.
 %
 % ==================================================================
 
@@ -16,21 +17,20 @@ clc; clear; close all;
 % Import functions from the waveDataToolbox package
 import waveDataToolbox.*
 
-%% User Input: Set target location and time range
-target_lon = 146.5615; % Longitude [degrees E]
-target_lat = -40.477;  % Latitude [degrees N]
-start_year_month = 201501; % Start YearMonth (YYYYMM)
-end_year_month = 201502;   % End YearMonth (YYYYMM)
+%% User Input: Select `the wave_wind_data.mat`
+[selected_file,location] = uigetfile('*.mat','Select a file');
 
-%% Load Wave and Wind Data
-[wave_wind_data] = loadWaveWindData(target_lon, target_lat, start_year_month, end_year_month);
-
+load(fullfile(location,selected_file))
 %% Data Analysis and Visualization
 % Assign parameters
 wave_data = wave_wind_data.wave_data;
 wave_metadata = wave_wind_data.wave_metadata;
 wind_data = wave_wind_data.wind_data;
 wind_metadata = wave_wind_data.wind_metadata;
+
+% Update the metadata filename so the output is saved in the same folder as the selected file
+wave_metadata.filename = location;
+wind_metadata.filename = location;
 
 % Probability Distribution Heatmap
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, wave_metadata);

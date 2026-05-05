@@ -195,8 +195,21 @@ end
 
 %% Save the figure if requested
 if save_figure
-    % Create output directory if it does not exist
-    output_folder = fullfile(pwd, 'outputs', dataset_metadata.filename);
+    % Determine output folder.
+    % If dataset_metadata.filename is a full path, use it directly.
+    % Otherwise, create an outputs subfolder under the current working directory.
+
+    fn = dataset_metadata.filename;
+    % Detect absolute path (Windows + UNIX-compatible)
+    is_absolute = startsWith(fn, filesep) || ...        % UNIX, macOS
+        (ispc && ~isempty(regexp(fn, '^[A-Za-z]:[\\/]', 'once')));
+
+    if is_absolute
+        output_folder = fn;
+    else
+        output_folder = fullfile(pwd, 'outputs', fn);
+    end
+
     if ~exist(output_folder, 'dir')
         mkdir(output_folder)
     end
