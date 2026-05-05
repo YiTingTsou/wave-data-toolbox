@@ -20,9 +20,11 @@ import waveDataToolbox.*
 %% User Input: Select `the wave_wind_data.mat`
 [selected_file,location] = uigetfile('*.mat','Select a file');
 
+%% Load Dataset and Initialise Variables
+% Load the selected data
 load(fullfile(location,selected_file))
-%% Data Analysis and Visualization
-% Assign parameters
+
+% Assign parameters from the loaded dataset
 wave_data = wave_wind_data.wave_data;
 wave_metadata = wave_wind_data.wave_metadata;
 wind_data = wave_wind_data.wind_data;
@@ -32,6 +34,7 @@ wind_metadata = wave_wind_data.wind_metadata;
 wave_metadata.filename = location;
 wind_metadata.filename = location;
 
+%% Data Analysis and Visualization
 % Probability Distribution Heatmap
 waveHindcastAnalysis(wave_data.t02, wave_data.hs, wave_metadata);
 

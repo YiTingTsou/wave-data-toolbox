@@ -199,15 +199,11 @@ if save_figure
     % If dataset_metadata.filename is a full path, use it directly.
     % Otherwise, create an outputs subfolder under the current working directory.
 
-    fn = dataset_metadata.filename;
-    % Detect absolute path (Windows + UNIX-compatible)
-    is_absolute = startsWith(fn, filesep) || ...        % UNIX, macOS
-        (ispc && ~isempty(regexp(fn, '^[A-Za-z]:[\\/]', 'once')));
-
-    if is_absolute
-        output_folder = fn;
+    filePath = dataset_metadata.filename;
+    if java.io.File(filePath).isAbsolute();
+        output_folder = filePath;
     else
-        output_folder = fullfile(pwd, 'outputs', fn);
+        output_folder = fullfile(pwd, 'outputs', filePath);
     end
 
     if ~exist(output_folder, 'dir')
