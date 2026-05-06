@@ -47,3 +47,5 @@ wind_mean_dir = waveRose(wind_data.wnddir, wind_data.wnd, wind_metadata, "title"
 %% Verify loading location
 % Confirm wave and wind data are loaded closely to the target location
 locationComparison(wave_metadata, wind_metadata);
+% Save the location figure
+print(gcf, '-dpng', '-r300', fullfile(location, ['locationComparison.png']))
