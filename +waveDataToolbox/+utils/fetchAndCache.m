@@ -21,20 +21,27 @@ function fetchAndCache(useParallel, urls, outFiles, pkgs, location_info, additio
 nM = numel(urls);
 if useParallel
 
+    % Set up a DataQueue so workers can report progress back to the client
+    q = parallel.pool.DataQueue;
+
+    afterEach(q, @(ym) updateProgress(ym, verbose, nM));
+
+    % Use parallel.pool.Constant to safely share data across workers
+    locC = parallel.pool.Constant(location_info);
+    addC = parallel.pool.Constant(additional_params);
+
     % Use parallel processing to fetch and cache data
     parfor k = 1:nM
-        % Use parallel.pool.Constant to safely share data across workers
-        locC = parallel.pool.Constant(location_info);
-        addC = parallel.pool.Constant(additional_params);
+
         try
-            % Print progress at the start of each year if verbose is enabled
-            if verbose && rem(k,12) == 1
-                current_ym = year_months(k);
-                year = floor(current_ym / 100);
-                fprintf('  Starting year %d: Loading %d (%d of %d)\n', year, current_ym, k, nM);
-            end
             % Skip if output file already exists
             if exist(outFiles{k},'file'), continue; end
+
+            % Report progress at the start of each year if verbose is enabled
+            if verbose && rem(k,12) == 1
+                current_ym = year_months(k);
+                send(q, current_ym);
+            end
 
             % Dynamically construct loader function name and load data
             loader = ['waveDataToolbox.utils.' pkgs{k} '.loadMonthlyData'];
@@ -59,8 +66,7 @@ else
         % Print progress at the start of each year if verbose is enabled
         if verbose && rem(k,12) == 1
             current_ym = year_months(k);
-            year = floor(current_ym / 100);
-            fprintf('  Starting year %d: Loading %d (%d of %d)\n', year, current_ym, k, nM);
+            updateProgress(current_ym, verbose, nM);
         end
         try
             % Skip if output file already exists
@@ -84,6 +90,7 @@ else
     end
 end
 end
+
 %% Helper function
 function parsave_struct(filename, S)
 %PARSAVE_STRUCT Safe save for PARFOR bodies.
@@ -94,5 +101,19 @@ try
 catch
     % Fallback for older MATLAB releases
     save(filename, '-struct', 'S');
+end
+end
+
+% --- %
+function updateProgress(current_ym, verbose, nM)
+persistent completed
+if isempty(completed)
+    completed = 0;
+end
+completed = completed + 1;
+
+if verbose
+    fprintf('  Completed %d of %d years: Loading %d\n', ...
+        completed, fix(nM/12), current_ym);
 end
 end
