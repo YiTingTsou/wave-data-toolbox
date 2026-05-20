@@ -19,8 +19,9 @@ function fetchAndCache(useParallel, urls, outFiles, pkgs, location_info, additio
 % It dynamically loads and saves data using package-specific functions, and skips files that already exist.
 
 nM = numel(urls);
+% Reset any persistent progress state from previous calls (covers both branches)
+clear updateProgress;
 if useParallel
-
     % Set up a DataQueue so workers can report progress back to the client
     q = parallel.pool.DataQueue;
 
@@ -106,11 +107,18 @@ end
 
 % --- %
 function updateProgress(current_ym, verbose, nM)
-persistent completed
-if isempty(completed)
-    completed = 0;
+% Track unique year-month values so repeated sends don't double-count
+persistent seenYears
+if isempty(seenYears)
+    seenYears = [];
 end
-completed = completed + 1;
+
+% Only add non-empty year-month values and avoid duplicates
+if ~isempty(current_ym) && ~ismember(current_ym, seenYears)
+    seenYears(end+1) = current_ym;
+end
+
+completed = numel(seenYears);
 
 if verbose
     fprintf('  Completed %d of %d years: Loading %d\n', ...
