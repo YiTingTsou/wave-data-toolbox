@@ -133,7 +133,7 @@ http://hdl.handle.net/102.100.100/137152?index=1
 **Toolbox citation:**
 
 ```
-Tsou, Y. (2026). Wave Data Loading Toolbox (Version 1.1.7) [Computer software]. https://github.com/YiTingTsou/wave-data-toolbox
+Tsou, Y. (2026). Wave Data Loading Toolbox (Version 1.1.8) [Computer software]. https://github.com/YiTingTsou/wave-data-toolbox
 ```
 
 ## License
