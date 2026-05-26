@@ -118,7 +118,7 @@ if ~isempty(current_ym) && ~ismember(current_ym, seenYears)
     seenYears(end+1) = current_ym;
 end
 
-completed = numel(seenYears);
+completed = numel(seenYears) - 1;
 
 if verbose
     fprintf('  Completed %d of %d years: Loading %d\n', ...
